@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
+import ProductProvider from "./context/ProductContext";
 
 //context
 
@@ -27,8 +28,7 @@ function App() {
   return (
     <>
       <div>
-       
-          <Router>
+        {/* <Router>
             <Routes>
               <Route element={<Home />}>
                 <Route path="/" element={<DashBoard />} />
@@ -39,8 +39,10 @@ function App() {
                 <Route path="/Cart" element={<Cart />} />
               </Route>
             </Routes>
-          </Router>
-       
+          </Router> */}
+        <ProductProvider>
+          <ProductList />
+        </ProductProvider>
       </div>
     </>
   );

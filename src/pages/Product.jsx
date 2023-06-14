@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-interface Props {
-  id: string;
-  
-}
+
 
 const myProduct = {
   name: "Donkey Tail",
@@ -24,8 +21,8 @@ const myProduct = {
     "NRs. 100 Inside Kathmandu Valley for any other places and/or large quantity Shipping Charge may vary accordingly.",
 };
 
-const Product: React.FC = () => {
-  const productId = useParams<ProductParams>();
+const Product = () => {
+  const productId = useParams();
   console.log(productId);
 
   //fetch
