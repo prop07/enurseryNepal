@@ -10,25 +10,20 @@ import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
-import ProductProvider from "./context/ProductContext";
+import Pagination from "./pages/Pagination";
 
 //context
+import ProductProvider from "./context/ProductProvider";
+import CartProvider from "./context/CartProvider";
 
 function App() {
-  // const [products, setProducts] = useState([]);
-
-  // useEffect(() => {
-  //   fetch("https://enurserynepal.com/api/v1/product/")
-  //     .then((response) => response.json())
-  //     .then((data) => setProducts(data))
-  //     .catch((error) => console.log(error));
-
-  // }, []);
 
   return (
     <>
       <div>
-        {/* <Router>
+        <Router>
+          <CartProvider>
+          <ProductProvider>
             <Routes>
               <Route element={<Home />}>
                 <Route path="/" element={<DashBoard />} />
@@ -39,10 +34,9 @@ function App() {
                 <Route path="/Cart" element={<Cart />} />
               </Route>
             </Routes>
-          </Router> */}
-        <ProductProvider>
-          <ProductList />
-        </ProductProvider>
+          </ProductProvider>
+          </CartProvider>
+        </Router>
       </div>
     </>
   );

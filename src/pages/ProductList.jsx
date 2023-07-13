@@ -1,26 +1,18 @@
-import { useEffect, useState,useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ProductContext } from "../context/ProductProvider";
+import { useState,useEffect } from "react";
 
-import ProductContext from "../context/ProductContext";
 
 const ProductList = () => {
-  // const [products, setProducts] = useState([]);
-
-  // useEffect(() => {
-  //   fetch("https://enurserynepal.com/api/v1/product/")
-  //     .then((response) => response.json())
-  //     .then((data) => setProducts(data))
-  //     .catch((error) => console.log(error));
-  // }, []);
-
   const products = useContext(ProductContext);
-  console.log(products);
-
-  return (
+  
+return (
     <div className="mx-0 grid place-items-center  grid-cols-4  ">
+      
       {products.slice(0, 20).map((product) => (
-        // <Link key={product.id} to={`/product/${product.id}`}>
-        <div>
+        <Link key={product.id} to={`/product/${product.id}`}>
+        <div key={product.id}>
           <div>
             <img
               className="w-64 h-64 rounded border-2 border-neutral-500"
@@ -45,8 +37,9 @@ const ProductList = () => {
             </div>
           </div>
         </div>
-        // </Link>
+        </Link>
       ))}
+      
     </div>
   );
 };

@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
-
+//context
+import { ProductContext } from "../context/ProductProvider";
 
 const myProduct = {
-  name: "Donkey Tail",
-  id: 4,
-  price: 300,
-  imageLinks: {
-    link1:
-      "https://enurserynepal.com/media/products/donkey_tail_manakamana_nursery.jpg",
-    link2:
-      "https://enurserynepal.com/media/products/fiddle_leaf_manakamana_nursery.jpg",
-  },
+ 
   productDetails:
     "Lorem Ipsum is simply dummy text of the printing and typesetting industryecimen book. It has survived not only five centuries, ",
   productClassification:
@@ -22,27 +15,14 @@ const myProduct = {
 };
 
 const Product = () => {
-  const productId = useParams();
-  console.log(productId);
+  const products = useContext(ProductContext);
 
-  //fetch
-  const [products, setProducts] = useState([]);
+  const {id} = useParams();
 
-  const [productDetail, setProductDetail] = useState([]);
+  console.log(id);
+  const product = products.find((item) => item.id == id);
+  console.log(product);
 
-  useEffect(() => {
-    fetch("https://enurserynepal.com/api/v1/product/")
-      .then((response) => response.json())
-      .then((data) => setProducts(data))
-      .catch((error) => console.log(error));
-
-      foundProductByID()
-  }, []);
-
-  const foundProductByID = () => {
-  const foundItem = products.find(({ id }) => id === productId);
-  setProductDetail(foundItem);  
-  };
 
   const [productDetails, setProductDetails] = useState(true);
   const [productClassification, setProductClassificationn] = useState(false);
@@ -77,7 +57,6 @@ const Product = () => {
 
   return (
     <>
-      {productId.id}
       <div className="flex gap-0 p-2  items-center justify-center ">
         {/* image selection */}
 
@@ -86,19 +65,12 @@ const Product = () => {
             <img
               onClick={() => setProductLink(myProduct.imageLinks.link1)}
               className=" p-4 cursor-pointer "
-              src={myProduct.imageLinks.link1}
-              alt={myProduct.imageLinks.link1}
+              src={product.image}
+              alt={product.image}
             ></img>
           </div>
 
-          <div className="w-20 h-20">
-            <img
-              onClick={() => setProductLink(myProduct.imageLinks.link2)}
-              className=" p-4 cursor-pointer "
-              src={myProduct.imageLinks.link2}
-              alt={myProduct.imageLinks.link2}
-            ></img>
-          </div>
+        
         </div>
         {/* image */}
         <div>
@@ -106,16 +78,17 @@ const Product = () => {
             <img
               className="object-cover"
               style={{ height: "30rem", width: "30rem" }}
-              src={productLink}
-              alt={productLink}
+                src={product.image}
+              alt={product.image}
+             
             ></img>
           </div>
         </div>
         {/* form */}
         <div>
-          <div className="font-bold m-4">{myProduct.name}</div>
+          <div className="font-bold m-4">{product.name}</div>
           <h1 className="text-green-600 m-4">In Stock</h1>
-          <div className="font-medium m-4">Rs:{myProduct.price}/-</div>
+          <div className="font-medium m-4">Rs:{product.price}/-</div>
           <div>
             <input
               type="number"

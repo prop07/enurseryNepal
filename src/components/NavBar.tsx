@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import {Link} from 'react-router-dom';
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiHelpCircle } from "react-icons/bi";
@@ -67,7 +68,8 @@ const NavBar = () => {
           <BiHelpCircle size={25} />
         </div>
         <div className="cursor-pointer hover:text-cyan-600 mx-2 ">
-          <HiShoppingCart size={25} />
+          <Link to="/Cart"><HiShoppingCart size={25} /></Link>
+          
         </div>
         <div className="cursor-pointer hover:text-cyan-600 mx-2 ">
           <FaUserCircle size={25} />

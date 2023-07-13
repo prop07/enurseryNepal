@@ -2,11 +2,18 @@ import React, { useContext } from "react";
 import { AiOutlineClose,AiFillLock,AiOutlineReload } from "react-icons/ai";
 
 
+//contex
+import { CartContext } from "../context/CartProvider";
+import { ProductContext } from "../context/ProductProvider";
+
+
 
 
 const Cart = () => {
+  const products = useContext(ProductContext);
+  const cart = useContext(CartContext)
 
-  
+
   const myProduct = {
     name: "Donkey Tail",
     id: 4,
