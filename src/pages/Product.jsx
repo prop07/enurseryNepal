@@ -5,7 +5,6 @@ import { useLocation, useParams } from "react-router-dom";
 import { ProductContext } from "../context/ProductProvider";
 
 const myProduct = {
- 
   productDetails:
     "Lorem Ipsum is simply dummy text of the printing and typesetting industryecimen book. It has survived not only five centuries, ",
   productClassification:
@@ -17,133 +16,71 @@ const myProduct = {
 const Product = () => {
   const products = useContext(ProductContext);
 
-  const {id} = useParams();
+  const { id } = useParams();
 
   console.log(id);
   const product = products.find((item) => item.id == id);
-  console.log(product);
-
-
-  const [productDetails, setProductDetails] = useState(true);
-  const [productClassification, setProductClassificationn] = useState(false);
-  const [shipping, setShipping] = useState(false);
-  const [productLink, setProductLink] = useState(myProduct.imageLinks.link1);
-
-  const handleProductDetails = () => {
-    setProductDetails(true);
-    setProductClassificationn(false);
-    setShipping(false);
-  };
-
-  const handleProductClassification = () => {
-    setProductDetails(false);
-    setProductClassificationn(true);
-    setShipping(false);
-  };
-
-  const handleShipping = () => {
-    setProductDetails(false);
-    setProductClassificationn(false);
-    setShipping(true);
-  };
-
-  //style
-
-  const style = {
-    color: "rgb(8 145 178)",
-  };
-
-  const noStyle = {};
 
   return (
     <>
-      <div className="flex gap-0 p-2  items-center justify-center ">
-        {/* image selection */}
-
-        <div className="grid">
-          <div className="w-20 h-20">
-            <img
-              onClick={() => setProductLink(myProduct.imageLinks.link1)}
-              className=" p-4 cursor-pointer "
-              src={product.image}
-              alt={product.image}
-            ></img>
-          </div>
-
-        
-        </div>
-        {/* image */}
-        <div>
-          <div>
-            <img
-              className="object-cover"
-              style={{ height: "30rem", width: "30rem" }}
-                src={product.image}
-              alt={product.image}
-             
-            ></img>
-          </div>
-        </div>
-        {/* form */}
-        <div>
-          <div className="font-bold m-4">{product.name}</div>
-          <h1 className="text-green-600 m-4">In Stock</h1>
-          <div className="font-medium m-4">Rs:{product.price}/-</div>
-          <div>
-            <input
-              type="number"
-              min="1"
-              max="20"
-              placeholder="1"
-              className=" text-center bg-slate-200 w-48 h-12 m-4"
-            />
-          </div>
-          <div>
-            <button className="p-4 text-neutral-100 bg-neutral-600 rounded w-48 font-medium m-4 hover:bg-neutral-700">
-              Add to Cart
-            </button>
-          </div>
-          <div>
-            <button className="p-4 text-neutral-100 bg-neutral-700 rounded w-48 m-4 hover:bg-neutral-500 ">
-              Buy Now
-            </button>
-          </div>
-        </div>
-      </div>
       <div>
-        <div className="text-lg flex gap-3 bg-slate-300 py-4 px-16">
-          <span
-            style={productDetails ? style : noStyle}
-            className="cursor-pointer  hover:text-cyan-600  "
-            onClick={handleProductDetails}
-          >
-            Product Details
-          </span>
-          <span
-            style={productClassification ? style : noStyle}
-            className="cursor-pointer hover:text-cyan-600 "
-            onClick={handleProductClassification}
-          >
-            Product Classification
-          </span>
-          <span
-            style={shipping ? style : noStyle}
-            className="cursor-pointer hover:text-cyan-600 "
-            onClick={handleShipping}
-          >
-            Shipping
-          </span>
-        </div>
+        <div className="container px-5 mt-24 mx-auto">
+          <div className="lg:w-4/5 mx-auto flex flex-wrap">
+            <img
+              alt="ecommerce"
+              className="lg:w-1/2 w-full lg:h-auto h-64 max-h-[55vh] object-cover object-center rounded"
+              src={product.image}
+            />
+            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+              <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                ON SALE
+              </h2>
+              <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+                {product.name}.
+              </h1>
+              <div className="flex mb-4">{product.type.detail}</div>
+              <p className="leading-relaxed mb-4">
+                Dui urna vehicula tincidunt pretium consequat luctus mi, platea
+                fermentum conubia tempus ac orci. Pellentesque dictum malesuada
+                cubilia faucibus dignissim mi nascetur senectus, augue ad libero
+                efficitur dolor duis lobortis, non etiam sociosqu maximus enim
+                mus natoque.
+              </p>
 
-        {productDetails ? (
-          <div className="py-4 px-16 ">{myProduct.productDetails}</div>
-        ) : null}
-        {productClassification ? (
-          <div className="py-4 px-16 ">{myProduct.productClassification}</div>
-        ) : null}
-        {shipping ? (
-          <div className="py-4 px-16 ">{myProduct.shipping}</div>
-        ) : null}
+              <div>
+                <p className="title-font font-medium text-2xl text-gray-900 mb-4">
+                  Rs:{product.price}/-
+                </p>
+                <div>
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    placeholder="1"
+                    className=" text-center bg-slate-200 w-48 h-12 mb-4"
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <button className="p-4 text-neutral-100 bg-neutral-600 rounded w-48 font-medium  hover:bg-neutral-700">
+                    Add to Cart
+                  </button>
+                  <button className="p-4 text-neutral-100 bg-neutral-700 rounded w-48  hover:bg-neutral-500 ">
+                    Buy Now
+                  </button>
+                </div>
+                <div>
+                  <h1 className=" mt-4 text-neutral-500 text-lg mb-1">
+                    Shipping
+                  </h1>
+                  <p className="text-neutral-500 mb-4">
+                    NRs. 100 Inside Kathmandu Valley for any other places and/or
+                    large quantity Shipping Charge may vary accordingly.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
