@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { BsBagPlus } from "react-icons/bs";
 
 //context
@@ -8,19 +7,22 @@ import { ProductContext } from "../context/ProductProvider";
 
 const ProductList = () => {
   const products = useContext(ProductContext);
+  const cart = JSON.parse(localStorage.getItem('storedCartItems'));
 
-
-
+  const addToCart = (id) => {
+   let item = {"id":id,"qty":1}
+   localStorage.setItem("storedCartItems", JSON.stringify(...cartItems,item)) 
+  }
 
   return (
     <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-24 mb-5 ">
       {products.map((product) => (
         <div
-          id={product.id}
+          key={product.id}
           className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
         >
           <Link key={product.id} to={`/product/${product.id}`}>
-            <img src={product.image} />
+            <img src={product.image} /></Link>
             <div className="px-4 py-3 w-72">
               <span className="text-gray-400 mr-3 uppercase text-xs">
                 {product.type.detail}
@@ -31,13 +33,12 @@ const ProductList = () => {
               <div className="flex items-center">
                 <p className="text-lg font-semibold text-black cursor-auto my-3">
                   Rs:{product.price}/-
-                </p>
-                <div className="ml-auto">
-                  <BsBagPlus />
-                </div>
+                </p><span className="ml-auto cursor-pointer hover:text-cyan-600">
+            <BsBagPlus size={25} onClick={() => addToCart(product.id)} />
+          </span>
               </div>
             </div>
-          </Link>
+           
         </div>
       ))}
     </section>

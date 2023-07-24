@@ -1,18 +1,16 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 export const CartContext = createContext();
 
+const CartProvider = ({ children }) => {
+  const cart = [
+    {id: 2, qty: 3},
+    {id: 3, qty: 2},
+]
 
 
- const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([
-    {id:1,qty:3},
-    {id:5,qty:2},
-    {id:6,qty:1},
-    {id:8,qty:4},
-  ]);
 
- return (
+  return (
     <CartContext.Provider value={cart}>
       {children}
     </CartContext.Provider>
@@ -20,7 +18,3 @@ export const CartContext = createContext();
 };
 
 export default CartProvider;
-
-//reducer
-//local storage
-//firebase

@@ -18,23 +18,40 @@ import CartProvider from "./context/CartProvider";
 
 function App() {
 
+  const [cartItems, setCartItems] = useState([
+    { id: 2, qty: 3 },
+    { id: 3, qty: 2 }
+]);
+
+useEffect(() => {
+
+    const storedCartItems = localStorage.getItem("storedCartItem");
+
+    if(!storedCartItems){
+      localStorage.setItem("storedCartItems", JSON.stringify(cartItems)) 
+    }
+  }, [cartItems])
+
+
+
+
   return (
     <>
       <div>
         <Router>
           <CartProvider>
-          <ProductProvider>
-            <Routes>
-              <Route element={<Home />}>
-                <Route path="/" element={<DashBoard />} />
+            <ProductProvider>
+              <Routes>
+                <Route element={<Home />}>
+                  <Route path="/" element={<DashBoard />} />
 
-                <Route path="/Productlist" element={<ProductList />} />
+                  <Route path="/productlist" element={<ProductList />} />
 
-                <Route path="/Product/:id" element={<Product />} />
-                <Route path="/Cart" element={<Cart />} />
-              </Route>
-            </Routes>
-          </ProductProvider>
+                  <Route path="/product/:id" element={<Product />} />
+                  <Route path="/cart" element={<Cart />} />
+                </Route>
+              </Routes>
+            </ProductProvider>
           </CartProvider>
         </Router>
       </div>
@@ -43,3 +60,6 @@ function App() {
 }
 
 export default App;
+
+
+//cart local storage
