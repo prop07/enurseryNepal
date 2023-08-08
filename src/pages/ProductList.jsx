@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { BsBagPlus } from "react-icons/bs";
 
@@ -10,8 +10,11 @@ const ProductList = () => {
   const cart = JSON.parse(localStorage.getItem('storedCartItems'));
 
   const addToCart = (id) => {
-   let item = {"id":id,"qty":1}
-   localStorage.setItem("storedCartItems", JSON.stringify(...cartItems,item)) 
+  let item = {"id":id,"qty":1}
+  const [none,setNone] = useState([]);
+  setNone(...cart,item)
+  console.log(none);
+
   }
 
   return (
@@ -38,7 +41,6 @@ const ProductList = () => {
           </span>
               </div>
             </div>
-           
         </div>
       ))}
     </section>

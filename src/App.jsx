@@ -1,4 +1,3 @@
-import "./App.css";
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -10,7 +9,8 @@ import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
-import Pagination from "./pages/Pagination";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 //context
 import ProductProvider from "./context/ProductProvider";
@@ -19,7 +19,7 @@ import CartProvider from "./context/CartProvider";
 function App() {
 
   const [cartItems, setCartItems] = useState([
-    { id: 2, qty: 3 },
+    { id: 10, qty: 3 },
     { id: 3, qty: 2 }
 ]);
 
@@ -33,26 +33,6 @@ useEffect(() => {
   }, [cartItems])
 
 
-
-  //Fetch data from core php api
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         "http://localhost/API/get.php"
-  //       );
-  //       const data = await response.json();
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.error("Error fetching products:", error);
-  //     }
-  //   };
-  //   fetchProducts();
-  // }, []);
-
-
-
-
   return (
     <>
       <div>
@@ -60,11 +40,11 @@ useEffect(() => {
           <CartProvider>
             <ProductProvider>
               <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
                 <Route element={<Home />}>
                   <Route path="/" element={<DashBoard />} />
-
                   <Route path="/productlist" element={<ProductList />} />
-
                   <Route path="/product/:id" element={<Product />} />
                   <Route path="/cart" element={<Cart />} />
                 </Route>
@@ -78,6 +58,3 @@ useEffect(() => {
 }
 
 export default App;
-
-
-//cart local storage
