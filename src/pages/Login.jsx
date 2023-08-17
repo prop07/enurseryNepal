@@ -36,6 +36,7 @@ const Login = () => {
     try {
       console.log(email, password);
       await signInWithPopup(auth, googleProvider);
+      redirect("/");
     } catch (err) {
       console.log(err);
     }
