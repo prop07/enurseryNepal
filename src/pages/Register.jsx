@@ -8,29 +8,18 @@ import { auth } from "../config/firebase";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-let rendercount = 0;
-
-
-
 const Register = () => {
-    rendercount++;
-
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
-    console.log(errors)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [errorResponse, setErrorResponse] = useState(null
-    );
+    const [errorResponse, setErrorResponse] = useState(null);
     const [showPassword, setShowPassword] = useState(false);
     const [registerState, setRegisterState] = useState(false);
-
-    // console.log(auth?.currentUser?.email);
-    // console.log(auth?.currentUser?.photoURL);
-
+    const [loading, setLoading] = useState(false);
     const handleTogglePassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
@@ -38,43 +27,29 @@ const Register = () => {
     const sinIn = async () => {
         setErrorResponse(null);
         setRegisterState(false);
+        setLoading(true);
         try {
-            console.log(email + password);
             await createUserWithEmailAndPassword(auth, email, password);
             setRegisterState(true);
-            // redirect("/login");
         } catch (err) {
-
             setErrorResponse({
+                message: err.customData._tokenResponse.error.message,
                 code: err.customData._tokenResponse.error.code,
-                message: err.customData._tokenResponse.error.message
             })
         }
-    };
-
-
-
-    const logout = async () => {
-        try {
-            console.log(email, password);
-            await signOut(auth);
-        } catch (err) {
-            console.log(err);
-        }
+        setLoading(false);
     };
     return (
         <div>
-            <button onClick={logout}>Logout</button>
-            <center>{rendercount}</center>
+            
             <section className="bg-gray-50 min-h-screen flex items-center justify-center">
                 <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
                     <div className="md:w-1/2 px-8 md:px-16">
                         <h2 className="font-bold text-2xl text-[#002D74]">Register</h2>
-                        <p className="text-xs mt-4 text-[#002D74]">It’s quick and easy.</p>
+                        <p className="text-xs mt-4 text-[#002D74]">It&apos;s quick and easy.</p>
                         <form
                             onSubmit={handleSubmit(sinIn)}
-                            className="flex flex-col gap-4"
-                        >
+                            className="flex flex-col gap-4">
                             <input
                                 className="p-2 mt-8 rounded-xl border"
                                 {...register("email", {
@@ -86,8 +61,7 @@ const Register = () => {
                                 })}
                                 onChange={(e) => setEmail(e.target.value)}
                                 type="text"
-                                placeholder="Email"
-                            />
+                                placeholder="Email" />
                             <p className="text-red-500 text-sm pl-4">{errors.email?.message}</p>
                             <div className="relative">
                                 <span className="flex items-center gap-2"> <input
@@ -95,8 +69,7 @@ const Register = () => {
                                     {...register("password", { required: "Password required !", minLength: { value: 8, message: "Min length is 8 !" } })}
                                     onChange={(e) => setPassword(e.target.value)}
                                     type={showPassword ? "text" : "password"}
-                                    placeholder="Password"
-                                />
+                                    placeholder="Password" />
                                     {showPassword ? <FaEyeSlash className="cursor-pointer hover:text-cyan-600 " size={25} onClick={handleTogglePassword} /> : <FaEye className="cursor-pointer hover:text-cyan-600 " size={25} onClick={handleTogglePassword} />}   </span>
                                 <p className="mt-2 text-red-500 text-sm pl-4">{errors.password?.message}</p>
                             </div>
@@ -110,7 +83,15 @@ const Register = () => {
                                 <svg className="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                                 </svg>
-                                <p className="mi-3 text-sm">{errorResponse.message}. Error Code: {errorResponse.code}</p>
+                                <div>
+                                    <p className="mi-3 text-sm">{errorResponse.message}.</p>
+                                    <p className="mi-3 text-sm"> Error-Code:{errorResponse.code}.</p>
+                                </div>
+                            </div> : null}
+                            {loading ? <div className="flex items-center justify-center space-x-2">
+                                <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
+                                <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
+                                <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
                             </div> : null}
                             <button
                                 className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300"
@@ -134,8 +115,7 @@ const Register = () => {
                     <div className="md:block hidden w-1/2">
                         <img
                             className="rounded-2xl"
-                            src="https://img.freepik.com/premium-photo/tropical-plants-banana-pot-white-background-generative-ai_58409-34885.jpg?w=740"
-                        />
+                            src="https://img.freepik.com/premium-photo/tropical-plants-banana-pot-white-background-generative-ai_58409-34885.jpg?w=740" />
                     </div>
                 </div>
             </section>

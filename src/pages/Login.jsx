@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { FaEyeSlash, FaEye } from "react-icons/fa";
-
+import { FaEyeSlash, FaEye } from "react-icons/fa"
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
@@ -11,17 +10,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 
-const Login = () => {
-  const redirect = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
 
+
+
+const Register = () => {
+  const redirect = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorResponse, setErrorResponse] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // console.log(auth?.currentUser?.email);
   // console.log(auth?.currentUser?.photoURL);
@@ -30,26 +33,38 @@ const Login = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
+
   const sinIn = async () => {
-    
+    setErrorResponse(null);
+    setLoading(true);
     try {
-      console.log(email + password);
-      // await signInWithEmailAndPassword(auth, email, password);
-      // redirect("/");
+      await signInWithEmailAndPassword(auth, email, password);
+      redirect("/");
     } catch (err) {
-      console.log(JSON.stringify(err));
+      setErrorResponse({
+        message: err.message,
+        code: err.code,
+      });
     }
+    setLoading(false);
+
   };
 
   const sinInWithGoogle = async () => {
-    try {
+    setLoading(true);
 
+    try {
       await signInWithPopup(auth, googleProvider);
       redirect("/");
     } catch (err) {
-      console.log(err);
+      setErrorResponse({
+        message: err.message,
+        code: err.code,
+      });
     }
+    setLoading(false);
   };
+
 
   const logout = async () => {
     try {
@@ -61,7 +76,7 @@ const Login = () => {
   };
   return (
     <div>
-      <button onClick={logout}>Log Out</button>
+      
       <section className="bg-gray-50 min-h-screen flex items-center justify-center">
         <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
           <div className="md:block hidden w-1/2">
@@ -72,53 +87,46 @@ const Login = () => {
           </div>
           <div className="md:w-1/2 px-8 md:px-16">
             <h2 className="font-bold text-2xl text-[#002D74]">Login</h2>
-            <p className="text-xs mt-4 text-[#002D74]">
-              If you are already a member, easily log in.
-            </p>
-
-            <form onSubmit={handleSubmit(sinIn)} className="flex flex-col gap-4">
+            <p className="text-xs mt-4 text-[#002D74]">If you are already a member, easily log in.</p>
+            <form
+              onSubmit={handleSubmit(sinIn)}
+              className="flex flex-col gap-4">
               <input
                 className="p-2 mt-8 rounded-xl border"
-                onChange={(e) => setEmail(e.target.value)}
                 {...register("email", {
                   required: "Email required !"
                 })}
+                onChange={(e) => setEmail(e.target.value)}
                 type="text"
-                name="email"
-                placeholder="Email"
-              />
+                placeholder="Email" />
               <p className="text-red-500 text-sm pl-4">{errors.email?.message}</p>
               <div className="relative">
-                <span className="flex items-center gap-2">
-                  <input
-                    className="p-2 rounded-xl border w-full"
-                    onChange={(e) => setPassword(e.target.value)}
-                    {...register("password", { required: "Password required !" })}
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                  />
-                  {showPassword ? (
-                    <FaEyeSlash
-                      className="cursor-pointer hover:text-cyan-600"
-                      size={25}
-                      onClick={handleTogglePassword}
-                    />
-                  ) : (
-                    <FaEye
-                      className="cursor-pointer hover:text-cyan-600"
-                      size={25}
-                      onClick={handleTogglePassword}
-                    />
-                  )}
-                </span>
+                <span className="flex items-center gap-2"> <input
+                  className="p-2 rounded-xl border w-full"
+                  {...register("password", { required: "Password required !" })}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Password" />
+                  {showPassword ? <FaEyeSlash className="cursor-pointer hover:text-cyan-600 " size={25} onClick={handleTogglePassword} /> : <FaEye className="cursor-pointer hover:text-cyan-600 " size={25} onClick={handleTogglePassword} />}   </span>
                 <p className="mt-2 text-red-500 text-sm pl-4">{errors.password?.message}</p>
               </div>
+              {errorResponse ? <div className="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                <svg className="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                </svg>
+                <div>
+                  <p className="mi-3 text-sm">{errorResponse.message}</p>
+                </div>
+              </div> : null}
+              {loading ? <div className="flex items-center justify-center space-x-2">
+                <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
+                <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
+                <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
+              </div> : null}
               <button
                 className="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300"
-                onClick={sinIn}
-              >
-                Login
-              </button>
+                type="submit"
+              >Login</button>
             </form>
             <div className="mt-6 grid grid-cols-3 items-center text-gray-400">
               <hr className="border-gray-400" />
@@ -127,8 +135,7 @@ const Login = () => {
             </div>
             <button
               onClick={sinInWithGoogle}
-              className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
-            >
+              className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]" >
               <svg
                 className="mr-3"
                 xmlns="http://www.w3.org/2000/svg"
@@ -168,8 +175,9 @@ const Login = () => {
           </div>
         </div>
       </section>
+      <button onClick={logout}>Logout</button>
     </div>
   );
 };
 
-export default Login;
+export default Register;
