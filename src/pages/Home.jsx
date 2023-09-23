@@ -23,9 +23,11 @@ onAuthStateChanged(auth, (user) => {
 
   return (
     <>
-      <NavBar />
-      <Outlet />
-      <NewsLetter />
+    <div className="mb-28">
+    <NavBar  />
+    </div>
+      <Outlet /> 
+       <NewsLetter/> 
       <Footer />
     </>
   );

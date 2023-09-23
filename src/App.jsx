@@ -14,30 +14,37 @@ import Register from "./pages/Register";
 
 //context
 import ProductProvider from "./context/ProductProvider";
-import CartProvider from "./context/CartProvider";
+
+
 
 function App() {
 
-  const [cartItems, setCartItems] = useState([
-    { id: 10, qty: 3 },
-    { id: 3, qty: 2 }
-]);
+  const [dummyCart, setDummycart] = useState([
+    { id: 1, qty: 3 },
+    { id: 3, qty: 2 },
+    { id: 5, qty: 2 },
+    {id: 7,  qty:9 }
 
-useEffect(() => {
 
-    const storedCartItems = localStorage.getItem("storedCartItem");
+]
+  )
 
-    if(!storedCartItems){
-      localStorage.setItem("storedCartItems", JSON.stringify(cartItems)) 
-    }
-  }, [cartItems])
+  //unauthorize
+
+  useEffect(() => {
+  
+localStorage.getItem('storedCartItem') ? null:localStorage.setItem("storedCartItem",JSON.stringify(dummyCart));
+
+  }, [])
+
+
+ 
 
 
   return (
     <>
       <div>
         <Router>
-          <CartProvider>
             <ProductProvider>
               <Routes>
                   <Route path="/login" element={<Login />} />
@@ -50,7 +57,6 @@ useEffect(() => {
                 </Route>
               </Routes>
             </ProductProvider>
-          </CartProvider>
         </Router>
       </div>
     </>

@@ -31,30 +31,30 @@ const Footer = () => {
   ];
 
   return (
-    <div className="grid grid-cols-6 bg-slate-200 p-8">
-      <div></div>
-      <div></div>
-      <div></div>
+    <div className="grid md:grid-cols-5 bg-slate-200 py-4 md:gap-18 px-4">
+      <div className="hidden md:block"></div>
+      <div className="hidden md:block"></div>
+   
+
       <div>
         <ul>
           {quickshopitems.map((item, index) => (
-            <li className="cursor-pointer hover:text-cyan-600 text-sm p-2" key={index}>
-              {item}
-            </li>
+            <li className="mb-4" key={item} ><span className="text-sm truncate cursor-pointer hover:text-cyan-600" key={index}>{item}</span></li>
           ))}
         </ul>
       </div>
-      <div>
+      <div >
         <ul>
           {informationitems.map((item, index) => (
-            <li className="cursor-pointer hover:text-cyan-600 text-sm p-2" key={index}>{item}</li>
+            <li className="mb-4" key={item}  ><span className="text-sm truncate  cursor-pointer hover:text-cyan-600" key={index}>{item}</span></li>
+            
           ))}
         </ul>
       </div>
-      <div>
+      <div >
         <ul>
           {ourservicesitem.map((item, index) => (
-            <li className="cursor-pointer hover:text-cyan-600 text-sm p-2" key={index}>{item}</li>
+            <li className="mb-4" key={item} ><span className="text-sm truncate cursor-pointer hover:text-cyan-600" key={index}>{item}</span></li>
           ))}
         </ul>
       </div>

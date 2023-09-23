@@ -1,29 +1,31 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AiOutlineClose, AiFillLock, AiOutlineReload } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 //contex
-import { CartContext } from "../context/CartProvider";
 import { ProductContext } from "../context/ProductProvider";
 
 const Cart = () => {
   const products = useContext(ProductContext);
   const [cartItems, setCartItems] = useState([]);
-  // const cart = JSON.parse(localStorage.getItem('storedCartItems'));
 
-
-  
   useEffect(() => {
     let data = [];
-    JSON.parse(localStorage.getItem('storedCartItems')).map((item) => {
-      products.find((product) => {
-        if (product.id == item.id) {
-          data = [...data, product];
-        }
+    const storedCart = JSON.parse(localStorage.getItem('storedCartItem'));
+    console.log(storedCart);
+    if (storedCart) {
+      storedCart.map((item) => {
+        products.find((product) => {
+          if (product.id == item.id) {
+            data = [...data, product];
+          }
+        });
       });
-    });
-    setCartItems(data);
-  }, [ products]);
+      setCartItems(data);
+
+    }
+
+  }, [products]);
 
   if (!cartItems) return <div>Loading</div>;
 
