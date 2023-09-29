@@ -123,8 +123,8 @@ const ProductList = () => {
     );
 
   return (
-    <>
-      <section className="scroll-smooth w-fit mx-auto grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
+    <div div className="p-4">
+      <section className="scroll-smooth w-fit mx-auto grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14 ">
         {productCardList}
       </section>
       {/* pagentation */}
@@ -181,7 +181,7 @@ const ProductList = () => {
           </ul>
         </pages>
       ) : null}
-    </>
+    </div>
   );
 };
 export default ProductList;
