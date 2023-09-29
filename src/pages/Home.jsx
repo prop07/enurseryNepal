@@ -23,8 +23,8 @@ onAuthStateChanged(auth, (user) => {
 
   return (
     <>
-    <div className="mb-28">
     <NavBar  />
+    <div className="mb-20">
     </div>
       <Outlet /> 
        <NewsLetter/> 

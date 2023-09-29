@@ -21,6 +21,9 @@ const Product = () => {
   console.log(id);
   const product = products.find((item) => item.id == id);
 
+
+  
+
   return (
     <>
       <div>

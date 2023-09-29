@@ -20,7 +20,7 @@ const NavBar = () => {
 
   return (
     <>
-    <div className="flex  bg-white fixed  top-0 left-0 right-0  py-4  px-1 md:px-16 shadow-md shadow-slate-500/50 justify-center items-center h-20">
+    <div className="flex z-10 bg-white fixed  top-0 left-0 right-0  py-4  px-1 md:px-16 shadow-md shadow-slate-500/50 justify-center items-center h-20">
      <Link to={"/"}><div>Logo</div></Link> 
       <div className="w-4/5 flex">
         <div className="hidden md:block">
@@ -38,7 +38,7 @@ const NavBar = () => {
       </div>
       <div className="flex justify-end m-1 mx-2 w-2/5 items-center ">
         {search ? (
-          <div className=" hidden md:flex mr-4 ">
+          <div className=" hidden  md:flex mr-4 ">
             <input
               className="h-8  w-auto px-4  bg-slate-100 outline-none rounded-l-lg "
               placeholder="Search On Store"
@@ -70,8 +70,8 @@ const NavBar = () => {
      
       </div>
       {search ? (
-        <center className="md:hidden absolute m-auto bg-white h-screen w-screen  "> 
-         <div className=" md:hidden flex mt-24  justify-center items-center  ">
+        <center className="md:hidden z-20 fixed m-auto bg-white h-screen w-screen  "> 
+         <div className=" md:hidden flex   justify-center items-center  ">
             <input
               className="h-8  w-auto px-4  bg-slate-100 outline-none rounded-l-lg "
               placeholder="Search On Store"

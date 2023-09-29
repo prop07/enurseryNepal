@@ -31,19 +31,15 @@ const Footer = () => {
   ];
 
   return (
-    <div className="grid md:grid-cols-5 bg-slate-200 py-4 md:gap-18 px-4">
-      <div className="hidden md:block"></div>
-      <div className="hidden md:block"></div>
-   
-
-      <div>
+    <div className="flex justify-end">
+      <div className="p-3">
         <ul>
           {quickshopitems.map((item, index) => (
             <li className="mb-4" key={item} ><span className="text-sm truncate cursor-pointer hover:text-cyan-600" key={index}>{item}</span></li>
           ))}
         </ul>
       </div>
-      <div >
+      <div className="p-3">
         <ul>
           {informationitems.map((item, index) => (
             <li className="mb-4" key={item}  ><span className="text-sm truncate  cursor-pointer hover:text-cyan-600" key={index}>{item}</span></li>
@@ -51,7 +47,7 @@ const Footer = () => {
           ))}
         </ul>
       </div>
-      <div >
+      <div className="p-3">
         <ul>
           {ourservicesitem.map((item, index) => (
             <li className="mb-4" key={item} ><span className="text-sm truncate cursor-pointer hover:text-cyan-600" key={index}>{item}</span></li>

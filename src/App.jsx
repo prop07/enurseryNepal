@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { getDatabase, ref, set } from "firebase/database";
 
 //import components
 import DashBoard from "./components/DashBoard";
@@ -7,6 +8,8 @@ import DashBoard from "./components/DashBoard";
 //import pages
 import Home from "./pages/Home";
 import ProductList from "./pages/ProductList";
+import { ProductList2 } from "./pages/ProductList2";
+import { Product2 } from "./pages/Product2";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
@@ -37,6 +40,11 @@ localStorage.getItem('storedCartItem') ? null:localStorage.setItem("storedCartIt
 
   }, [])
 
+  function writeUserData(userId, name, email, imageUrl){
+ const db = getdatabase();
+
+  }
+
 
  
 
@@ -51,8 +59,10 @@ localStorage.getItem('storedCartItem') ? null:localStorage.setItem("storedCartIt
                   <Route path="/register" element={<Register />} />
                 <Route element={<Home />}>
                   <Route path="/" element={<DashBoard />} />
-                  <Route path="/productlist" element={<ProductList />} />
-                  <Route path="/product/:id" element={<Product />} />
+                  <Route path="/products/:page" element={<ProductList />} />
+                  <Route path="/products2/:page/" element={<ProductList2 />} />
+                  <Route path="/product/:productId" element={<Product />} />
+                  <Route path="/product2/:productId" element={<Product2 />} />
                   <Route path="/cart" element={<Cart />} />
                 </Route>
               </Routes>
