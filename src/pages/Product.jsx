@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import {  useContext } from "react";
+import { useParams } from "react-router-dom";
 
 //context
 import { ProductContext } from "../context/ProductProvider";
@@ -15,14 +15,10 @@ const myProduct = {
 
 const Product = () => {
   const products = useContext(ProductContext);
+  const { productId } = useParams();
 
-  const { id } = useParams();
-
-  console.log(id);
-  const product = products.find((item) => item.id == id);
-
-
-  
+  console.log(productId);
+  const product = products.find((item) => item.id == productId);
 
   return (
     <>
@@ -49,7 +45,6 @@ const Product = () => {
                 efficitur dolor duis lobortis, non etiam sociosqu maximus enim
                 mus natoque.
               </p>
-
               <div>
                 <p className="title-font font-medium text-2xl text-gray-900 mb-4">
                   Rs:{product.price}/-

@@ -9,10 +9,6 @@ import { auth, googleProvider } from "../config/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-
-
-
-
 const Register = () => {
   const redirect = useNavigate();
   const {
@@ -33,7 +29,6 @@ const Register = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
-
   const sinIn = async () => {
     setErrorResponse(null);
     setLoading(true);
@@ -47,12 +42,10 @@ const Register = () => {
       });
     }
     setLoading(false);
-
   };
 
   const sinInWithGoogle = async () => {
     setLoading(true);
-
     try {
       await signInWithPopup(auth, googleProvider);
       redirect("/");
@@ -65,7 +58,6 @@ const Register = () => {
     setLoading(false);
   };
 
-
   const logout = async () => {
     try {
       console.log(email, password);
@@ -76,7 +68,6 @@ const Register = () => {
   };
   return (
     <div>
-      
       <section className="bg-gray-50 min-h-screen flex items-center justify-center">
         <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
           <div className="md:block hidden w-1/2">

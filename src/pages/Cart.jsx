@@ -22,18 +22,14 @@ const Cart = () => {
         });
       });
       setCartItems(data);
-
     }
-
   }, [products]);
 
   if (!cartItems) return <div>Loading</div>;
-
   return (
     <>
       <div className=" flex flex-wrap justify-center mt-24 ">
         {/* cart */}
-
         <div className="max-w-[80vh]">
           <div className="p-4">
             {/* table title */}

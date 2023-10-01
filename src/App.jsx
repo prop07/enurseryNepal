@@ -7,9 +7,6 @@ import DashBoard from "./components/DashBoard";
 
 //import pages
 import Home from "./pages/Home";
-import ProductList from "./pages/ProductList";
-import { ProductList2 } from "./pages/ProductList2";
-import { Product2 } from "./pages/Product2";
 import Product from "./pages/Product";
 import Cart from "./pages/Cart";
 import Login from "./pages/Login";
@@ -17,6 +14,7 @@ import Register from "./pages/Register";
 
 //context
 import ProductProvider from "./context/ProductProvider";
+import {Products} from "./pages/Products";
 
 
 
@@ -59,10 +57,8 @@ localStorage.getItem('storedCartItem') ? null:localStorage.setItem("storedCartIt
                   <Route path="/register" element={<Register />} />
                 <Route element={<Home />}>
                   <Route path="/" element={<DashBoard />} />
-                  <Route path="/products/:page" element={<ProductList />} />
-                  <Route path="/products2/:page/" element={<ProductList2 />} />
+                  <Route path="/products/:pageId" element={<Products />} />
                   <Route path="/product/:productId" element={<Product />} />
-                  <Route path="/product2/:productId" element={<Product2 />} />
                   <Route path="/cart" element={<Cart />} />
                 </Route>
               </Routes>
