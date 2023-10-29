@@ -1,4 +1,4 @@
-import {  useContext } from "react";
+import {  useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 //context
@@ -16,9 +16,11 @@ const myProduct = {
 const Product = () => {
   const products = useContext(ProductContext);
   const { productId } = useParams();
-
-  console.log(productId);
   const product = products.find((item) => item.id == productId);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+}, []);
 
   return (
     <>

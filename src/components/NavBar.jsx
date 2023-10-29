@@ -25,7 +25,7 @@ const NavBar = () => {
                 className="cursor-pointer hover:text-cyan-600 text-sm p-2" >
                 Shop
               </span>
-              <Link to={'/products/1'}>
+              <Link to={'/products'}>
                 <span className="cursor-pointer hover:text-cyan-600 text-sm p-2" >
                   Product
                 </span></Link>

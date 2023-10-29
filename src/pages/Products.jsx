@@ -1,24 +1,36 @@
 import { useContext, useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //icons
 import { BsImageAlt, BsBagPlus } from 'react-icons/bs';
-import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
-import { BsThreeDots } from 'react-icons/bs';
 
 //context
 import { ProductContext } from "../context/ProductProvider";
+import { CartContext } from "../context/CartProvider";
+
+
 
 export const Products = () => {
-    const { pageId } = useParams();
     const products = useContext(ProductContext);
-    const [activePage, setActivePage] = useState(parseInt(pageId));
-    const [pageCount, setPageCount] = useState(Math.ceil(products.length / 12));
+    const [activePage, setActivePage] = useState(1);
+    const [pageCount, setPageCount] = useState(0);
+
+    
 
     useEffect(() => {
-        setActivePage(pageId);
-        window.scrollTo(0, 0);
-    }, [pageId]);
+        const calculatePageCount = async () => {
+        const pageCount = Math.ceil(products.length / 12);
+        setPageCount(pageCount);
+        };
+    
+        calculatePageCount();
+    }, [products]);
+
+
+
+    useEffect(() => {
+        console.log(activePage);
+    }, [activePage]);
     return (
         <div>
             <div>
@@ -31,6 +43,15 @@ export const Products = () => {
 };
 //product Listing
 const ProductListByPage = ({ activePage, products }) => {
+
+   
+
+    const handleCart = (productId) => {
+        // addToCart(productId);
+
+    }
+
+
     //loading skelation
     const loadingSkelaton = [];
     for (let i = 1; i < 7; i++) {
@@ -51,7 +72,7 @@ const ProductListByPage = ({ activePage, products }) => {
     }
     //productsCards
     const productCardList = [];
-    products.slice(activePage * 12 - 12, activePage * 12).map((product) =>
+    products.slice(0, activePage * 12).map((product) =>
         productCardList.push(
             <div
                 key={product.id}
@@ -65,18 +86,25 @@ const ProductListByPage = ({ activePage, products }) => {
                     />
                 </Link>
                 <div className="px-4 py-3 w-72">
-                    <span className="text-gray-400 mr-3 uppercase text-xs">
-                        {product.type.detail}
+                    <span className="text-gray-400 p-1 mb-1 rounded bg-gray-200 mr-1 text-sm">
+                        {product.type.title}
                     </span>
-                    <p className="text-lg font-bold text-black truncate block capitalize">
+
+                    <span className="text-gray-400 p-1 mb-1 rounded bg-gray-200 mr-1 text-sm">
+                        {product.sub_category.category.title}
+                    </span>
+                    <span className="text-gray-400 p-1 mb-1 rounded bg-gray-200  text-sm">
+                        {product.sub_category.title}
+                    </span>
+                    <p className="text-lg mt-1 font-semibold text-neutral-700 truncate block capitalize">
                         {product.name}
                     </p>
                     <div className="flex items-center">
-                        <p className="text-lg font-semibold text-black cursor-auto my-3">
+                        <p className="text-lg  text-black cursor-auto my-3">
                             Rs:{product.price}/-
                         </p>
                         <span className="ml-auto cursor-pointer hover:text-cyan-600">
-                            <BsBagPlus size={25} />
+                            <BsBagPlus onClick={() => handleCart(product.id)} size={25} />
                         </span>
                     </div>
                 </div>
@@ -96,75 +124,14 @@ const ProductListByPage = ({ activePage, products }) => {
 
 //pagintation
 const Pagination = ({ pageCount, activePage, setActivePage }) => {
-    //activePage to int
-    const inActivePage = parseInt(activePage);
 
-    const pagintation = [];
-    for (let i = (inActivePage - 2); i < (inActivePage + 3); i++) {
-        if (i > 1 && i < pageCount) {
-            console.log("page" + i);
-            pagintation.push(
-                <Link key={i} to={`/products/${parseInt(i)}`} >
-                    <li
-                        className={`flex items-center justify-center cursor-pointer place-self-center rounded-full border border-blue-gray-100 h-8 w-8 text-sm text-blue-gray-500 transition duration-150 ease-in-out ${inActivePage === i
-                            ? 'bg-cyan-600 text-cyan-50'
-                            : 'hover:bg-cyan-600 hover:text-cyan-50'
-                            }`}>
-                        {i}
-                    </li>
-                </Link>
-            );
-        }
-    }
+
     return (
-        <div>
-            {pageCount > 1 ? (
-                <pages>
-                    <ul className="flex  justify-center gap-8 my-8">
-                        <li
-                            className="flex items-center justify-center cursor-pointer place-self-center rounded-full border border-blue-gray-100 h-8 w-8 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-cyan-600 hover:text-cyan-50 "
-                        >
-                            <FiArrowLeft />
-                        </li>
-                        <Link to={`/products/1`}>
-                            <li
-                                key={1}
-                                className={`flex items-center justify-center cursor-pointer place-self-center rounded-full border border-blue-gray-100 h-8 w-8 text-sm text-blue-gray-500 transition duration-150 ease-in-out ${inActivePage === 1
-                                    ? "bg-cyan-600 text-cyan-50"
-                                    : "hover:bg-cyan-600 hover:text-cyan-50"
-                                    }`}
-                            >
-                                1
-                            </li>
-                        </Link>
-                        <BsThreeDots
-                            className={` flex items-center justify-center place-self-center ${inActivePage < 5 ? " hidden " : null
-                                }`}
-                        />
-                        {pagintation}
-                        <BsThreeDots
-                            className={` flex items-center justify-center place-self-center ${inActivePage > pageCount - 4 ? " hidden " : null
-                                }`}
-                        />
-                        <Link to={`/products/${pageCount}`}>
-                            <li
-                                key={pageCount}
-                                className={`flex items-center justify-center cursor-pointer place-self-center rounded-full border border-blue-gray-100 h-8 w-8 text-sm text-blue-gray-500 transition duration-150 ease-in-out ${inActivePage === pageCount
-                                    ? "bg-cyan-600 text-cyan-50"
-                                    : "hover:bg-cyan-600 hover:text-cyan-50"
-                                    }`}
-                            >
-                                {pageCount}
-                            </li>
-                        </Link>
-                        <li
-                            className="flex items-center justify-center cursor-pointer place-self-center rounded-full border border-blue-gray-100 h-8 w-8 text-sm text-blue-gray-500 transition duration-150 ease-in-out hover:bg-cyan-600 hover:text-cyan-50 "
-                        >
-                            <FiArrowRight />
-                        </li>
-                    </ul>
-                </pages>
-            ) : null}
+        <div className="flex items-center justify-center">  
+        <p onClick={() =>activePage < pageCount ? setActivePage(activePage + 1): null} className="flex items-center justify-center w-2/3  self-center   m-4 border cursor-pointer p-2  text-gray-400 hover:text-gray-800  ">
+        {activePage < pageCount? <span> Load more</span>:<span>No more items</span>}   
+        </p>
         </div>
+
     )
 }

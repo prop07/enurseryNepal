@@ -1,6 +1,11 @@
+
 const DashBoard = () => {
+
   return (
-    <div>DashBoard</div>
+
+    <div>
+      Dash board
+    </div>
   )
 }
 
