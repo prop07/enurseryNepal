@@ -1,54 +1,60 @@
-import React, { createContext, useState, useEffect, useReducer } from "react";
+import { useContext } from "react";
+import { createContext, useState, useEffect, useReducer } from "react";
 
-export const CartContext = createContext();
+export const CartDispatchContext = createContext();
 
-const cartReducer = (state, action) => {
+const reducer = (state, action) => {
+  const storedCartItems = JSON.parse(localStorage.getItem('storedCartItems')) || [];
   switch (action.type) {
-    case 'AddToCart':
-      // Logic to handle adding product to the cart
-      // action.productId and action.quantity contain the product ID and quantity
-      // Update your state accordingly
-      return /* updated state */;
-    case 'UPDATE':
-      // Logic to handle updating product quantity in the cart
-      return /* updated state */;
-    case 'DELETE':
-      // Logic to handle removing product from the cart
-      return /* updated state */;
+    
+    case 'AddToCart': {
+      const { id, qty } = action.payload;
+        const updateCart =[...storedCartItems,{ id, qty } ];
+        console.log(updateCart)
+        localStorage.setItem("storedCartItem", JSON.stringify(updateCart));
+        return;
+      }
+    case 'UpdateToCart':
+      return;
+    case 'DeleteToCart':
+      return;
     default:
       return state;
   }
 };
 
 const CartProvider = ({ children }) => {
-  const [cartAct, dispatch] = useReducer(cartReducer, []);
-  const [cart, setCart] = useState([]);
+
+  // const initialState = localStorage.getItem('storedCartItem');
+  const [cart, dispatch] = useReducer(reducer, []);
+
+  useEffect(() => {
+    //  localStorage.getItem('storedCartItem') ? null:localStorage.setItem("storedCartItem",JSON.stringify(dummyCart));
+    localStorage.setItem("storedCartItem", JSON.stringify(cart));
+  }, [cart])
+
   const [dummyCart, setDummycart] = useState([
     { id: 1, qty: 3 },
     { id: 3, qty: 2 },
     { id: 5, qty: 2 },
-    {id: 7,  qty:9 }
+    { id: 7, qty: 9 }
 
-]
+  ]
   )
 
-  
-
-  useEffect(() => {
-   
-  
-    localStorage.getItem('storedCartItem') ? null:localStorage.setItem("storedCartItem",JSON.stringify(dummyCart));
-    
-      }, [])
-
-
-
-
   return (
-    <CartContext.Provider value={dispatch}>
+    <CartDispatchContext.Provider value={{ cart, dispatch }}>
       {children}
-    </CartContext.Provider>
+    </CartDispatchContext.Provider>
   );
 };
 
 export default CartProvider;
+
+export const useDispatchCart = () => {
+  const context = useContext(CartDispatchContext);
+  if (!context) {
+    throw new Error("useDispatchCart must be used within a CartProvider");
+  }
+  return context.dispatch;
+};

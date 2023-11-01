@@ -6,27 +6,19 @@ import { BsImageAlt, BsBagPlus } from 'react-icons/bs';
 
 //context
 import { ProductContext } from "../context/ProductProvider";
-import { CartContext } from "../context/CartProvider";
-
-
+import { useDispatchCart } from "../context/CartProvider";
 
 export const Products = () => {
     const products = useContext(ProductContext);
     const [activePage, setActivePage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
-
-    
-
     useEffect(() => {
         const calculatePageCount = async () => {
-        const pageCount = Math.ceil(products.length / 12);
-        setPageCount(pageCount);
+            const pageCount = Math.ceil(products.length / 12);
+            setPageCount(pageCount);
         };
-    
         calculatePageCount();
     }, [products]);
-
-
 
     useEffect(() => {
         console.log(activePage);
@@ -38,19 +30,15 @@ export const Products = () => {
             </div>
             <div><Pagination pageCount={pageCount} activePage={activePage} setActivePage={setActivePage} /> </div>
         </div>
-
     );
 };
+
 //product Listing
 const ProductListByPage = ({ activePage, products }) => {
-
-   
-
-    const handleCart = (productId) => {
-        // addToCart(productId);
-
+    const dispatch = useDispatchCart();
+    const addToCart = (productId) => {
+        dispatch({ type: 'AddToCart', payload: { id: productId, qty: 1 } })
     }
-
 
     //loading skelation
     const loadingSkelaton = [];
@@ -89,7 +77,6 @@ const ProductListByPage = ({ activePage, products }) => {
                     <span className="text-gray-400 p-1 mb-1 rounded bg-gray-200 mr-1 text-sm">
                         {product.type.title}
                     </span>
-
                     <span className="text-gray-400 p-1 mb-1 rounded bg-gray-200 mr-1 text-sm">
                         {product.sub_category.category.title}
                     </span>
@@ -104,34 +91,32 @@ const ProductListByPage = ({ activePage, products }) => {
                             Rs:{product.price}/-
                         </p>
                         <span className="ml-auto cursor-pointer hover:text-cyan-600">
-                            <BsBagPlus onClick={() => handleCart(product.id)} size={25} />
+                            <BsBagPlus onClick={() => addToCart(product.id)} size={25} />
                         </span>
                     </div>
                 </div>
-            </div>));
+            </div>
+        ));
     if (products.length === 0)
         return (
             <div className="p-4 relative w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
                 {loadingSkelaton}
-            </div>
-        )
+            </div>)
     return (
         <div className="p-4 relative w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
             {productCardList}
+
         </div>
     )
 }
-
 //pagintation
 const Pagination = ({ pageCount, activePage, setActivePage }) => {
 
-
     return (
-        <div className="flex items-center justify-center">  
-        <p onClick={() =>activePage < pageCount ? setActivePage(activePage + 1): null} className="flex items-center justify-center w-2/3  self-center   m-4 border cursor-pointer p-2  text-gray-400 hover:text-gray-800  ">
-        {activePage < pageCount? <span> Load more</span>:<span>No more items</span>}   
-        </p>
+        <div className="flex items-center justify-center">
+            <p onClick={() => activePage < pageCount ? setActivePage(activePage + 1) : null} className="flex items-center justify-center w-2/3  self-center   m-4 border cursor-pointer p-2  text-gray-400 hover:text-gray-800  ">
+                {activePage < pageCount ? <span> Load more</span> : <span>No more items</span>}
+            </p>
         </div>
-
     )
 }
