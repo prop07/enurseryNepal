@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useContext} from "react";
 import { Link } from 'react-router-dom';
 
 //icons
@@ -6,8 +6,13 @@ import { AiOutlineSearch, AiOutlineClose, AiOutlineArrowRight } from "react-icon
 import { BiHelpCircle } from "react-icons/bi";
 import { HiShoppingCart } from "react-icons/hi";
 import { FaUserCircle } from "react-icons/fa";
+import { CartDispatchContext } from "../context/CartProvider";
+
+
+
 
 const NavBar = () => {
+  const {cart} = useContext(CartDispatchContext);
   const [search, setSearch] = useState(false);
 
   const searchHandle = () => {
@@ -52,7 +57,8 @@ const NavBar = () => {
           </div>
           <div className="cursor-pointer hover:text-cyan-600 mx-2">
             <Link to="/cart">
-              <HiShoppingCart size={25} />
+              <p className="flex ml-4 -mt-4  text-slate-500  font-bold">{cart.length}</p>
+              <HiShoppingCart className="-mt-2" size={25} />
             </Link>
           </div>
           <div className="cursor-pointer hover:text-cyan-600">

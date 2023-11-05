@@ -1,8 +1,10 @@
-import {  useContext, useEffect } from "react";
+import {  useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
 
 //context
 import { ProductContext } from "../context/ProductProvider";
+import { useDispatchCart } from "../context/CartProvider";
 
 const myProduct = {
   productDetails:
@@ -14,9 +16,20 @@ const myProduct = {
 };
 
 const Product = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+} = useForm();
+  const [quantity, setQuantity] = useState(1)
   const products = useContext(ProductContext);
   const { productId } = useParams();
   const product = products.find((item) => item.id == productId);
+  const dispatch = useDispatchCart();
+
+  const addToCart = () => {
+    dispatch({ type: 'AddToCart', payload: { id:parseInt( productId), qty: parseInt(quantity) } });
+}
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -51,23 +64,40 @@ const Product = () => {
                 <p className="title-font font-medium text-2xl text-gray-900 mb-4">
                   Rs:{product.price}/-
                 </p>
-                <div>
-                  <input
+                <form 
+                onSubmit={handleSubmit(addToCart)}>
+                   <h1 className=" mt-4 text-neutral-600 text-lg mb-1">
+                    Quantity:
+                  </h1>
+                  <input 
+                  {...register("quantity",{
+                    value: /^[1-9]+$/,
+                    message: 'Please enter a valid Quantity 1 To 20 !',
+                    max:{
+                      value:20,
+                      message: " Quantity must be less than 20 !"
+                      }, 
+                      min:{
+                      value:1,
+                      message: "Quantity must be 1 or greater !"
+                      },})}
+                    onChange={(e)=>setQuantity(e.target.value)}
                     type="number"
-                    min="1"
-                    max="20"
                     placeholder="1"
-                    className=" text-center bg-slate-200 w-48 h-12 mb-4"
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <button className="p-4 text-neutral-100 bg-neutral-600 rounded w-48 font-medium  hover:bg-neutral-700">
+                    className=" text-center bg-slate-200 w-48 h-12 mb-1"
+                  /> 
+                  <p className="text-red-500 text-sm mb-1">{errors.quantity?.message}</p>
+                  
+                  <div className="flex gap-2">
+                  <button type="submit" className="p-4 text-neutral-100 bg-neutral-600 rounded w-48 font-medium  hover:bg-neutral-700">
                     Add to Cart
                   </button>
                   <button className="p-4 text-neutral-100 bg-neutral-700 rounded w-48  hover:bg-neutral-500 ">
                     Buy Now
                   </button>
                 </div>
+                </form>
+               
                 <div>
                   <h1 className=" mt-4 text-neutral-500 text-lg mb-1">
                     Shipping
