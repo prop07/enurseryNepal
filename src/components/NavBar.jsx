@@ -1,9 +1,9 @@
-import { useState ,useContext} from "react";
+import { useState, useContext } from "react";
 import { Link } from 'react-router-dom';
 
 //icons
 import { AiOutlineSearch, AiOutlineClose, AiOutlineArrowRight } from "react-icons/ai";
-import { BiHelpCircle } from "react-icons/bi";
+import { BiCart, BiHelpCircle } from "react-icons/bi";
 import { HiShoppingCart } from "react-icons/hi";
 import { FaUserCircle } from "react-icons/fa";
 import { CartDispatchContext } from "../context/CartProvider";
@@ -12,7 +12,7 @@ import { CartDispatchContext } from "../context/CartProvider";
 
 
 const NavBar = () => {
-  const {cart} = useContext(CartDispatchContext);
+  const { cart } = useContext(CartDispatchContext);
   const [search, setSearch] = useState(false);
 
   const searchHandle = () => {
@@ -55,13 +55,15 @@ const NavBar = () => {
           <div className="cursor-pointer hover:text-cyan-600 mx-2">
             <BiHelpCircle size={25} />
           </div>
-          <div className="cursor-pointer hover:text-cyan-600 mx-2">
+          <div className="cursor-pointer hover:text-cyan-600 mx-2 mt-2 ">
             <Link to="/cart">
-              <p className="flex ml-4 -mt-4  text-slate-500  font-bold">{cart.length}</p>
-              <HiShoppingCart className="-mt-2" size={25} />
+              <span className="relative inline-block">
+                <HiShoppingCart className="hover:text-cyan-600" size={25} />
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{cart.length}</span>
+              </span>
             </Link>
           </div>
-          <div className="cursor-pointer hover:text-cyan-600">
+          <div className="ml-1 cursor-pointer hover:text-cyan-600">
             <FaUserCircle size={25} />
           </div>
         </div>

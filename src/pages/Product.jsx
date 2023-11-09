@@ -97,7 +97,6 @@ const Product = () => {
                   </button>
                 </div>
                 </form>
-               
                 <div>
                   <h1 className=" mt-4 text-neutral-500 text-lg mb-1">
                     Shipping

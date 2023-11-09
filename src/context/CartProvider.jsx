@@ -5,24 +5,32 @@ export const CartDispatchContext = createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    
-    case 'AddToCart':{ const { id, qty } = action.payload;
-    const existingCartItemIndex = state.findIndex(item => item.id === id);
 
-    if (existingCartItemIndex !== -1) {
-      // If the item already exists in the cart, update its quantity
-      const updatedCart = [...state];
-      return updatedCart;
-    } else {
-      // If the item doesn't exist in the cart, add it as a new item
-      const updatedCart = [...state, { id, qty }];
+    case 'AddToCart': {
+      const { id, qty } = action.payload;
+      const existingCartItemIndex = state.findIndex(item => item.id === id);
+
+      if (existingCartItemIndex !== -1) {
+        // If the item already exists in the cart, update its quantity
+        const updatedCart = [...state];
+        return updatedCart;
+      } else {
+        // If the item doesn't exist in the cart, add it as a new item
+        const updatedCart = [...state, { id, qty }];
+        localStorage.setItem("storedCartItem", JSON.stringify(updatedCart));
+        return updatedCart;
+      }
+    }
+    case 'UpdateToCart':
+      
+      return;
+    case 'DeleteToCart':{
+      const { id } = action.payload;
+      const updatedCart = state.filter(item => item.id !== id);
       localStorage.setItem("storedCartItem", JSON.stringify(updatedCart));
       return updatedCart;
-    }}
-    case 'UpdateToCart':
-      return;
-    case 'DeleteToCart':
-      return;
+    }
+    
     default:
       return state;
   }
