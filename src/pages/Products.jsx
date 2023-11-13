@@ -45,7 +45,7 @@ export const Products = () => {
 const ProductListByPage = ({ activePage, products }) => {
   const dispatch = useDispatchCart();
   const addToCart = (productId) => {
-    dispatch({ type: "UpdateCartItem", payload: { id: productId, qty: 1 } });
+    dispatch({ type: "AddToCart", payload: { id: productId } });
   };
 
   //loading skelation

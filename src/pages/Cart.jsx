@@ -18,30 +18,17 @@ const Cart = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    let newCartData = {};
-    Object.keys(cart).map((key) => {
-      products.find((product) => {
-        if (product.id == key) {
-          newCartData[product.id] = cart[key] || 0;
-        }
-      });
-    });
-    console.log("newCartData", newCartData);
-    // dispatch({ type: "SetCart", payload: { id: { 1: 2 } } });
-  }, []);
-
   const handleDeleteCart = (id) => {
     dispatch({ type: "DeleteCartItem", payload: { id } });
   };
 
   const handleUpdateCart = (action, id) => {
-    cart.find((item) => item.id);
+    Object.keys(cart).find((key) => key === id);
     dispatch({
-      type: "UpdateCartItem",
+      type: "AddToCart",
       payload: {
         id: parseInt(id),
-        qty: parseInt(1) + action === "increase" ? 1 : -1,
+        qtyEq: action === "increase" ? 1 : -1,
       },
     });
   };
@@ -53,15 +40,16 @@ const Cart = () => {
           <div className="w-full lg:w-8/12">
             <div className="px-10 overflow-auto max-h-screen ">
               <Link to={"/products"}>
-                {" "}
                 <p className="flex items-center my-4 cursor-pointer text-cyan-500 hover:text-cyan-300 ">
                   <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
                 </p>
               </Link>
-              {Object.keys(cart).map((cartKey) => {
-                const p = products.find((product) => product.id === cartKey);
+              {Object.keys(cart)?.map((cartKey) => {
+                const p = products.find(
+                  (product) => product.id === parseInt(cartKey)
+                );
                 if (!p) {
-                  return;
+                  return <div>loading</div>;
                 }
                 return (
                   <div
@@ -103,12 +91,12 @@ const Cart = () => {
                     <div className="w-full px-4 mt-6 mb-6 xl:w-auto xl:mb-0 xl:mt-0">
                       <div className="flex items-center">
                         <h4 className="mr-4 font-medium ">Qty:</h4>
-                        <div className="inline-flex items-center px-4 font-semibold text-gray-500 border border-gray-300 rounded-md">
+                        <div className="inline-flex items-center font-semibold text-gray-500 border border-gray-300 rounded-md">
                           <button
                             onClick={() =>
                               handleUpdateCart("decrease", cartKey)
                             }
-                            className="py-2 pr-2 border-r border-gray-300 hover:text-gray-900  "
+                            className="p-3 pr-2 border-r border-gray-300 hover:text-gray-900  "
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +119,7 @@ const Cart = () => {
                             onClick={() =>
                               handleUpdateCart("increase", cartKey)
                             }
-                            className="py-2 pl-2 border-l border-gray-300 hover:text-gray-900  "
+                            className="p-3 border-l border-gray-300 hover:text-gray-900  "
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"

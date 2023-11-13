@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { ProductContext } from "../context/ProductProvider";
 import { createContext, useState, useEffect, useReducer } from "react";
 
 export const CartDispatchContext = createContext();
@@ -7,6 +8,10 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "SetCart":
       return { ...state, ...action.payload };
+    case "AddToCart": {
+      const { id, qtyEq } = action.payload;
+      return { ...state, [id]: (state[id] || 0) + qtyEq };
+    }
     case "UpdateCartItem": {
       const { id, qty } = action.payload;
       return { ...state, [id]: qty };
@@ -24,11 +29,28 @@ const reducer = (state, action) => {
 };
 
 const CartProvider = ({ children }) => {
-  const initialState = localStorage.getItem("cartItemss");
-  const [cart, dispatch] = useReducer(reducer, initialState || {});
+  const products = useContext(ProductContext);
+  const initialState = localStorage.getItem("ca");
+  const [cart, dispatch] = useReducer(
+    reducer,
+    initialState ? JSON.parse(initialState) : {}
+  );
 
   useEffect(() => {
-    localStorage.setItem("cartItemss", JSON.stringify(cart));
+    let newCartData = {};
+    Object.keys(cart).map((key) => {
+      products.find((product) => {
+        if (product.id == key) {
+          newCartData[product.id] = cart[key] || 0;
+        }
+      });
+    });
+    dispatch({ type: "SetCart", payload: newCartData });
+    console.log("cart", cart);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("ca", JSON.stringify(cart));
   }, [cart]);
 
   return (

@@ -1,13 +1,16 @@
 import { useState, useContext } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 //icons
-import { AiOutlineSearch, AiOutlineClose, AiOutlineArrowRight } from "react-icons/ai";
-import {  BiHelpCircle } from "react-icons/bi";
+import {
+  AiOutlineSearch,
+  AiOutlineClose,
+  AiOutlineArrowRight,
+} from "react-icons/ai";
+import { BiHelpCircle } from "react-icons/bi";
 import { HiShoppingCart } from "react-icons/hi";
 import { FaUserCircle } from "react-icons/fa";
 import { CartDispatchContext } from "../context/CartProvider";
-
 
 const NavBar = () => {
   const { cart } = useContext(CartDispatchContext);
@@ -20,18 +23,20 @@ const NavBar = () => {
   return (
     <>
       <div className="flex z-10 bg-white fixed  top-0 left-0 right-0  py-4  px-1 md:px-16 shadow-md shadow-slate-500/50 justify-center items-center h-20">
-        <Link to={"/"}><div>Logo</div></Link>
+        <Link to={"/"}>
+          <div>Logo</div>
+        </Link>
         <div className="w-4/5 flex">
           <div className="hidden md:block">
             <ul>
-              <span
-                className="cursor-pointer hover:text-cyan-600 text-sm p-2" >
+              <span className="cursor-pointer hover:text-cyan-600 text-sm p-2">
                 Shop
               </span>
-              <Link to={'/products'}>
-                <span className="cursor-pointer hover:text-cyan-600 text-sm p-2" >
+              <Link to={"/products"}>
+                <span className="cursor-pointer hover:text-cyan-600 text-sm p-2">
                   Product
-                </span></Link>
+                </span>
+              </Link>
             </ul>
           </div>
         </div>
@@ -57,7 +62,9 @@ const NavBar = () => {
             <Link to="/cart">
               <span className="relative inline-block">
                 <HiShoppingCart className="hover:text-cyan-600" size={25} />
-                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">{cart.length}</span>
+                <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                  {Object.values(cart).reduce((acc, i) => acc + i, 0)}
+                </span>
               </span>
             </Link>
           </div>
@@ -76,17 +83,27 @@ const NavBar = () => {
             <button className=" cursor-pointer hover:text-cyan-600 text-sm bg-slate-100 rounded-r-lg p-1.5 ">
               <AiOutlineArrowRight size={20} />
             </button>
-            <AiOutlineClose size={20} onClick={searchHandle} className="justify-center cursor-pointer hover:text-cyan-600 ml-2 " />
+            <AiOutlineClose
+              size={20}
+              onClick={searchHandle}
+              className="justify-center cursor-pointer hover:text-cyan-600 ml-2 "
+            />
           </div>
           <ul>
             <p
-              className="cursor-pointer hover:text-cyan-600 text-sm p-2 mt-2 " onClick={searchHandle} >
+              className="cursor-pointer hover:text-cyan-600 text-sm p-2 mt-2 "
+              onClick={searchHandle}
+            >
               Shop
             </p>
-            <Link to={'/products'}>
-              <p className="cursor-pointer hover:text-cyan-600 text-sm p-2" onClick={searchHandle} >
+            <Link to={"/products"}>
+              <p
+                className="cursor-pointer hover:text-cyan-600 text-sm p-2"
+                onClick={searchHandle}
+              >
                 Product
-              </p></Link>
+              </p>
+            </Link>
           </ul>
         </center>
       ) : null}
