@@ -8,7 +8,6 @@ import NewsLetter from "../components/NewsLetter";
 import Footer from "../components/Footer";
 
 const Home = () => {
-
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
@@ -18,13 +17,12 @@ const Home = () => {
         console.log("User Not Found");
       }
     });
-  }, [])
+  }, []);
 
   return (
     <>
       <NavBar />
-      <div className="mb-20">
-      </div>
+      <div className="mb-20"></div>
       <Outlet />
       <NewsLetter />
       <Footer />
