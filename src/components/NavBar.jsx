@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom';
 
 //icons
 import { AiOutlineSearch, AiOutlineClose, AiOutlineArrowRight } from "react-icons/ai";
-import { BiCart, BiHelpCircle } from "react-icons/bi";
+import {  BiHelpCircle } from "react-icons/bi";
 import { HiShoppingCart } from "react-icons/hi";
 import { FaUserCircle } from "react-icons/fa";
 import { CartDispatchContext } from "../context/CartProvider";
-
-
 
 
 const NavBar = () => {
@@ -85,7 +83,7 @@ const NavBar = () => {
               className="cursor-pointer hover:text-cyan-600 text-sm p-2 mt-2 " onClick={searchHandle} >
               Shop
             </p>
-            <Link to={'/productlist'}>
+            <Link to={'/products'}>
               <p className="cursor-pointer hover:text-cyan-600 text-sm p-2" onClick={searchHandle} >
                 Product
               </p></Link>

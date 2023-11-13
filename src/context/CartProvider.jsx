@@ -5,55 +5,31 @@ export const CartDispatchContext = createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
-
-    case 'AddToCart': {
+    case "SetCart":
+      return { ...state, ...action.payload };
+    case "UpdateCartItem": {
       const { id, qty } = action.payload;
-      const existingCartItemIndex = state.findIndex(item => item.id === id);
-
-      if (existingCartItemIndex !== -1) {
-        // If the item already exists in the cart, update its quantity
-        const updatedCart = [...state];
-        return updatedCart;
-      } else {
-        // If the item doesn't exist in the cart, add it as a new item
-        const updatedCart = [...state, { id, qty }];
-        localStorage.setItem("storedCartItem", JSON.stringify(updatedCart));
-        return updatedCart;
-      }
+      return { ...state, [id]: qty };
     }
-    case 'UpdateToCart':
-      
-      return;
-    case 'DeleteToCart':{
+    case "DeleteCartItem": {
       const { id } = action.payload;
-      const updatedCart = state.filter(item => item.id !== id);
-      localStorage.setItem("storedCartItem", JSON.stringify(updatedCart));
-      return updatedCart;
+      let newCart = { ...state };
+      delete newCart[id];
+      return { ...newCart };
     }
-    
+
     default:
       return state;
   }
 };
 
 const CartProvider = ({ children }) => {
-
-  // const initialState = localStorage.getItem('storedCartItem');
-  const [cart, dispatch] = useReducer(reducer, []);
+  const initialState = localStorage.getItem("cartItemss");
+  const [cart, dispatch] = useReducer(reducer, initialState || {});
 
   useEffect(() => {
-    //  localStorage.getItem('storedCartItem') ? null:localStorage.setItem("storedCartItem",JSON.stringify(dummyCart));
-    localStorage.setItem("storedCartItem", JSON.stringify(cart));
-  }, [cart])
-
-  const [dummyCart, setDummycart] = useState([
-    { id: 1, qty: 3 },
-    { id: 3, qty: 2 },
-    { id: 5, qty: 2 },
-    { id: 7, qty: 9 }
-
-  ]
-  )
+    localStorage.setItem("cartItemss", JSON.stringify(cart));
+  }, [cart]);
 
   return (
     <CartDispatchContext.Provider value={{ cart, dispatch }}>
