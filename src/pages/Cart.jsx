@@ -1,7 +1,8 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AiFillLock } from "react-icons/ai";
 import { RiCoupon3Line, RiDeleteBinLine } from "react-icons/ri";
 import { FaAngleDoubleLeft } from "react-icons/fa";
+import { HiShoppingCart } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 //contex
@@ -13,10 +14,20 @@ const Cart = () => {
   const products = useContext(ProductContext);
   const dispatch = useDispatchCart();
   const { cart } = useContext(CartDispatchContext);
+  const [cartAmount, setCartAmount] = useState();
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  useEffect(() => {
+    let totalAmount = 0;
+    Object.keys(cart)?.map((cartKey) => {
+      let item = products.find((product) => product.id === parseInt(cartKey));
+      totalAmount += cart[cartKey] * item.price;
+    });
+    setCartAmount(totalAmount);
+  }, [cart, cartAmount, products]);
 
   const handleDeleteCart = (id) => {
     dispatch({ type: "DeleteCartItem", payload: { id } });
@@ -32,6 +43,19 @@ const Cart = () => {
       },
     });
   };
+
+  if (Object.keys(cart).length <= 0) {
+    return (
+      <center className=" grid items-center justify-center bg-gray-50  font-poppins p-16 " >
+        <HiShoppingCart size={100}/>
+        <h2 className=" text-xl font-bold mb-4">Your Cart is currently empty.</h2>
+        <Link to={"/products"}>
+                <p className="flex items-center cursor-pointer text-cyan-500 hover:text-cyan-300 ">
+                  <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
+                </p>
+              </Link>
+      </center>)
+  }
 
   return (
     <section className="flex items-center bg-gray-50  font-poppins mt-20 ">
@@ -49,7 +73,7 @@ const Cart = () => {
                   (product) => product.id === parseInt(cartKey)
                 );
                 if (!p) {
-                  return <div>loading</div>;
+                  return <div>Product removed from store.</div>;
                 }
                 return (
                   <div
@@ -166,7 +190,7 @@ const Cart = () => {
                   required=""
                 />
                 <p className="flex flex-row items-center p-4 mt-2 text-neutral-100 bg-neutral-700 rounded w-48 cursor-pointer  hover:bg-neutral-600">
-                  {" "}
+                
                   <RiCoupon3Line className="mr-2" /> <span>Apply Coupon.</span>
                 </p>
               </div>
@@ -175,27 +199,30 @@ const Cart = () => {
                 <div className="flex items-center justify-between px-10 py-4 mb-3 font-medium leading-8 bg-gray-100 bg-opacity-50 border    rounded-xl">
                   <span>Subtotal</span>
                   <span className="flex items-center text-xl">
-                    <span className="mr-2 text-base">Rs</span>
-                    <span>710,70</span>
+                    <span className="mr-1 text-base">Rs:</span>
+                    <span>{cartAmount}/-</span>
                   </span>
                 </div>
-                <div className="flex items-center justify-between px-10 py-4 mb-3 font-medium leading-8 bg-gray-100 bg-opacity-50 border    rounded-xl">
+                <div className="flex items-center justify-between px-10 py-2 mb-3 font-medium leading-8 bg-gray-100 bg-opacity-50 border    rounded-xl">
                   <span>Shipping</span>
                   <span className="flex items-center text-xl">
-                    <span className="mr-2 text-base">Rs:</span>
+                    <span className="mr-1 text-base">Rs:</span>
                     <span>100/-</span>
                   </span>
                 </div>
+                <p className="text-neutral-500 px-10 py-1 mb-3">
+                  NRs. 100 Inside Kathmandu Valley for any other places and/or
+                  large quantity Shipping Charge may vary accordingly.
+                </p>
                 <div className="flex items-center justify-between px-10 py-4 mb-6 font-medium leading-8 bg-gray-100 border    rounded-xl">
                   <span>Total</span>
                   <span className="flex items-center text-xl text-cyan-500 ">
-                    <span className="mr-2 text-base">Rs:</span>
-                    <span>720,70</span>
+                    <span className="mr-1 text-base">Rs:</span>
+                    <span>{cartAmount + 100}/-</span>
                   </span>
                 </div>
                 <p className="flex flex-row items-center cursor-pointer p-4 text-neutral-100 bg-neutral-700 rounded w-56   hover:bg-neutral-600">
-                  {" "}
-                  <AiFillLock className="mr-2" />{" "}
+                  <AiFillLock className="mr-2" />
                   <span>Proceed Check Out.</span>
                 </p>
               </div>

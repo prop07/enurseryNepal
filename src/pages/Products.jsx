@@ -35,7 +35,7 @@ export const Products = () => {
           pageCount={pageCount}
           activePage={activePage}
           setActivePage={setActivePage}
-        />{" "}
+        />
       </div>
     </div>
   );
@@ -45,7 +45,7 @@ export const Products = () => {
 const ProductListByPage = ({ activePage, products }) => {
   const dispatch = useDispatchCart();
   const addToCart = (productId) => {
-    dispatch({ type: "AddToCart", payload: { id: productId } });
+    dispatch({ type: "AddToCart", payload: { id: productId,qtyEq:1 } });
   };
 
   //loading skelation

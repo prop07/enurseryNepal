@@ -3,13 +3,18 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import {
   signInWithEmailAndPassword,
   signInWithPopup,
-  signOut,
 } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+//user
+import { useUser } from '../context/UserContext';
+import { useEffect } from "react";
+
+
 
 const Register = () => {
+  const { updateUser, userId } = useUser();
   const redirect = useNavigate();
   const {
     register,
@@ -22,8 +27,10 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // console.log(auth?.currentUser?.email);
-  // console.log(auth?.currentUser?.photoURL);
+  useEffect(() => {
+    userId?redirect("/"): null;
+  })
+  
 
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -34,7 +41,8 @@ const Register = () => {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      redirect("/");
+      redirect("/")
+
     } catch (err) {
       setErrorResponse({
         message: err.message,
@@ -48,6 +56,7 @@ const Register = () => {
     setLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);
+      updateUser(auth?.currentUser?.id);
       redirect("/");
     } catch (err) {
       setErrorResponse({
@@ -58,18 +67,11 @@ const Register = () => {
     setLoading(false);
   };
 
-  const logout = async () => {
-    try {
-      console.log(email, password);
-      await signOut(auth);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  
   return (
     <div>
       <section className="bg-gray-50 min-h-screen flex items-center justify-center">
-        <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
+        <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-2 items-center">
           <div className="md:block hidden w-1/2">
             <img
               className="rounded-2xl"
@@ -83,7 +85,7 @@ const Register = () => {
             </p>
             <form
               onSubmit={handleSubmit(sinIn)}
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-2"
             >
               <input
                 className="p-2 mt-8 rounded-xl border"
@@ -99,7 +101,6 @@ const Register = () => {
               </p>
               <div className="relative">
                 <span className="flex items-center gap-2">
-                  {" "}
                   <input
                     className="p-2 rounded-xl border w-full"
                     {...register("password", {
@@ -167,7 +168,7 @@ const Register = () => {
             </div>
             <button
               onClick={sinInWithGoogle}
-              className="bg-white border py-2 w-full rounded-xl mt-5 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
+              className="bg-white border py-2 w-full rounded-xl mt-2 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]"
             >
               <svg
                 className="mr-3"
@@ -194,7 +195,7 @@ const Register = () => {
               </svg>
               Login with Google
             </button>
-            <div className="mt-5 text-xs border-b border-[#002D74] py-4 text-[#002D74]">
+            <div className="mt-3 text-xs border-b border-[#002D74] py-4 text-[#002D74]">
               <a href="#">Forgot your password?</a>
             </div>
             <div className="mt-3 text-xs flex justify-between items-center text-[#002D74]">
@@ -208,7 +209,6 @@ const Register = () => {
           </div>
         </div>
       </section>
-      <button onClick={logout}>Logout</button>
     </div>
   );
 };

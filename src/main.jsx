@@ -6,13 +6,17 @@ import "./App.css";
 //context reducer
 import ProductProvider from "./context/ProductProvider";
 import CartProvider from "./context/CartProvider";
+import { UserProvider } from './context/UserContext';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <ProductProvider>
+    <UserProvider>
+      <ProductProvider>
       <CartProvider>
         <App />
       </CartProvider>
     </ProductProvider>
+    </UserProvider>
+    
   </React.StrictMode>
 );

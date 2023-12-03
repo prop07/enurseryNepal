@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+//user
+import { useUser } from '../context/UserContext';
+
+
 const Register = () => {
+  const redirect = useNavigate();
+  const { userId } = useUser();
   const {
     register,
     handleSubmit,
@@ -20,6 +26,10 @@ const Register = () => {
   const handleTogglePassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
+
+  useEffect(() => {
+    userId?redirect("/"): null;
+  })
 
   const sinIn = async () => {
     setErrorResponse(null);
@@ -39,7 +49,7 @@ const Register = () => {
   return (
     <div>
       <section className="bg-gray-50 min-h-screen flex items-center justify-center">
-        <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
+        <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-2 items-center">
           <div className="md:w-1/2 px-8 md:px-16">
             <h2 className="font-bold text-2xl text-[#002D74]">Register</h2>
             <p className="text-xs mt-4 text-[#002D74]">
@@ -47,9 +57,10 @@ const Register = () => {
             </p>
             <form
               onSubmit={handleSubmit(sinIn)}
-              className="flex flex-col gap-4"
+              className="flex flex-col gap-2"
             >
               <input
+              id="email"
                 className="p-2 mt-8 rounded-xl border"
                 {...register("email", {
                   required: "Email required !",
@@ -67,7 +78,6 @@ const Register = () => {
               </p>
               <div className="relative">
                 <span className="flex items-center gap-2">
-                  {" "}
                   <input
                     className="p-2 rounded-xl border w-full"
                     {...register("password", {
@@ -160,7 +170,7 @@ const Register = () => {
             <div className="mt-3 text-xs flex justify-between items-center text-[#002D74]">
               <p>Have an account?</p>
               <Link to={"/login"}>
-                <button className="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300">
+                <button className="py-2 px-4 bg-white border rounded-xl hover:scale-110 duration-300">
                   Log In
                 </button>
               </Link>

@@ -1,6 +1,12 @@
-import { useContext } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useEffect, useReducer, useContext } from "react";
 import { ProductContext } from "../context/ProductProvider";
-import { createContext, useState, useEffect, useReducer } from "react";
+
+//firebase
+import { ref, set, child, get } from "firebase/database";
+import { database } from "../config/firebase";
+
+import { useUser } from "../context/UserContext";
 
 export const CartDispatchContext = createContext();
 
@@ -29,13 +35,54 @@ const reducer = (state, action) => {
 };
 
 const CartProvider = ({ children }) => {
+  const { userId } = useUser();
   const products = useContext(ProductContext);
-  const initialState = localStorage.getItem("ca");
+  // const initialState = localStorage.getItem("cart");
   const [cart, dispatch] = useReducer(
     reducer,
-    initialState ? JSON.parse(initialState) : {}
+    // initialState ? JSON.parse(initialState) : 
+    {}
   );
 
+  //write
+  function writeUserCart(id, cart) {
+    const reference = ref(database, "cart/" + id);
+    set(reference, {
+      data: cart,
+    });
+  }
+
+  //read
+  useEffect(() => {
+    try {
+      const userRef = ref(database, "cart/" + userId);
+      get(child(userRef, "data")).then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          console.log("Cart :", data);
+          dispatch({ type: "SetCart", payload: data });
+          console.log(cart);
+        } else {
+          const initialState = localStorage.getItem("cart");
+          console.log("try from local storage" + initialState);
+          dispatch({type:"SetCart", payload: JSON.parse(initialState)})
+        }
+      });
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    }
+  }, [userId]);
+
+  //write user cart on change
+  useEffect(() => {
+    userId
+      ? writeUserCart(userId, cart)
+      : console.log("user not found");
+    localStorage.setItem("cart", JSON.stringify(cart)
+    );
+  }, [cart]);
+
+  //find product within cart
   useEffect(() => {
     let newCartData = {};
     Object.keys(cart).map((key) => {
@@ -46,12 +93,7 @@ const CartProvider = ({ children }) => {
       });
     });
     dispatch({ type: "SetCart", payload: newCartData });
-    console.log("cart", cart);
   }, []);
-
-  useEffect(() => {
-    localStorage.setItem("ca", JSON.stringify(cart));
-  }, [cart]);
 
   return (
     <CartDispatchContext.Provider value={{ cart, dispatch }}>
