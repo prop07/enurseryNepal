@@ -59,7 +59,7 @@ const CartProvider = ({ children }) => {
       get(child(userRef, "data")).then((snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
-          console.log("Cart :", data);
+          console.log("Cart from database :", data);
           dispatch({ type: "SetCart", payload: data });
           console.log(cart);
         } else {

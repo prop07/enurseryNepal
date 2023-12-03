@@ -47,7 +47,12 @@ const Register = () => {
     setLoading(false);
   };
   return (
-    <div>
+    <div className="static">
+      {loading?   <div className="absolute h-full w-full backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
+                  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+                  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+                  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+                </div></div>: null }
       <section className="bg-gray-50 min-h-screen flex items-center justify-center">
         <div className="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-2 items-center">
           <div className="md:w-1/2 px-8 md:px-16">
@@ -76,7 +81,7 @@ const Register = () => {
               <p className="text-red-500 text-sm pl-4">
                 {errors.email?.message}
               </p>
-              <div className="relative">
+              <div>
                 <span className="flex items-center gap-2">
                   <input
                     className="p-2 rounded-xl border w-full"
@@ -146,13 +151,6 @@ const Register = () => {
                       Error-Code:{errorResponse.code}.
                     </p>
                   </div>
-                </div>
-              ) : null}
-              {loading ? (
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
-                  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
-                  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-600"></div>
                 </div>
               ) : null}
               <button

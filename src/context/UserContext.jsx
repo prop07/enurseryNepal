@@ -1,8 +1,6 @@
-/* eslint-disable react-refresh/only-export-components */
 import { createContext, useState,useEffect ,useContext} from 'react';
 
 // firebase
-
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
@@ -10,9 +8,10 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState();
-
   const updateUser = (newUserId)=>{
     setUserId(newUserId);
+    window.location.reload("/");
+    
   }
 
   useEffect(() => {
