@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //context
 import { ProductContext } from "../context/ProductProvider";
@@ -16,6 +18,22 @@ const myProduct = {
 };
 
 const Product = () => {
+
+  const showToastMessage = () => {
+    toast.success("Item added.",{
+    position: "bottom-right",
+    autoClose: 4000,
+    closeButton: false,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    theme: "light",
+        });
+      };
+    
+
   const {
     register,
     handleSubmit,
@@ -32,6 +50,7 @@ const Product = () => {
       type: "UpdateCartItem",
       payload: { id: parseInt(productId), qty: parseInt(quantity) },
     });
+    showToastMessage();
   };
 
   useEffect(() => {
@@ -39,9 +58,8 @@ const Product = () => {
   }, []);
 
   return (
-    <>
-      <div>
-        <div className="container px-5 mt-24 mx-auto">
+      <div >
+        <div className=" container px-5 mt-24 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
@@ -92,7 +110,6 @@ const Product = () => {
                   <p className="text-red-500 text-sm mb-1">
                     {errors.quantity?.message}
                   </p>
-
                   <div className="flex gap-2">
                     <button
                       type="submit"
@@ -100,6 +117,7 @@ const Product = () => {
                     >
                       Add to Cart
                     </button>
+                      <ToastContainer className="sm:w-48" />
                     <button className="p-4 text-neutral-100 bg-neutral-700 rounded w-48  hover:bg-neutral-500 ">
                       Buy Now
                     </button>
@@ -119,7 +137,6 @@ const Product = () => {
           </div>
         </div>
       </div>
-    </>
   );
 };
 

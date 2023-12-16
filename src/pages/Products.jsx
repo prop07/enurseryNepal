@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 //icons
 import { BsImageAlt, BsBagPlus } from "react-icons/bs";
+import { ToastContainer, toast } from "react-toastify";
 
 //context
 import { ProductContext } from "../context/ProductProvider";
@@ -45,7 +46,22 @@ export const Products = () => {
 const ProductListByPage = ({ activePage, products }) => {
   const dispatch = useDispatchCart();
   const addToCart = (productId) => {
-    dispatch({ type: "AddToCart", payload: { id: productId,qtyEq:1 } });
+    dispatch({ type: "AddToCart", payload: { id: productId, qtyEq: 1 } });
+    showToastMessage();
+  };
+
+const showToastMessage = () => {
+toast.success("Item added.",{
+position: "bottom-right",
+autoClose: 4000,
+closeButton: false,
+hideProgressBar: false,
+closeOnClick: false,
+pauseOnHover: false,
+draggable: false,
+progress: undefined,
+theme: "light",
+    });
   };
 
   //loading skelation
@@ -99,8 +115,9 @@ const ProductListByPage = ({ activePage, products }) => {
             <p className="text-lg  text-black cursor-auto my-3">
               Rs:{product.price}/-
             </p>
-            <span className="ml-auto cursor-pointer hover:text-cyan-600">
+            <span  className="ml-auto cursor-pointer hover:text-cyan-600">
               <BsBagPlus onClick={() => addToCart(product.id)} size={25} />
+              <ToastContainer className="sm:w-48"/>
             </span>
           </div>
         </div>

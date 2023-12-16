@@ -4,6 +4,8 @@ import { RiCoupon3Line, RiDeleteBinLine } from "react-icons/ri";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { HiShoppingCart } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //contex
 import { ProductContext } from "../context/ProductProvider";
@@ -15,6 +17,13 @@ const Cart = () => {
   const dispatch = useDispatchCart();
   const { cart } = useContext(CartDispatchContext);
   const [cartAmount, setCartAmount] = useState();
+
+  const showToastMessage = () => {
+    toast.success("Added To Cart!", {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
+  };
+  
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,7 +55,7 @@ const Cart = () => {
 
   if (Object.keys(cart).length <= 0) {
     return (
-      <center className=" grid items-center justify-center bg-gray-50  font-poppins p-16 " >
+      <center className=" grid items-center justify-center  font-poppins p-16 " >
         <HiShoppingCart size={100}/>
         <h2 className=" text-xl font-bold mb-4">Your Cart is currently empty.</h2>
         <Link to={"/products"}>
@@ -58,13 +67,16 @@ const Cart = () => {
   }
 
   return (
-    <section className="flex items-center bg-gray-50  font-poppins mt-20 ">
-      <div className="justify-center flex-1 px-1 py-6 mx-auto max-w-7xl lg:py-4 md:px-6">
+    
+
+    
+    <div className="flex items-center  font-poppins mt-20 ">
+      <div className="justify-center flex-1 px-1 py-6 mx-auto max-w-7xl lg:py-4 md:px-6 ">
         <div className="flex flex-wrap mt-2">
           <div className="w-full lg:w-8/12">
             <div className="px-10 overflow-auto max-h-screen ">
               <Link to={"/products"}>
-                <p className="flex items-center my-4 cursor-pointer text-cyan-500 hover:text-cyan-300 ">
+                <p className="flex items-center my-4 cursor-pointer text-cyan-500 hover:text-cyan-400 ">
                   <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
                 </p>
               </Link>
@@ -73,7 +85,7 @@ const Cart = () => {
                   (product) => product.id === parseInt(cartKey)
                 );
                 if (!p) {
-                  return <div>Product removed from store.</div>;
+                  return <div key={p.id} >Product removed from store.</div>;
                 }
                 return (
                   <div
@@ -230,7 +242,7 @@ const Cart = () => {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

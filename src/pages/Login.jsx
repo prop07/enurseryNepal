@@ -29,6 +29,7 @@ const Register = () => {
 
 
   useEffect(() => {
+    userId?setLoading(true): null;
     userId?redirect("/"): null;
   }, [userId])
   
@@ -71,7 +72,7 @@ const Register = () => {
   
   return (
     <div className="static">
-      {loading?    <div className="absolute h-full w-full backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
+      {loading || userId ?    <div className="absolute h-full w-full backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
                   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
                   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
                   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>

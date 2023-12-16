@@ -51,19 +51,19 @@ const NavBar = () => {
 
   return (
     <div>
-      <div className="z-10 bg-white fixed w-full  top-0 left-0 right-0  pb-1    shadow-md shadow-slate-500/50 justify-center items-center">
+      <div className="z-10  fixed w-full bg-white  top-0 left-0 right-0  pb-1    shadow-md shadow-slate-500/50 justify-center items-center">
         {userId ? null : (
           <div className=" text-sm p-2 text-green-800  bg-green-50 dark:bg-gray-800 dark:text-green-400">
             <span className="md:text-sm text-xs font-sm flex items-center justify-center gap-1">
-              <FaInfoCircle /> make sure you{" "}
+              <FaInfoCircle /> make sure you
               <Link to={"/login"} className=" underline ">
                 Log-in
-              </Link>{" "}
+              </Link>
               in order to save all your progress!
             </span>
           </div>
         )}
-        <div className="flex items-center">
+        <div className="flex items-center p-2 ">
           <Link to={"/"} className="flex mr-6 ">
             <img className="h-18 w-28 ml-4" src={logo} alt={logo} />
           </Link>
@@ -81,7 +81,7 @@ const NavBar = () => {
               </ul>
             </div>
           </div>
-          <div className="flex justify-end m-1 mx-2 w-4/5 items-center ">
+          <div className="flex justify-end m-1 mx-2 w-5/6 items-center ">
             {search ? (
               <div className=" hidden  md:flex mr-1 ">
                 <input
@@ -152,7 +152,7 @@ const NavBar = () => {
                     >
                       <span className="flex items-center" onClick={logout}>
                         <IoLogOutOutline size={20} className="mr-1" />
-                        Sign out{" "}
+                        Sign out
                       </span>
                     </p>
                   </div>
@@ -162,8 +162,8 @@ const NavBar = () => {
             <div>
               {email ? (
                 <p className="md:block hidden ml-1 text-xs text-gray-700">
-                  {" "}
-                  {email}{" "}
+                  
+                  {email}
                 </p>
               ) : null}
             </div>

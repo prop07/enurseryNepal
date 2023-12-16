@@ -9,9 +9,9 @@ const Home = () => {
 
 
   return (
-    <>
-      <NavBar />
-      <div className="mb-20"></div>
+    <  >
+      <NavBar  />
+      <div className="mt-32 "></div>
       <Outlet />
       <NewsLetter />
       <Footer />

@@ -17,6 +17,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       </CartProvider>
     </ProductProvider>
     </UserProvider>
-    
   </React.StrictMode>
 );
