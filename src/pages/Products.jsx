@@ -50,17 +50,17 @@ const ProductListByPage = ({ activePage, products }) => {
     showToastMessage();
   };
 
-const showToastMessage = () => {
-toast.success("Item added.",{
-position: "bottom-right",
-autoClose: 4000,
-closeButton: false,
-hideProgressBar: false,
-closeOnClick: false,
-pauseOnHover: false,
-draggable: false,
-progress: undefined,
-theme: "light",
+  const showToastMessage = () => {
+    toast.success("Item added.", {
+      position: "bottom-right",
+      autoClose: 4000,
+      closeButton: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
     });
   };
 
@@ -87,6 +87,7 @@ theme: "light",
   const productCardList = [];
   products.slice(0, activePage * 12).map((product) =>
     productCardList.push(
+
       <div
         key={product.id}
         className=" w-72 grid border bg-white rounded-xl justify-items-center shadow-baseShadow hover:shadow-hoverShadow shadow-gray-200 hover:shadow-gray-200 duration-500 ease-in-out"
@@ -115,13 +116,13 @@ theme: "light",
             <p className="text-lg  text-black cursor-auto my-3">
               Rs:{product.price}/-
             </p>
-            <span  className="ml-auto cursor-pointer hover:text-cyan-600">
+            <span className="ml-auto cursor-pointer hover:text-cyan-600">
               <BsBagPlus onClick={() => addToCart(product.id)} size={25} />
-              <ToastContainer className="sm:w-48"/>
             </span>
           </div>
         </div>
       </div>
+
     )
   );
   if (products.length === 0)
@@ -133,6 +134,7 @@ theme: "light",
   return (
     <div className="p-4 relative w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
       {productCardList}
+      <ToastContainer className="sm:w-48" />
     </div>
   );
 };

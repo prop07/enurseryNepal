@@ -53,7 +53,7 @@ const NavBar = () => {
     <div>
       <div className="z-10  fixed w-full bg-white  top-0 left-0 right-0  pb-1    shadow-md shadow-slate-500/50 justify-center items-center">
         {userId ? null : (
-          <div className=" text-sm p-2 text-green-800  bg-green-50 dark:bg-gray-800 dark:text-green-400">
+          <div className=" text-sm p-2   bg-green-50 ">
             <span className="md:text-sm text-xs font-sm flex items-center justify-center gap-1">
               <FaInfoCircle /> make sure you
               <Link to={"/login"} className=" underline ">
@@ -161,7 +161,7 @@ const NavBar = () => {
             </div>
             <div>
               {email ? (
-                <p className="md:block hidden ml-1 text-xs text-gray-700">
+                <p className="md:block hidden ml-1 text-xs text-gray-600">
                   
                   {email}
                 </p>

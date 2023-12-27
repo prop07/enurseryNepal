@@ -58,8 +58,8 @@ const Product = () => {
   }, []);
 
   return (
-      <div >
-        <div className=" container px-5 mt-24 mx-auto">
+      
+        <div className=" container px-5 py-1  mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
@@ -127,7 +127,7 @@ const Product = () => {
                   <h1 className=" mt-4 text-neutral-500 text-lg mb-1">
                     Shipping
                   </h1>
-                  <p className="text-neutral-500 mb-4">
+                  <p className="text-neutral-500 mb-2">
                     NRs. 100 Inside Kathmandu Valley for any other places and/or
                     large quantity Shipping Charge may vary accordingly.
                   </p>
@@ -136,7 +136,7 @@ const Product = () => {
             </div>
           </div>
         </div>
-      </div>
+      
   );
 };
 

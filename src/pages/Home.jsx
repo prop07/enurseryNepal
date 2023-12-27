@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <  >
       <NavBar  />
-      <div className="mt-32 "></div>
+      <div className="mt-28 "></div>
       <Outlet />
       <NewsLetter />
       <Footer />

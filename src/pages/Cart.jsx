@@ -3,7 +3,7 @@ import { AiFillLock } from "react-icons/ai";
 import { RiCoupon3Line, RiDeleteBinLine } from "react-icons/ri";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { HiShoppingCart } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,19 +11,43 @@ import "react-toastify/dist/ReactToastify.css";
 import { ProductContext } from "../context/ProductProvider";
 import { useDispatchCart } from "../context/CartProvider";
 import { CartDispatchContext } from "../context/CartProvider";
+import { useUser } from "../context/UserContext";
 
 const Cart = () => {
+  const navigate = useNavigate();
+  const { userId } = useUser();
   const products = useContext(ProductContext);
   const dispatch = useDispatchCart();
   const { cart } = useContext(CartDispatchContext);
   const [cartAmount, setCartAmount] = useState();
 
-  const showToastMessage = () => {
-    toast.success("Added To Cart!", {
-      position: toast.POSITION.BOTTOM_RIGHT,
+  const showToastRemoveMessage = () => {
+    toast.warning("Item removed.", {
+      position: "bottom-right",
+      autoClose: 4000,
+      closeButton: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
     });
   };
-  
+
+  const showToastErrorMessage = () => {
+    toast.error("Login first !", {
+      position: "bottom-right",
+      autoClose: 4000,
+      closeButton: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -40,6 +64,7 @@ const Cart = () => {
 
   const handleDeleteCart = (id) => {
     dispatch({ type: "DeleteCartItem", payload: { id } });
+    showToastRemoveMessage();
   };
 
   const handleUpdateCart = (action, id) => {
@@ -53,24 +78,29 @@ const Cart = () => {
     });
   };
 
+  const Checkout =() =>{
+    userId ? navigate('/checkout'): showToastErrorMessage();
+  }
+
   if (Object.keys(cart).length <= 0) {
     return (
       <center className=" grid items-center justify-center  font-poppins p-16 " >
-        <HiShoppingCart size={100}/>
+        <HiShoppingCart size={100} />
         <h2 className=" text-xl font-bold mb-4">Your Cart is currently empty.</h2>
         <Link to={"/products"}>
-                <p className="flex items-center cursor-pointer text-cyan-500 hover:text-cyan-300 ">
-                  <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
-                </p>
-              </Link>
+          <p className="flex items-center cursor-pointer text-cyan-500 hover:text-cyan-300 ">
+            <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
+          </p>
+        </Link>
       </center>)
   }
 
   return (
-    
 
-    
+
+
     <div className="flex items-center  font-poppins mt-20 ">
+      <ToastContainer className="sm:w-48" />
       <div className="justify-center flex-1 px-1 py-6 mx-auto max-w-7xl lg:py-4 md:px-6 ">
         <div className="flex flex-wrap mt-2">
           <div className="w-full lg:w-8/12">
@@ -201,10 +231,9 @@ const Cart = () => {
                   placeholder="x304k45"
                   required=""
                 />
-                <p className="flex flex-row items-center p-4 mt-2 text-neutral-100 bg-neutral-700 rounded w-48 cursor-pointer  hover:bg-neutral-600">
-                
+                <button className="flex flex-row items-center p-4 mt-2 text-neutral-100 bg-neutral-700 rounded w-48 cursor-pointer  hover:bg-neutral-600" >
                   <RiCoupon3Line className="mr-2" /> <span>Apply Coupon.</span>
-                </p>
+                </button>
               </div>
               <div>
                 <h2 className="mb-6 text-xl font-bold ">Cart Total.</h2>
@@ -233,10 +262,10 @@ const Cart = () => {
                     <span>{cartAmount + 100}/-</span>
                   </span>
                 </div>
-                <p className="flex flex-row items-center cursor-pointer p-4 text-neutral-100 bg-neutral-700 rounded w-56   hover:bg-neutral-600">
+                <button onClick={Checkout} className="flex flex-row items-center cursor-pointer p-4 text-neutral-100 bg-neutral-700 rounded w-56   hover:bg-neutral-600">
                   <AiFillLock className="mr-2" />
                   <span>Proceed Check Out.</span>
-                </p>
+                </button>
               </div>
             </div>
           </div>
