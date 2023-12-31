@@ -1,4 +1,4 @@
-import {AiFillInstagram , AiFillTwitterSquare}from "react-icons/ai"
+import {AiFillInstagram , AiFillTwitterSquare}from "react-icons/ai";
 import {FaFacebookSquare  } from "react-icons/fa";
 import logo from "../images/logo.png"
 
@@ -68,9 +68,9 @@ const Footer = () => {
 			<div className="space-y-3">
 				<div className="uppercase ">Social media</div>
 				<div className="flex justify-start space-x-3">
-					<AiFillInstagram className="cursor-pointer hover:text-cyan-600" size={25}/>
-          <AiFillTwitterSquare className="cursor-pointer hover:text-cyan-600" size={25}/>
-          <FaFacebookSquare className="cursor-pointer hover:text-cyan-600" size={25}/>
+					<AiFillInstagram className="cursor-pointer bg-gradient-to-r  hover:text-green-700" size={25}/>
+          <AiFillTwitterSquare className="cursor-pointer  hover:text-green-700" size={25}/>
+          <FaFacebookSquare className="cursor-pointer hover:text-green-700" size={25}/>
 				</div>
 			</div>
 		</div>

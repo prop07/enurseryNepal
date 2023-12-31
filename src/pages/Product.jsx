@@ -18,22 +18,6 @@ const myProduct = {
 };
 
 const Product = () => {
-
-  const showToastMessage = () => {
-    toast.success("Item added.",{
-    position: "bottom-right",
-    autoClose: 4000,
-    closeButton: false,
-    hideProgressBar: false,
-    closeOnClick: false,
-    pauseOnHover: false,
-    draggable: false,
-    progress: undefined,
-    theme: "light",
-        });
-      };
-    
-
   const {
     register,
     handleSubmit,
@@ -57,9 +41,24 @@ const Product = () => {
     window.scrollTo(0, 0);
   }, []);
 
+  const showToastMessage = () => {
+    toast.success("Item added.",{
+    position: "bottom-right",
+    autoClose: 4000,
+    closeButton: false,
+    hideProgressBar: false,
+    closeOnClick: false,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    theme: "light",
+        });
+      };
+
   return (
-      
-        <div className=" container px-5 py-1  mx-auto">
+      <div >
+        <div className=" h-6"></div>
+        <div className=" container px-5 py-1   mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <img
               alt="ecommerce"
@@ -136,6 +135,8 @@ const Product = () => {
             </div>
           </div>
         </div>
+      </div>
+        
       
   );
 };

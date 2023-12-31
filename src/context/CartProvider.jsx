@@ -28,6 +28,9 @@ const reducer = (state, action) => {
       delete newCart[id];
       return { ...newCart };
     }
+    case "EmptyCart": {
+      return {}; 
+    }
 
     default:
       return state;

@@ -97,8 +97,6 @@ const Cart = () => {
 
   return (
 
-
-
     <div className="flex items-center  font-poppins mt-20 ">
       <ToastContainer className="sm:w-48" />
       <div className="justify-center flex-1 px-1 py-6 mx-auto max-w-7xl lg:py-4 md:px-6 ">
@@ -231,20 +229,20 @@ const Cart = () => {
                   placeholder="x304k45"
                   required=""
                 />
-                <button className="flex flex-row items-center p-4 mt-2 text-neutral-100 bg-neutral-700 rounded w-48 cursor-pointer  hover:bg-neutral-600" >
+                <button className="flex flex-row items-center p-4 mt-2 text-neutral-100 bg-neutral-700 rounded w-48 cursor-not-allowed hover:bg-neutral-600" >
                   <RiCoupon3Line className="mr-2" /> <span>Apply Coupon.</span>
                 </button>
               </div>
               <div>
                 <h2 className="mb-6 text-xl font-bold ">Cart Total.</h2>
-                <div className="flex items-center justify-between px-10 py-4 mb-3 font-medium leading-8 bg-gray-100 bg-opacity-50 border    rounded-xl">
+                <div className="flex items-center justify-between px-10 py-4 mb-3 font-medium leading-8 bg-gray-100 bg-opacity-50 border rounded-xl">
                   <span>Subtotal</span>
                   <span className="flex items-center text-xl">
                     <span className="mr-1 text-base">Rs:</span>
                     <span>{cartAmount}/-</span>
                   </span>
                 </div>
-                <div className="flex items-center justify-between px-10 py-2 mb-3 font-medium leading-8 bg-gray-100 bg-opacity-50 border    rounded-xl">
+                <div className="flex items-center justify-between px-10 py-2 mb-3 font-medium leading-8 bg-gray-100 bg-opacity-50 border rounded-xl">
                   <span>Shipping</span>
                   <span className="flex items-center text-xl">
                     <span className="mr-1 text-base">Rs:</span>

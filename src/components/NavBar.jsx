@@ -15,7 +15,6 @@ import { BiHelpCircle } from "react-icons/bi";
 import { HiShoppingCart } from "react-icons/hi";
 import { FaUserCircle } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
-import { MdOutlineSettings } from "react-icons/md";
 import { IoLogOutOutline } from "react-icons/io5";
 import { FaInfoCircle } from "react-icons/fa";
 import logo from "../images/logo.png";
@@ -53,10 +52,10 @@ const NavBar = () => {
     <div>
       <div className="z-10  fixed w-full bg-white  top-0 left-0 right-0  pb-1    shadow-md shadow-slate-500/50 justify-center items-center">
         {userId ? null : (
-          <div className=" text-sm p-2   bg-green-50 ">
+          <div className=" text-sm p-2 text-white  bg-green-700 ">
             <span className="md:text-sm text-xs font-sm flex items-center justify-center gap-1">
               <FaInfoCircle /> make sure you
-              <Link to={"/login"} className=" underline ">
+              <Link to={"/login"} className=" underline hover:text-cyan-600 ">
                 Log-in
               </Link>
               in order to save all your progress!
@@ -130,20 +129,11 @@ const NavBar = () => {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
-                      <span className="flex items-center cursor-pointer">
+                    <Link to={"/profile"}>
+                    <span className="flex items-center cursor-pointer">
                         <ImProfile size={20} className="mr-1" />
                         Profile
-                      </span>
-                    </p>
-                    <hr className="text-gray-400 w-3/4 mx-auto " />
-                    <p
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"
-                      role="menuitem"
-                    >
-                      <span className="flex items-center">
-                        <MdOutlineSettings size={20} className="mr-1" />
-                        Settings
-                      </span>
+                      </span> </Link>  
                     </p>
                     <hr className="text-gray-400 w-3/4 mx-auto " />
                     <p
