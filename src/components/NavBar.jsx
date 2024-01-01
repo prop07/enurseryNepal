@@ -13,10 +13,9 @@ import {
 } from "react-icons/ai";
 import { BiHelpCircle } from "react-icons/bi";
 import { HiShoppingCart } from "react-icons/hi";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaInfoCircle ,FaChevronDown} from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { IoLogOutOutline } from "react-icons/io5";
-import { FaInfoCircle } from "react-icons/fa";
 import logo from "../images/logo.png";
 
 //context
@@ -27,16 +26,13 @@ const NavBar = () => {
   const { userId } = useUser();
   const { cart } = useContext(CartDispatchContext);
   const [search, setSearch] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [userDropDown, setUserDropDown] = useState(false);
   const email = auth?.currentUser?.email;
   const redirect = useNavigate();
+  const [catDropDown , setCatDropDown] = useState(false);
 
   const searchHandle = () => {
     setSearch(!search);
-  };
-
-  const toggleDropdown = () => {
-    userId ? setIsOpen(!isOpen) : redirect("/login");
   };
 
   const logout = async () => {
@@ -50,7 +46,7 @@ const NavBar = () => {
 
   return (
     <div>
-      <div className="z-10  fixed w-full bg-white  top-0 left-0 right-0  pb-1    shadow-md shadow-slate-500/50 justify-center items-center">
+      <div className="z-10   fixed w-full bg-white  top-0 left-0 right-0  pb-1  shadow-md shadow-slate-500/50 justify-center items-center">
         {userId ? null : (
           <div className=" text-sm p-2 text-white  bg-green-700 ">
             <span className="md:text-sm text-xs font-sm flex items-center justify-center gap-1">
@@ -67,22 +63,34 @@ const NavBar = () => {
             <img className="h-18 w-28 ml-4" src={logo} alt={logo} />
           </Link>
           <div className="w-auto flex">
-            <div className="hidden md:block">
-              <ul>
-                <span className="cursor-pointer hover:text-cyan-600 text-sm p-2">
-                  Shop
-                </span>
+            <div className="hidden lg:block">
+              <ul className="flex">
+                <p className="relative cursor-pointer  text-sm p-2">
+              <span onClick={()=>setCatDropDown(!catDropDown)} className=" text-base flex items-center justify-center "> Category <FaChevronDown size={15} className={`ml-1 ${catDropDown === true ? "rotate-90":null}`}/></span>  
+              { catDropDown ?  <div className="  absolute left-0 mt-1 w-24 rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <ul className="flex flex-col  cursor-pointer">
+                  <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-24">
+                    Indoor
+                  </center>
+                  <hr className="text-gray-400 w-3/4 mx-auto" />
+                  <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-24">
+                    Outdoor
+                  </center>
+                </ul>
+                </div> : null
+              }
+                </p>
                 <Link to={"/products"}>
-                  <span className="cursor-pointer hover:text-cyan-600 text-sm p-2">
+                  <p className="cursor-pointer hover:text-cyan-600 text-base p-2">
                     Products
-                  </span>
+                  </p>
                 </Link>
               </ul>
             </div>
           </div>
           <div className="flex justify-end m-1 mx-2 w-5/6 items-center ">
             {search ? (
-              <div className=" hidden  md:flex mr-1 ">
+              <div className=" hidden  lg:flex mr-1 ">
                 <input
                   className="h-8  w-auto px-4  bg-slate-100 outline-none rounded-l-lg "
                   placeholder="Search On Store"
@@ -112,11 +120,11 @@ const NavBar = () => {
               <div>
                 <FaUserCircle
                   className="ml-1 cursor-pointer hover:text-cyan-600"
-                  onClick={toggleDropdown}
+                  onClick={()=>setUserDropDown(!userDropDown)}
                   size={25}
                 />
               </div>
-              {isOpen && (
+              {userDropDown && (
                 <div className="origin-top-right absolute right-0 mt-1 w-48 rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ">
                   {/* Dropdown content goes here */}
                   <div
@@ -129,7 +137,7 @@ const NavBar = () => {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
-                    <Link to={"/profile"}>
+                    <Link className=" hover:text-gray-700" to={"/profile"}>
                     <span className="flex items-center cursor-pointer">
                         <ImProfile size={20} className="mr-1" />
                         Profile
@@ -161,8 +169,8 @@ const NavBar = () => {
         </div>
       </div>
       {search ? (
-        <center className="md:hidden z-20 fixed m-auto bg-white h-screen w-screen  ">
-          <div className=" md:hidden flex   justify-center items-center  ">
+        <center className="lg:hidden z-20 fixed m-auto bg-white h-screen w-screen  ">
+          <div className=" lg:hidden flex   justify-center items-center  ">
             <input
               className="h-8  w-auto px-4  bg-slate-100 outline-none rounded-l-lg "
               placeholder="Search On Store"

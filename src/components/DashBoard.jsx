@@ -98,8 +98,8 @@ const DashBoard = () => {
       <div>
         <div className="mx-14 flex xl:flex-row flex-col gap-2 ">
           <div className="relative flex-1">
-            <img className="rounded-md " src="https://img.freepik.com/free-photo/cactus-shelf-by-blank-wall-background_53876-142820.jpg?w=1380&t=st=1704020343~exp=1704020943~hmac=8e860d51316202e9c015b283ece41d4bdb9dc2637f544e6fbc93221aa4768815" alt="" />
-          <div className="absolute left-10  lg:top-32 top-1 ml-4 ">
+            <img className="rounded-md " src="https://img.freepik.com/free-photo/small-cacti-with-white-wall-background_53876-133169.jpg?w=1380&t=st=1704075587~exp=1704076187~hmac=cac960933cf5a80ce196d14d7ff858f1700dcc8efdae1a69e6c94782de6f3cc1" alt="" />
+          <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
             <p className="text-neutral-700  ">Only On Our Store!</p>
             <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Indoor Life Plants</p>
             <span className=" font-semibold cursor-pointer text-gray-900 hover:text-white border-2 border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2 ">
@@ -127,7 +127,7 @@ const DashBoard = () => {
             </span>
             </div>
           <div className="flex-1">
-         <img className="rounded-full" src="https://img.freepik.com/free-photo/worker-take-care-flowerpoots-girl-white-shirt-woman-gloves_1157-42003.jpg?w=1380&t=st=1704036449~exp=1704037049~hmac=5dbb53712dbec7e4200684e4c5ff209aa5c3f8709b7c092a9fc9b27dfaecd77a" alt="gardening" />
+         <img className="rounded-full" src="https://img.freepik.com/free-photo/worker-take-care-flowerpoots-girl-white-shirt-woman-gloves_1157-42003.jpg?w=1380&t=st=1704076223~exp=1704076823~hmac=b5bb640c7bb9de636c33aa1770e1fbe4b8009262e0821d4c141dc3a99d1e12da" alt="gardening" />
           </div>
         </div>
       </div>
