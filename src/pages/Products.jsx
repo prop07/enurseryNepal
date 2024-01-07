@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 //icons
 import { BsImageAlt, BsBagPlus } from "react-icons/bs";
@@ -10,8 +10,8 @@ import { ProductContext } from "../context/ProductProvider";
 import { useDispatchCart } from "../context/CartProvider";
 
 export const Products = () => {
+  const { page } = useParams();
   const products = useContext(ProductContext);
-  const [activePage, setActivePage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
   useEffect(() => {
     const calculatePageCount = async () => {
@@ -22,20 +22,22 @@ export const Products = () => {
   }, [products]);
 
   useEffect(() => {
-    console.log(activePage);
-  }, [activePage]);
+    window.scroll(0,0)
+  }, [page]);
   return (
     <div>
       <div>
         {products && (
-          <ProductListByPage activePage={activePage} products={products} />
+          <div>
+            <ProductListByPage activePage={page} products={products} />
+            <div className=" flex items-center gap-1 justify-center h-auto"><div className="h-0.5 w-2/4  bg-gray-400 rounded-xl"></div><p className="flex items-center justify-center text-gray-400 font-normal border rounded-full h-10 w-10 ">{page}</p> </div>
+          </div>
         )}
       </div>
       <div>
         <Pagination
           pageCount={pageCount}
-          activePage={activePage}
-          setActivePage={setActivePage}
+          activePage={page}
         />
       </div>
     </div>
@@ -83,16 +85,17 @@ const ProductListByPage = ({ activePage, products }) => {
       </div>
     );
   }
+
+
   //productsCards
   const productCardList = [];
-  products.slice(0, activePage * 12).map((product) =>
+  products.slice((activePage * 12)-12, activePage * 12).map((product) =>
     productCardList.push(
-
       <div
         key={product.id}
         className=" w-72 grid border bg-white rounded-xl justify-items-center shadow-baseShadow hover:shadow-hoverShadow shadow-gray-200 hover:shadow-gray-200 duration-500 ease-in-out"
       >
-        <Link key={product.id} to={`/product/${product.id}`}>
+          <Link key={product.id} to={`/product/${product.id}`}>
           <img
             className="w-64 h-64 mt-4 object-center rounded duration-500 hover:scale-105"
             src={product.image}
@@ -121,8 +124,8 @@ const ProductListByPage = ({ activePage, products }) => {
             </span>
           </div>
         </div>
+        {}
       </div>
-
     )
   );
   if (products.length === 0)
@@ -138,22 +141,20 @@ const ProductListByPage = ({ activePage, products }) => {
     </div>
   );
 };
+
+
 //pagintation
-const Pagination = ({ pageCount, activePage, setActivePage }) => {
+const Pagination = ({ pageCount, activePage }) => {
   return (
     <div className="flex items-center justify-center">
-      <p
-        onClick={() =>
-          activePage < pageCount ? setActivePage(activePage + 1) : null
-        }
-        className="flex items-center justify-center w-2/3  self-center   m-4 border cursor-pointer p-2  text-gray-400 hover:text-gray-800  "
+    {activePage < pageCount ?   <Link to={`/products/${JSON.parse(activePage)+1}`}
+        
+        className="flex items-center justify-center w-2/3  self-center rounded-md  m-4  cursor-pointer p-2 text-gray-600 hover:text-gray-600  border-1 border-gray-300 hover:border-gray-600 transition duration-300 ease-in-out "
       >
-        {activePage < pageCount ? (
-          <span> Load more</span>
-        ) : (
-          <span>No more items</span>
-        )}
-      </p>
+          <span> Next page</span>
+      </Link>: 
+          <span   className="flex items-center justify-center w-2/3  self-center rounded-md   m-4 border-1 cursor-not-allowed p-2 text-gray-500 border-gray-300  ">No more items !</span>
+        }
     </div>
   );
 };

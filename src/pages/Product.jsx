@@ -39,7 +39,8 @@ const Product = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    console.log(products);
+  }, [products]);
 
   const showToastMessage = () => {
     toast.success("Item added.",{
@@ -54,6 +55,16 @@ const Product = () => {
     theme: "light",
         });
       };
+
+      if(!product){
+        return(
+          <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
+          <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+          <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+          <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+        </div></div>
+        )
+      }
 
   return (
       <div >
@@ -112,14 +123,12 @@ const Product = () => {
                   <div className="flex gap-2">
                     <button
                       type="submit"
-                      className="p-4 text-neutral-100 bg-neutral-600 rounded w-48 font-medium  hover:bg-neutral-700"
+                      className=" p-4 text-neutral-100 bg-neutral-600 rounded w-48 font-medium  hover:bg-neutral-700"
                     >
                       Add to Cart
                     </button>
                       <ToastContainer className="sm:w-48" />
-                    <button className="p-4 text-neutral-100 bg-neutral-700 rounded w-48  hover:bg-neutral-500 ">
-                      Buy Now
-                    </button>
+                  
                   </div>
                 </form>
                 <div>

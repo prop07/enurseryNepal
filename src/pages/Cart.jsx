@@ -35,8 +35,8 @@ const Cart = () => {
     });
   };
 
-  const showToastErrorMessage = () => {
-    toast.error("Login first !", {
+  const showToastErrorMessage = (error) => {
+    toast.error(error, {
       position: "bottom-right",
       autoClose: 4000,
       closeButton: false,
@@ -48,6 +48,7 @@ const Cart = () => {
       theme: "light",
     });
   };
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -69,17 +70,27 @@ const Cart = () => {
 
   const handleUpdateCart = (action, id) => {
     Object.keys(cart).find((key) => key === id);
+    if( cart[id] === 1  && action === "decrease"){
+    dispatch({ type: "DeleteCartItem", payload: { id } });
+    showToastRemoveMessage();
+    }
+    else if(cart[id] === 20  && action === "increase") {
+    console.log("not more then 20");
+    showToastErrorMessage("20 Max Quantity !")
+    }
+    else{
     dispatch({
-      type: "AddToCart",
-      payload: {
-        id: parseInt(id),
-        qtyEq: action === "increase" ? 1 : -1,
-      },
-    });
+    type: "AddToCart",
+    payload: {
+      id: parseInt(id),
+      qtyEq: action === "increase" ? 1 : -1,
+    },
+  }); 
+  }
   };
 
   const Checkout =() =>{
-    userId ? navigate('/checkout'): showToastErrorMessage();
+    userId ? navigate('/checkout'): showToastErrorMessage("Login First !");
   }
 
   if (Object.keys(cart).length <= 0) {
@@ -93,6 +104,16 @@ const Cart = () => {
           </p>
         </Link>
       </center>)
+  }
+
+  if(!products){
+return(
+  <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
+  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+</div></div>
+)
   }
 
   return (
@@ -118,7 +139,7 @@ const Cart = () => {
                 return (
                   <div
                     key={cartKey}
-                    className="relative flex flex-wrap items-center pb-8 mb-8 -mx-4 border-b border-gray-200  xl:justify-between border-opacity-40"
+                    className="relative flex flex-wrap items-center pb-8 mb-8 -mx-4 border-b border-gray-500  xl:justify-between border-opacity-40"
                   >
                     <div className="w-full mb-2 lg:mb-0 h-96 md:h-44 md:w-44">
                       {p ? (
@@ -157,9 +178,7 @@ const Cart = () => {
                         <h4 className="mr-4 font-medium ">Qty:</h4>
                         <div className="inline-flex items-center font-semibold text-gray-500 border border-gray-300 rounded-md">
                           <button
-                            onClick={() =>
-                              handleUpdateCart("decrease", cartKey)
-                            }
+                            onClick={() => handleUpdateCart("decrease", cartKey)}
                             className="p-3 pr-2 border-r border-gray-300 hover:text-gray-900  "
                           >
                             <svg
@@ -175,7 +194,7 @@ const Cart = () => {
                           </button>
                           <div
                             key={cart[cartKey].id}
-                            className="w-12 px-1 py-4 text-center border-0 rounded-md  bg-gray-50  md:text-right"
+                            className="w-12 px-1 py-4 text-center border-0 rounded-md    md:text-right"
                           >
                             {cart[cartKey]}
                           </div>
@@ -229,9 +248,9 @@ const Cart = () => {
                   placeholder="x304k45"
                   required=""
                 />
-                <button className="flex flex-row items-center p-4 mt-2 text-neutral-100 bg-neutral-700 rounded w-48 cursor-not-allowed hover:bg-neutral-600" >
+                <p className="flex flex-row items-center p-4 mt-2 text-neutral-100 bg-neutral-700 rounded w-48 cursor-not-allowed hover:bg-neutral-600" >
                   <RiCoupon3Line className="mr-2" /> <span>Apply Coupon.</span>
-                </button>
+                </p>
               </div>
               <div>
                 <h2 className="mb-6 text-xl font-bold ">Cart Total.</h2>

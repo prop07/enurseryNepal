@@ -44,6 +44,15 @@ const NavBar = () => {
     }
   };
 
+  const userHandle= ()=>{
+  if(userId){
+    setUserDropDown(!userDropDown)
+  } 
+  else{
+    redirect("login")
+  }
+  }
+
   return (
     <div>
       <div className="z-10   fixed w-full bg-white  top-0 left-0 right-0  pb-1  shadow-md shadow-slate-500/50 justify-center items-center">
@@ -67,7 +76,7 @@ const NavBar = () => {
               <ul className="flex">
                 <p className="relative cursor-pointer  text-sm p-2">
               <span onClick={()=>setCatDropDown(!catDropDown)} className=" text-base flex items-center justify-center "> Category <FaChevronDown size={15} className={`ml-1 ${catDropDown === true ? "rotate-90":null}`}/></span>  
-              { catDropDown ?  <div className="  absolute left-0 mt-1 w-24 rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+              { catDropDown ?  <div className="  absolute left-0 mt-1 w-28 rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <ul className="flex flex-col  cursor-pointer">
                   <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-24">
                     Indoor
@@ -76,11 +85,23 @@ const NavBar = () => {
                   <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-24">
                     Outdoor
                   </center>
+                  <hr className="text-gray-400 w-3/4 mx-auto" />
+                  <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-24">
+                    Semi-Indoor
+                  </center>
+                  <hr className="text-gray-400 w-3/4 mx-auto" />
+                  <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-24">
+                    Vase
+                  </center>
+                  <hr className="text-gray-400 w-3/4 mx-auto" />
+                  <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-24">
+                    Fertilizer
+                  </center>
                 </ul>
                 </div> : null
               }
                 </p>
-                <Link to={"/products"}>
+                <Link to={"/products/1"}>
                   <p className="cursor-pointer hover:text-cyan-600 text-base p-2">
                     Products
                   </p>
@@ -120,11 +141,11 @@ const NavBar = () => {
               <div>
                 <FaUserCircle
                   className="ml-1 cursor-pointer hover:text-cyan-600"
-                  onClick={()=>setUserDropDown(!userDropDown)}
+                  onClick={userHandle}
                   size={25}
                 />
               </div>
-              {userDropDown && (
+              { userDropDown ? 
                 <div className="origin-top-right absolute right-0 mt-1 w-48 rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ">
                   {/* Dropdown content goes here */}
                   <div
@@ -155,7 +176,7 @@ const NavBar = () => {
                     </p>
                   </div>
                 </div>
-              )}
+              : null}
             </div>
             <div>
               {email ? (
@@ -191,7 +212,7 @@ const NavBar = () => {
             >
               Shop
             </p>
-            <Link to={"/products"}>
+            <Link to={"/products/1"}>
               <p
                 className="cursor-pointer hover:text-cyan-600 text-sm p-2"
                 onClick={searchHandle}
