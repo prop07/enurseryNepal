@@ -13,6 +13,7 @@ import NotFound from "./pages/NotFound";
 import Checkout from "./pages/Checkout";
 import Profile from "./pages/Profile";
 import {Products} from "./pages/Products";
+import { Search } from "./pages/Search";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                   <Route path="/checkout" element={<Checkout />} />
                   <Route element={<Home />}>
                   <Route path="/" element={<DashBoard />} />
+                  <Route path="/search/:quairy" element={<Search />} />
                   <Route path="/products/:page" element={<Products />} />
                   <Route path="/product/:productId" element={<Product />} />
                   <Route path="/cart" element={<Cart />} />
