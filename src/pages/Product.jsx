@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdBrokenImage } from "react-icons/md";
+
 
 //context
 import { ProductContext } from "../context/ProductProvider";
@@ -71,11 +73,13 @@ const Product = () => {
         <div className=" h-6"></div>
         <div className=" container px-5 py-1   mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <img
+            {product.image ?  <img
               alt="ecommerce"
               className="lg:w-1/2 w-full lg:h-auto h-64 max-h-[55vh] object-cover object-center rounded"
               src={product.image}
-            />
+            />:<div
+            className=" flex items-center justify-center bg-gray-200 text-gray-400 lg:w-1/2 w-full lg:h-auto h-64 max-h-[55vh] object-cover object-center rounded"
+          ><MdBrokenImage size={30} /></div> }
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">
                 ON SALE
@@ -105,7 +109,7 @@ const Product = () => {
                       message: "Please enter a valid Quantity 1 To 20 !",
                       max: {
                         value: 20,
-                        message: " Quantity must be less than 20 !",
+                        message: " Quantity must be less or equal 20 !",
                       },
                       min: {
                         value: 1,

@@ -2,7 +2,8 @@ import { BsBagPlus } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import { useContext } from "react";
 import {Link} from "react-router-dom";
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 //context
 import { ProductContext } from "../context/ProductProvider";
@@ -57,12 +58,13 @@ const DashBoard = () => {
             All types of plant delivered at your door step stop waiting and
             start building your own garden
           </p>
-          <button className="py-3 px-5 mt-2 bg-gray-800 rounded-md text-white hover:bg-green-700 ">
+          <Link to={'/products/1'}><button className="py-3 px-5 mt-2 bg-gray-800 rounded-md text-white hover:bg-green-700 ">
             SHOPNOW
           </button>
+          </Link>
         </div>
       </div>
-      <div className=" mt-4 grid mx-14  ">
+      <div className=" mt-4 grid mx-14 rounded-md ">
         <div className="w-36 font-extrabold  border-green-700 border-b-4  ">
           TODAY&apos;S DEAL
         </div>
@@ -84,26 +86,28 @@ const DashBoard = () => {
                 const p = products.find((product) => product.id === parseInt(value));
                 if (p) {
                   return (
-                    <div className="rounded-md shadow-md h-96 w-64" key={p.id}>
+                    <div className="rounded-md  h-96 w-64" key={p.id}>
                       <Link key={p.id} to={`/product/${p.id}`}>
-                      <img
+                      <LazyLoadImage
+                      effect="blur"
+                      width={240}
                         src={p.image}
                         alt="product image"
                         className="object-cover object-center w-full rounded-t-md h-72" /></Link>
-                      <div className="mt-1 px-2">  <span className="text-gray-400 p-1  mb-1 rounded bg-gray-200 mr-1 text-sm">
+                      <div className="mt-0.5 px-2">  <span className="text-gray-400 p-1  mb-1 rounded bg-gray-200 mr-1 text-sm">
                         {p.type.title}
                       </span>
-                        <span className="text-gray-400 p-1  mb-1 rounded bg-gray-200 mr-1 text-sm">
+                        <span className="text-gray-400 p-1  mb-0.5 rounded bg-gray-200 mr-1 text-sm">
                           {p.sub_category.category.title}
                         </span></div>
                       <div className="px-2">
-                        <p className=" mt-1 font-semibold text-neutral-700 truncate block capitalize">
+                        <p className=" mt-0.5 font-semibold text-neutral-700 truncate block capitalize">
                           {p.name}
                         </p>
-                        <div className="flex items-center">
+                        <div className="flex items-center ">
                           <p className="text-neutral-700  cursor-auto my-1">Rs:{p.price}/-</p>
                           <span className="ml-auto cursor-pointer hover:text-cyan-600">
-                            <BsBagPlus onClick={() => addToCart(p.id)} size={25} className="mr-2" />
+                            <BsBagPlus title="add to cart" onClick={() => addToCart(p.id)} size={20} className="mr-2" />
                           </span>
                         </div>
                       </div>
@@ -123,9 +127,9 @@ const DashBoard = () => {
           <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
             <p className="text-neutral-700  ">Only On Our Store!</p>
             <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Indoor Life Plants</p>
-            <span className=" font-semibold cursor-pointer text-gray-900 hover:text-white border-2 border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2 ">
+            <Link to={'search/indoor/1'} className=" font-semibold cursor-pointer text-gray-900 hover:text-white border-2 border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2 ">
               CHECK NOW
-            </span>
+            </Link>
             </div>
           </div>
           <div className="relative flex-1">
@@ -133,9 +137,9 @@ const DashBoard = () => {
           <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
             <p className="text-neutral-700  ">Only On Our Store!</p>
             <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Outdoor Life Plants</p>
-            <span className=" font-semibold cursor-pointer text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2  ">
+            <Link to={'search/outdoor/1'} className=" font-semibold cursor-pointer text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2  ">
               CHECK NOW
-            </span>
+            </Link>
             </div>
           </div>
         </div>
@@ -143,12 +147,12 @@ const DashBoard = () => {
         <div className="flex-1 right-10  ml-4  flex flex-col items-center justify-center h-96">
             <p className="text-neutral-700  ">A Great Addition</p>
             <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Gardening, Timly Visit & Routine Service For You !</p>
-            <span className=" font-semibold cursor-pointer text-gray-900 hover:text-white border-2 border-gray-800  hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2 ">
+            <span title="adding soon!" className=" font-semibold  cursor-not-allowed text-gray-900 hover:text-white border-2 border-gray-800  hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2 ">
               BOOK NOW
             </span>
             </div>
           <div className="flex-1">
-        <img className="rounded-full" src="https://img.freepik.com/free-photo/worker-take-care-flowerpoots-girl-white-shirt-woman-gloves_1157-42003.jpg?w=1380&t=st=1704076223~exp=1704076823~hmac=b5bb640c7bb9de636c33aa1770e1fbe4b8009262e0821d4c141dc3a99d1e12da" alt="gardening" />
+        <img className="sm:rounded-full rounded-xl" src="https://img.freepik.com/free-photo/worker-take-care-flowerpoots-girl-white-shirt-woman-gloves_1157-42003.jpg?w=1380&t=st=1704076223~exp=1704076823~hmac=b5bb640c7bb9de636c33aa1770e1fbe4b8009262e0821d4c141dc3a99d1e12da" alt="gardening" />
           </div>
         </div>
       </div>

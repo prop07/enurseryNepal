@@ -1,46 +1,90 @@
 import { useContext, useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 //icons
 import { BsImageAlt, BsBagPlus } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
+import { MdBrokenImage } from "react-icons/md";
 
 //context
 import { ProductContext } from "../context/ProductProvider";
 import { useDispatchCart } from "../context/CartProvider";
 
 export const Search = () => {
-  const { page } = useParams();
+  const { searchQuery , page } = useParams();
   const products = useContext(ProductContext);
   const [pageCount, setPageCount] = useState(0);
+  const [matchingProducts , setMatchingProducts] = useState([]);
+  const [ sortBy, setSortBy ] = useState("default");
   useEffect(() => {
     const calculatePageCount = async () => {
-      const pageCount = Math.ceil(products.length / 12);
+      const pageCount = Math.ceil(matchingProducts.length / 12);
       setPageCount(pageCount);
     };
     calculatePageCount();
-  }, [products]);
+  }, [matchingProducts]);
+
+  useEffect(() => {
+    console.log("filter")
+    const search = searchQuery.trim().toLocaleLowerCase();
+    const filterProduct =
+      products.filter(
+        (product) =>
+          product.name.toLowerCase().includes(search) ||
+          product.type.title.toLowerCase().includes(search) ||
+          product.sub_category.category.title.toLowerCase().includes(search) ||
+          product.sub_category.title.toLowerCase().includes(search)
+      );
+      if (sortBy === "ascending") {
+        setMatchingProducts(filterProduct.slice().sort((a, b) => a.price - b.price));
+      } else if (sortBy === "descending") {
+        setMatchingProducts(filterProduct.slice().sort((a, b) => b.price - a.price));
+      } else {
+        setMatchingProducts( products.filter(
+          (product) =>
+            product.name.toLowerCase().includes(search) ||
+            product.type.title.toLowerCase().includes(search)
+        ));
+      }
+  }, [ searchQuery, sortBy, products]);
 
   useEffect(() => {
     window.scroll(0,0)
-  }, [page]);
+  }, [page])
+  
+  if(products  &&  matchingProducts.length == 0 ){
+    return(
+      <center className=" grid items-center justify-center h-96  font-poppins p-16 " >
+    <h2 className=" text-xl font-bold mb-4 text-gray-600"> Sorry! &#34;no item match found for {searchQuery}&#34;</h2>
+  </center>
+    )
+  }
+  
   return (
-    <div>
-      <div>
-        {products && (
+    <>
+    <div className=" w-2/4 p-1   mx-auto pt-5   flex justify-end items-end ">
+      <p className="border border-gray-400 p-2 rounded-md">
+      <span className="mr-1">Sort by:</span>
+      <span onClick={()=>setSortBy("default")} className={`border-r-2  border-gray-400 pr-2 cursor-pointer text-lg ${sortBy == "default"?"text-black":" text-gray-500 "}`}>Default</span>
+      <span onClick={()=>setSortBy("ascending")} className={`border-r-2 border-gray-400 pr-2 pl-2 cursor-pointer text-lg ${sortBy == "ascending"?"text-black":" text-gray-500  "}`}>Price Low to High</span>
+      <span onClick={()=>setSortBy("descending")} className={`pl-2 border-gray-400 pr-1 cursor-pointer text-lg ${sortBy == "descending"?"text-black":" text-gray-500  "}`}>Price High to Low</span>
+      </p>
+    </div>   
           <div>
-            <ProductListByPage activePage={page} products={products} />
-            <div className=" flex items-center gap-1 justify-center h-auto"><div className="h-0.5 w-2/4  bg-gray-400 rounded-xl"></div><p className="flex items-center justify-center text-gray-400 font-normal border rounded-full h-10 w-10 ">{page}</p> </div>
+            
+            <ProductListByPage activePage={page} products={matchingProducts} />
+            <div className=" flex items-center gap-1 justify-center h-auto"><div className="h-0.5 w-2/4  bg-gray-400 rounded-xl"></div><p className="flex items-center justify-center text-gray-400 font-normal border border-gray-400 rounded-full h-10 w-10 ">{page}</p> </div>
           </div>
-        )}
-      </div>
       <div>
         <Pagination
           pageCount={pageCount}
+          searchQuery = {searchQuery}
           activePage={page}
         />
       </div>
-    </div>
+    </>
   );
 };
 
@@ -86,21 +130,28 @@ const ProductListByPage = ({ activePage, products }) => {
     );
   }
 
-
   //productsCards
   const productCardList = [];
   products.slice((activePage * 12)-12, activePage * 12).map((product) =>
     productCardList.push(
       <div
         key={product.id}
-        className=" w-72 grid border bg-white rounded-xl justify-items-center shadow-baseShadow hover:shadow-hoverShadow shadow-gray-200 hover:shadow-gray-200 duration-500 ease-in-out"
+        className=" w-72 grid border bg-white rounded-xl justify-items-center shadow-baseShadow hover:shadow-hoverShadow shadow-gray-300 hover:shadow-gray-300 duration-500 ease-in-out"
       >
-          <Link key={product.id} to={`/product/${product.id}`}>
-          <img
-            className="w-64 h-64 mt-4 object-center rounded duration-500 hover:scale-105"
-            src={product.image}
-            alt={product.image}
-          />
+          <Link key={product.id} to={`/product/${product.id}`}
+          >
+          {product.image ? (
+            <LazyLoadImage
+              className="w-64 h-64 mt-4 object-center rounded  "
+              src={product.image}
+              alt={product.image}
+              effect="blur"
+            />
+          ) : (
+            <div className="flex items-center justify-center mt-4 h-64 w-64  bg-gray-200 rounded text-gray-400 hover:text-gray-400">
+              <MdBrokenImage size={30} />
+            </div>
+          )}
         </Link>
         <div className="px-4 py-3 w-72">
           <span className="text-gray-400 p-1 mb-1 rounded bg-gray-200 mr-1 text-sm">
@@ -120,7 +171,7 @@ const ProductListByPage = ({ activePage, products }) => {
               Rs:{product.price}/-
             </p>
             <span className="ml-auto cursor-pointer hover:text-cyan-600">
-              <BsBagPlus onClick={() => addToCart(product.id)} size={25} />
+              <BsBagPlus title="add to cart" onClick={() => addToCart(product.id)} size={25} />
             </span>
           </div>
         </div>
@@ -130,12 +181,13 @@ const ProductListByPage = ({ activePage, products }) => {
   );
   if (products.length === 0)
     return (
-      <div className="p-4 relative w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
+      <div className="p-4  w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
         {loadingSkelaton}
       </div>
     );
   return (
-    <div className="p-4 relative w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
+    
+    <div className="p-4  w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
       {productCardList}
       <ToastContainer className="sm:w-48" />
     </div>
@@ -144,16 +196,16 @@ const ProductListByPage = ({ activePage, products }) => {
 
 
 //pagintation
-const Pagination = ({ pageCount, activePage }) => {
+const Pagination = ({ pageCount, activePage, searchQuery }) => {
   return (
-    <div className="flex items-center justify-center">
-    {activePage < pageCount ?   <Link to={`/products/${JSON.parse(activePage)+1}`}
+    <div className="flex items-center justify-center mb-4 mt-2">
+    {activePage < pageCount ?   <Link to={`/search/${searchQuery}/${JSON.parse(activePage)+1}`}
         
-        className="flex items-center justify-center w-2/3  self-center rounded-md  m-4  cursor-pointer p-2 text-gray-600 hover:text-gray-600  border-1 border-gray-300 hover:border-gray-600 transition duration-300 ease-in-out "
+        className="flex items-center justify-center w-2/3 py-2  self-center rounded-md  border border-gray-400 hover:border-gray-800 text-gray-800 transition duration-300 ease-in-out "
       >
           <span> Next page</span>
       </Link>: 
-          <span   className="flex items-center justify-center w-2/3  self-center rounded-md   m-4 border-1 cursor-not-allowed p-2 text-gray-500 border-gray-300  ">No more items !</span>
+          <span   className="flex items-center justify-center w-2/3 py-2 self-center rounded-md  border border-gray-400 text-gray-400 cursor-not-allowed   ">No more items !</span>
         }
     </div>
   );

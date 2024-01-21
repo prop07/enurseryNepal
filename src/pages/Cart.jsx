@@ -3,6 +3,7 @@ import { AiFillLock } from "react-icons/ai";
 import { RiCoupon3Line, RiDeleteBinLine } from "react-icons/ri";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { HiShoppingCart } from "react-icons/hi";
+import { MdBrokenImage } from "react-icons/md";
 import { Link, useNavigate} from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -75,8 +76,7 @@ const Cart = () => {
     showToastRemoveMessage();
     }
     else if(cart[id] === 20  && action === "increase") {
-    console.log("not more then 20");
-    showToastErrorMessage("20 Max Quantity !")
+    showToastErrorMessage("20 Max Quantity per items !")
     }
     else{
     dispatch({
@@ -98,7 +98,7 @@ const Cart = () => {
       <center className=" grid items-center justify-center  font-poppins p-16 " >
         <HiShoppingCart size={100} />
         <h2 className=" text-xl font-bold mb-4">Your Cart is currently empty.</h2>
-        <Link to={"/products"}>
+        <Link to={"/products/1"}>
           <p className="flex items-center cursor-pointer text-cyan-500 hover:text-cyan-300 ">
             <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
           </p>
@@ -112,6 +112,7 @@ return(
   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+  
 </div></div>
 )
   }
@@ -119,12 +120,12 @@ return(
   return (
 
     <div className="flex items-center  font-poppins mt-20 ">
-      <ToastContainer className="sm:w-48" />
+      <ToastContainer className="sm:w-72" />
       <div className="justify-center flex-1 px-1 py-6 mx-auto max-w-7xl lg:py-4 md:px-6 ">
         <div className="flex flex-wrap mt-2">
           <div className="w-full lg:w-8/12">
             <div className="px-10 overflow-auto max-h-screen ">
-              <Link to={"/products"}>
+              <Link to={"/products/1"}>
                 <p className="flex items-center my-4 cursor-pointer text-cyan-500 hover:text-cyan-400 ">
                   <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
                 </p>
@@ -142,27 +143,28 @@ return(
                     className="relative flex flex-wrap items-center pb-8 mb-8 -mx-4 border-b border-gray-500  xl:justify-between border-opacity-40"
                   >
                     <div className="w-full mb-2 lg:mb-0 h-96 md:h-44 md:w-44">
-                      {p ? (
+                      {p.image ? (
+                        
                         <img
                           src={p.image}
                           alt={p.image}
                           className=" rounded object-cover w-full h-full"
                         />
                       ) : (
-                        <div>Loading image</div>
+                        <div className="flex justify-center items-center rounded w-full h-full bg-gray-200 text-gray-400"><MdBrokenImage size={30}/></div>
                       )}
                     </div>
-                    <div className="w-full px-4 mb-6 md:w-auto xl:mb-0">
+                    <div className=" px-4 mb-6 w-64 xl:mb-0 ">
                       <Link key={cartKey} to={`/product/${cartKey}`}>
-                        <div className="block mb-5 text-xl font-medium   text-ellipsis  hover:underline">
+                        <p className=" mb-5  text-xl font-medium truncate block capitalize  hover:underline">
                           {p.name}
-                        </div>
+                        </p>
                       </Link>
                       <div className="flex flex-wrap">
                         <p className="mr-4 text-sm font-medium">
                           <span className="">Type:</span>
-                          <span className="ml-1 text-gray-400 ">
-                            {p.type.detail.substring(0, 8)}
+                          <span className="ml-1 text-gray-400">
+                            {p.type.detail}
                           </span>
                         </p>
                         <p className="text-sm font-medium ">
@@ -194,7 +196,7 @@ return(
                           </button>
                           <div
                             key={cart[cartKey].id}
-                            className="w-12 px-1 py-4 text-center border-0 rounded-md    md:text-right"
+                            className="flex items-center justify-center w-12 px-1 py-4  border-0 rounded-md    md:text-right"
                           >
                             {cart[cartKey]}
                           </div>
@@ -226,6 +228,7 @@ return(
                     </div>
                     <span className="absolute top-0 right-0 text-gray-400 p-2 lg:mt-6 lg:-mr-4 hover:text-gray-600 cursor-pointer  ">
                       <RiDeleteBinLine
+                      title="remove"
                         className="bg-gray-50 rounded"
                         onClick={() => handleDeleteCart(cartKey)}
                         size={25}
