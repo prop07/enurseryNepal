@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 
 //firebase
 import { auth } from "../config/firebase";
-import { ref, set } from "firebase/database";
+import { ref, set, push } from "firebase/database";
 import { database } from "../config/firebase";
+
 
 //context
 import { ProductContext } from "../context/ProductProvider";
@@ -31,6 +32,8 @@ const Checkout = () => {
   const [zipCode, setZipCode] = useState();
   const [stateProvince, setStateProvince] = useState();
   const [isButtonDisabled, setButtonDisabled] = useState(false);
+  const modifiedEmail = email.replace(/\./g, '_');
+
   const {
     handleSubmit,
   } = useForm();
@@ -65,7 +68,6 @@ const Checkout = () => {
 
 
   function writecheckout(id, order, userEmail, amount, userName, userPhone, userAddress, userStateProvince, userZipCode) {
-    const modifiedEmail = email.replace(/\./g, '_');
     const currentDate = new Date;
     console.log(currentDate);
     console.log(currentDate);
@@ -83,8 +85,10 @@ const Checkout = () => {
       date: JSON.stringify(currentDate),
     }
     const reference = ref(database, "order/" + modifiedEmail);
-    set(reference, {
-      details:orderPlace ,
+    const newPostRef = push(reference);
+
+    set(newPostRef, {
+      orderPlace ,
     });
     showToastMessage();
     dispatch({ type: "EmptyCart" });
@@ -94,8 +98,6 @@ const Checkout = () => {
   const checkout = () => {
     isButtonDisabled== false? writecheckout(userId, orderItems, email, cartAmount, name, phone, address, stateProvince, zipCode): null;
   }
-
- 
 
   const showToastMessage = () => {
     toast.info("order Placed !", {

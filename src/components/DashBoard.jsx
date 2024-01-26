@@ -5,6 +5,17 @@ import {Link} from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
+//images
+import outdoor from "../images/outdoor.jpg";
+import indoor from "../images/indoor.jpg";
+import gardening from "../images/gardening.jpg";
+
+//icon
+import { BsImageAlt} from "react-icons/bs";
+
+
+
+
 //context
 import { ProductContext } from "../context/ProductProvider";
 import { useDispatchCart } from "../context/CartProvider";
@@ -49,7 +60,7 @@ const DashBoard = () => {
           style={{ height: "60vh" }}
         />
         <div className="absolute lg:left-24  lg:top-24 top-20 ml-4 lg:ml-80 ">
-          <p className="mb-2 text-gray-600">New Arrivals</p>
+          <p className="mb-2 text-gray-600">Get Yours</p>
           <p className=" lg:text-6xl text-4xl font-extrabold">
             CREATE YOUR OWN
           </p>
@@ -59,7 +70,7 @@ const DashBoard = () => {
             start building your own garden
           </p>
           <Link to={'/products/1'}><button className="py-3 px-5 mt-2 bg-gray-800 rounded-md text-white hover:bg-green-700 ">
-            SHOPNOW
+            SHOP NOW
           </button>
           </Link>
         </div>
@@ -113,8 +124,22 @@ const DashBoard = () => {
                       </div>
                     </div>
                   );
-                }
-                return null;
+                }//
+                return (
+                  <div
+                  key={value}
+                  role="status"
+                  className="mr-2 h-96 w-64 border border-gray-500 rounded-xl shadow animate-pulse p-4  "
+                >
+                  <div className="flex items-center justify-center h-64 w-56 mb-4 ml-1 bg-gray-400 rounded ">
+                    <BsImageAlt size={30} />
+                  </div>
+                  <div className="h-2.5 bg-gray-400 rounded-full  w-56 mb-4 ml-1"></div>
+                  <div className="h-2.5 bg-gray-400 rounded-full  w-56 mb-8 ml-1"></div>
+                  <div className="h-2.5 bg-gray-400 rounded-full  w-56 mb-2 ml-1"></div>
+                  <span className="sr-only">Loading...</span>
+                </div>
+                );
               })
             }
           </div>
@@ -123,21 +148,21 @@ const DashBoard = () => {
       <div>
         <div className="mx-14 flex xl:flex-row flex-col gap-2 ">
           <div className="relative flex-1">
-            <img className="rounded-md " src="https://img.freepik.com/free-photo/small-cacti-with-white-wall-background_53876-133169.jpg?w=1380&t=st=1704075587~exp=1704076187~hmac=cac960933cf5a80ce196d14d7ff858f1700dcc8efdae1a69e6c94782de6f3cc1" alt="" />
+            <img className="rounded-md " src={indoor} alt="indoor plants" />
           <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
             <p className="text-neutral-700  ">Only On Our Store!</p>
             <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Indoor Life Plants</p>
-            <Link to={'search/indoor/1'} className=" font-semibold cursor-pointer text-gray-900 hover:text-white border-2 border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2 ">
+            <Link to={'search/indoor/1'} className="font-bold cursor-pointer sm:text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300 bg-gray-900 sm:bg-transparent text-white  rounded-lg text-sm px-6 py-4 text-center me-2  ">
               CHECK NOW
             </Link>
             </div>
           </div>
           <div className="relative flex-1">
-            <img className=" rounded-md " src="https://img.freepik.com/free-photo/white-wall-with-tree-leaf-wall_74190-7308.jpg?w=1380&t=st=1704035493~exp=1704036093~hmac=b6467e7bb210c244db6e663984ed8cea598f59ce43f47bb216bce1b177521eb5" alt="" />
+            <img className=" rounded-md " src={outdoor} alt="outdoor plants" />
           <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
             <p className="text-neutral-700  ">Only On Our Store!</p>
             <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Outdoor Life Plants</p>
-            <Link to={'search/outdoor/1'} className=" font-semibold cursor-pointer text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2  ">
+            <Link to={'search/outdoor/1'} className=" font-bold cursor-pointer sm:text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300 bg-gray-900 sm:bg-transparent text-white  rounded-lg text-sm px-6 py-4 text-center me-2  ">
               CHECK NOW
             </Link>
             </div>
@@ -147,12 +172,12 @@ const DashBoard = () => {
         <div className="flex-1 right-10  ml-4  flex flex-col items-center justify-center h-96">
             <p className="text-neutral-700  ">A Great Addition</p>
             <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Gardening, Timly Visit & Routine Service For You !</p>
-            <span title="adding soon!" className=" font-semibold  cursor-not-allowed text-gray-900 hover:text-white border-2 border-gray-800  hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-5 py-3 text-center me-2 ">
+            <span title="adding soon!" className=" font-bold   cursor-not-allowed text-gray-900 hover:text-white border-2 border-gray-800  hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-6 py-4 text-center me-2 ">
               BOOK NOW
             </span>
             </div>
           <div className="flex-1">
-        <img className="sm:rounded-full rounded-xl" src="https://img.freepik.com/free-photo/worker-take-care-flowerpoots-girl-white-shirt-woman-gloves_1157-42003.jpg?w=1380&t=st=1704076223~exp=1704076823~hmac=b5bb640c7bb9de636c33aa1770e1fbe4b8009262e0821d4c141dc3a99d1e12da" alt="gardening" />
+        <img className="sm:rounded-full rounded-xl" src={gardening} alt="gardening" />
           </div>
         </div>
       </div>

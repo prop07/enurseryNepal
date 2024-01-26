@@ -35,14 +35,14 @@ export const Products = () => {
       <div
         key={i}
         role="status"
-        className=" w-72 border border-gray-200 rounded-xl shadow animate-pulse p-4  dark:border-gray-500"
+        className=" w-72 border border-gray-500 rounded-xl shadow animate-pulse p-4  "
       >
-        <div className="flex items-center justify-center h-64 w-60 mb-4 ml-1 bg-gray-200 rounded dark:bg-gray-500">
+        <div className="flex items-center justify-center h-64 w-60 mb-4 ml-1 bg-gray-400 rounded ">
           <BsImageAlt size={30} />
         </div>
-        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-60 mb-4 ml-1"></div>
-        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-60 mb-8 ml-1"></div>
-        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-60 mb-2 ml-1"></div>
+        <div className="h-2.5 bg-gray-400 rounded-full  w-60 mb-4 ml-1"></div>
+        <div className="h-2.5 bg-gray-400 rounded-full  w-60 mb-8 ml-1"></div>
+        <div className="h-2.5 bg-gray-400 rounded-full  w-60 mb-2 ml-1"></div>
         <span className="sr-only">Loading...</span>
       </div>
     );
@@ -56,7 +56,7 @@ export const Products = () => {
               <div className="h-0.5 w-2/4  bg-gray-400 rounded-xl"></div>
               <p className="flex items-center justify-center text-gray-400 font-normal border border-gray-400 rounded-full h-10 w-10 ">
                 {page}
-              </p>{" "}
+              </p>
             </div>
             <Pagination pageCount={pageCount} activePage={page} />
           </div>

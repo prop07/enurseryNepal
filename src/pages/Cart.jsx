@@ -22,6 +22,7 @@ const Cart = () => {
   const { cart } = useContext(CartDispatchContext);
   const [cartAmount, setCartAmount] = useState();
 
+
   const showToastRemoveMessage = () => {
     toast.warning("Item removed.", {
       position: "bottom-right",
@@ -51,9 +52,12 @@ const Cart = () => {
   };
 
 
+ 
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scroll(0, 0);
   }, []);
+  
 
   useEffect(() => {
     let totalAmount = 0;
@@ -106,7 +110,7 @@ const Cart = () => {
       </center>)
   }
 
-  if(!products){
+  if(!products ){
 return(
   <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
@@ -116,19 +120,16 @@ return(
 </div></div>
 )
   }
-
   return (
-
     <div className="flex items-center  font-poppins mt-20 ">
       <ToastContainer className="sm:w-72" />
       <div className="justify-center flex-1 px-1 py-6 mx-auto max-w-7xl lg:py-4 md:px-6 ">
         <div className="flex flex-wrap mt-2">
           <div className="w-full lg:w-8/12">
-            <div className="px-10 overflow-auto max-h-screen ">
-              <Link to={"/products/1"}>
-                <p className="flex items-center my-4 cursor-pointer text-cyan-500 hover:text-cyan-400 ">
+            <p className="flex items-center px-10 my-4 cursor-pointer text-cyan-500 hover:text-cyan-400 ">
                   <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
-                </p>
+                </p> <div className="px-10 overflow-auto" style={{ maxHeight: '80vh' }}>
+              <Link to={"/products/1"}>
               </Link>
               {Object.keys(cart)?.map((cartKey) => {
                 const p = products.find(
@@ -147,7 +148,7 @@ return(
                         
                         <img
                           src={p.image}
-                          alt={p.image}
+                          alt="Loading..."
                           className=" rounded object-cover w-full h-full"
                         />
                       ) : (
@@ -251,7 +252,7 @@ return(
                   placeholder="x304k45"
                   required=""
                 />
-                <p className="flex flex-row items-center p-4 mt-2 text-neutral-100 bg-neutral-700 rounded w-48 cursor-not-allowed hover:bg-neutral-600" >
+                <p className="flex flex-row items-center p-4 mt-2 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 rounded w-48 cursor-not-allowed " >
                   <RiCoupon3Line className="mr-2" /> <span>Apply Coupon.</span>
                 </p>
               </div>

@@ -114,7 +114,7 @@ const Register = () => {
               </div>
               {registerState ? (
                 <div
-                  className="flex items-center rounded-lg p-4 mb-4 text-green-800  bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800"
+                  className="flex items-center rounded-lg p-4 mb-4 text-green-800  bg-green-50 "
                   role="alert"
                 >
                   <svg
@@ -133,7 +133,7 @@ const Register = () => {
               ) : null}
               {errorResponse ? (
                 <div
-                  className="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                  className="flex items-center p-4 mb-4 text-sm  rounded-lg bg-gray-800 text-red-400  "
                   role="alert"
                 >
                   <svg

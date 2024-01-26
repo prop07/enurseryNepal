@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -15,7 +15,7 @@ import {
 import { BiHelpCircle } from "react-icons/bi";
 import { HiShoppingCart } from "react-icons/hi";
 import { FaUserCircle, FaInfoCircle, FaChevronDown } from "react-icons/fa";
-import { ImProfile } from "react-icons/im";
+import { IoMdGift } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import logo from "../images/logo.png";
 
@@ -69,6 +69,7 @@ const NavBar = () => {
       redirect("login");
     }
   };
+
 
   return (
     <div>
@@ -173,7 +174,6 @@ const NavBar = () => {
                 <AiOutlineSearch onClick={searchToggle} size={25} />
               </div>
             )}
-
             <div className="cursor-pointer hover:text-cyan-600 mx-2">
               <BiHelpCircle size={25} />
             </div>
@@ -199,7 +199,7 @@ const NavBar = () => {
                 <div className="origin-top-right absolute right-0 mt-1 w-48 rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 focus:outline-none ">
                   {/* Dropdown content goes here */}
                   <div
-                    className="py-1"
+                    className="py-1 relative"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="options-menu"
@@ -208,11 +208,11 @@ const NavBar = () => {
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
-                      <Link className=" hover:text-gray-700" to={"/profile"}>
+                      <Link onClick={userHandle} className=" hover:text-gray-700" to={"/profile/order"}>
                         <span className="flex items-center cursor-pointer">
-                          <ImProfile size={20} className="mr-1" />
-                          Profile
-                        </span>{" "}
+                          <IoMdGift size={20} className="mr-1" />
+                          Orders
+                        </span>
                       </Link>
                     </p>
                     <hr className="text-gray-400 w-3/4 mx-auto " />

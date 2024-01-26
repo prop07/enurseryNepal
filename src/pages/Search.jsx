@@ -4,7 +4,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 //icons
-import { BsImageAlt, BsBagPlus } from "react-icons/bs";
+import {  BsBagPlus } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import { MdBrokenImage } from "react-icons/md";
 
@@ -18,6 +18,10 @@ export const Search = () => {
   const [pageCount, setPageCount] = useState(0);
   const [matchingProducts , setMatchingProducts] = useState([]);
   const [ sortBy, setSortBy ] = useState("default");
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  //pages
   useEffect(() => {
     const calculatePageCount = async () => {
       const pageCount = Math.ceil(matchingProducts.length / 12);
@@ -26,8 +30,8 @@ export const Search = () => {
     calculatePageCount();
   }, [matchingProducts]);
 
+  //filter
   useEffect(() => {
-    console.log("filter")
     const search = searchQuery.trim().toLocaleLowerCase();
     const filterProduct =
       products.filter(
@@ -50,9 +54,25 @@ export const Search = () => {
       }
   }, [ searchQuery, sortBy, products]);
 
+  //loading
   useEffect(() => {
-    window.scroll(0,0)
-  }, [page])
+    const loadingTimeout = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    window.scroll(0, 0);
+    return () => clearTimeout(loadingTimeout);
+  }, [page]);
+
+
+  if (isLoading || !products) {
+    return (
+      <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+      </div></div>
+    )
+  }
   
   if(products  &&  matchingProducts.length == 0 ){
     return(
@@ -64,12 +84,13 @@ export const Search = () => {
   
   return (
     <>
-    <div className=" w-2/4 p-1   mx-auto pt-5   flex justify-end items-end ">
-      <p className="border border-gray-400 p-2 rounded-md">
-      <span className="mr-1">Sort by:</span>
-      <span onClick={()=>setSortBy("default")} className={`border-r-2  border-gray-400 pr-2 cursor-pointer text-lg ${sortBy == "default"?"text-black":" text-gray-500 "}`}>Default</span>
-      <span onClick={()=>setSortBy("ascending")} className={`border-r-2 border-gray-400 pr-2 pl-2 cursor-pointer text-lg ${sortBy == "ascending"?"text-black":" text-gray-500  "}`}>Price Low to High</span>
-      <span onClick={()=>setSortBy("descending")} className={`pl-2 border-gray-400 pr-1 cursor-pointer text-lg ${sortBy == "descending"?"text-black":" text-gray-500  "}`}>Price High to Low</span>
+    <div className=" sm:w-2/4 p-1   mx-auto pt-5   flex justify-end items-end ">
+      <p className="border border-gray-400 p-1 sm:p-2 rounded-md">
+      <span className="  mr-1 text-sm sm:text-base ">Sort by:</span>
+
+      <span onClick={()=>setSortBy("default")} className={`border-r-2  border-gray-400 sm:pr-2 pr-1 cursor-pointer sm:text-lg text-sm ${sortBy == "default"?"text-black":" text-gray-500 "}`}>Default</span>
+      <span onClick={()=>setSortBy("ascending")} className={`border-r-2 border-gray-400 sm:pr-2 sm:pl-2 pl-1 pr-1  cursor-pointer sm:text-lg text-sm ${sortBy == "ascending"?"text-black":" text-gray-500  "}`}>Price Low to High</span>
+      <span onClick={()=>setSortBy("descending")} className={`sm:pl-2 pl-1 border-gray-400 pr-1 cursor-pointer sm:text-lg text-sm ${sortBy == "descending"?"text-black":" text-gray-500  "}`}>Price High to Low</span>
       </p>
     </div>   
           <div>
@@ -110,25 +131,6 @@ const ProductListByPage = ({ activePage, products }) => {
     });
   };
 
-  //loading skelation
-  const loadingSkelaton = [];
-  for (let i = 1; i < 7; i++) {
-    loadingSkelaton.push(
-      <div
-        key={i}
-        role="status"
-        className=" w-72 border border-gray-200 rounded-xl shadow animate-pulse p-4  dark:border-gray-500"
-      >
-        <div className="flex items-center justify-center h-64 w-60 mb-4 ml-1 bg-gray-200 rounded dark:bg-gray-500">
-          <BsImageAlt size={30} />
-        </div>
-        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-60 mb-4 ml-1"></div>
-        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-60 mb-8 ml-1"></div>
-        <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-60 mb-2 ml-1"></div>
-        <span className="sr-only">Loading...</span>
-      </div>
-    );
-  }
 
   //productsCards
   const productCardList = [];
@@ -179,12 +181,6 @@ const ProductListByPage = ({ activePage, products }) => {
       </div>
     )
   );
-  if (products.length === 0)
-    return (
-      <div className="p-4  w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">
-        {loadingSkelaton}
-      </div>
-    );
   return (
     
     <div className="p-4  w-fit mx-auto  grid grid-cols-1  lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-8 gap-x-14  ">

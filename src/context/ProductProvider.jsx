@@ -9,7 +9,7 @@ const ProductProvider = ({ children }) => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(
-          "https://enurserynepal.com/api/v1/product/"
+          "https://enurserynepal.com/api/v1/product/",{mode:'cors'}
         );
         const data = await response.json();
         setProducts(data);
