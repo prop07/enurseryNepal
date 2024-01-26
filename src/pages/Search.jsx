@@ -73,21 +73,18 @@ export const Search = () => {
       </div></div>
     )
   }
-  
-  if(products  &&  matchingProducts.length == 0 ){
+if(products  &&  matchingProducts.length == 0 ){
     return(
       <center className=" grid items-center justify-center h-96  font-poppins p-16 " >
     <h2 className=" text-xl font-bold mb-4 text-gray-600"> Sorry! &#34;no item match found for {searchQuery}&#34;</h2>
   </center>
-    )
-  }
-  
-  return (
+    )}
+
+return (
     <>
     <div className=" sm:w-2/4 p-1   mx-auto pt-5   flex justify-end items-end ">
       <p className="border border-gray-400 p-1 sm:p-2 rounded-md">
       <span className="  mr-1 text-sm sm:text-base ">Sort by:</span>
-
       <span onClick={()=>setSortBy("default")} className={`border-r-2  border-gray-400 sm:pr-2 pr-1 cursor-pointer sm:text-lg text-sm ${sortBy == "default"?"text-black":" text-gray-500 "}`}>Default</span>
       <span onClick={()=>setSortBy("ascending")} className={`border-r-2 border-gray-400 sm:pr-2 sm:pl-2 pl-1 pr-1  cursor-pointer sm:text-lg text-sm ${sortBy == "ascending"?"text-black":" text-gray-500  "}`}>Price Low to High</span>
       <span onClick={()=>setSortBy("descending")} className={`sm:pl-2 pl-1 border-gray-400 pr-1 cursor-pointer sm:text-lg text-sm ${sortBy == "descending"?"text-black":" text-gray-500  "}`}>Price High to Low</span>
@@ -130,7 +127,6 @@ const ProductListByPage = ({ activePage, products }) => {
       theme: "light",
     });
   };
-
 
   //productsCards
   const productCardList = [];
@@ -189,7 +185,6 @@ const ProductListByPage = ({ activePage, products }) => {
     </div>
   );
 };
-
 
 //pagintation
 const Pagination = ({ pageCount, activePage, searchQuery }) => {

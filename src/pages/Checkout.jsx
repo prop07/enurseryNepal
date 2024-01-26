@@ -32,12 +32,12 @@ const Checkout = () => {
   const [zipCode, setZipCode] = useState();
   const [stateProvince, setStateProvince] = useState();
   const [isButtonDisabled, setButtonDisabled] = useState(false);
-  const modifiedEmail = email.replace(/\./g, '_');
 
   const {
     handleSubmit,
   } = useForm();
 
+  //calculate total price
   useEffect(() => {
     let totalAmount = 0;
     Object.keys(cart)?.map((cartKey) => {
@@ -47,30 +47,23 @@ const Checkout = () => {
     setCartAmount(totalAmount);
   }, [cart, cartAmount, products]);
 
+  //update cart with info
   const updateCartWithProductInfo = () => {
     const updatedOrderItems = Object.keys(cart).map((cartKey) => {
       const quantity = cart[cartKey];
       const p = products.find((product) => product.id === parseInt(cartKey));
       return { id: cartKey, qty: quantity, name: p.name, price: p.price };
     });
-    setOrderItems(...orderItems, updatedOrderItems);
-  };
+    setOrderItems(updatedOrderItems);}
 
   useEffect(() => {
     updateCartWithProductInfo();
-    const date = new Date;
-    console.log(date.toLocaleString());
   }, [cart, products])
 
-  useEffect(() => {
-    console.log('Updated Order Items:', orderItems);
-  }, [orderItems]);
 
-
+  //write checkout
   function writecheckout(id, order, userEmail, amount, userName, userPhone, userAddress, userStateProvince, userZipCode) {
     const currentDate = new Date;
-    console.log(currentDate);
-    console.log(currentDate);
     const orderPlace = {
       userId: id,
       items: order,
@@ -84,9 +77,8 @@ const Checkout = () => {
       status: "pending",
       date: JSON.stringify(currentDate),
     }
-    const reference = ref(database, "order/" + modifiedEmail);
+    const reference = ref(database, "order/" + email.replace(/\./g, '_'));
     const newPostRef = push(reference);
-
     set(newPostRef, {
       orderPlace ,
     });
@@ -95,6 +87,7 @@ const Checkout = () => {
     setButtonDisabled(true);
   }
 
+  //disable button on submit
   const checkout = () => {
     isButtonDisabled== false? writecheckout(userId, orderItems, email, cartAmount, name, phone, address, stateProvince, zipCode): null;
   }
@@ -113,7 +106,15 @@ const Checkout = () => {
     });
   };
 
-
+  if (orderItems.length == 0 ) {
+    return (
+      <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+      </div></div>
+    )
+  }
   return (
     <div className="flex justify-center object-contain items-center h-screen bg-[url('https://images.unsplash.com/photo-1538438253612-287c9fc9217e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">
       <div className=" rounded-lg px-6  pt-6 pb-8 mb-4 md:w-1/3 bg-white/50 ">
@@ -133,20 +134,6 @@ const Checkout = () => {
               name="fullName"
               className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
               placeholder="Enter your full name"
-              required={true}
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              id="email"
-              name="email"
-              className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              value={email}
               required={true}
             />
           </div>
@@ -208,9 +195,10 @@ const Checkout = () => {
               />
             </div>
           </div>
+            <p className="text-green-600 text-sm mt-1 mb-1">Note: For your order updates and details, we&apos;ll keep you in the loop using your email. Sweet and simple!</p>
           <div className="mt-4">
             <button
-              className={`bg-[#002D74] rounded-xl text-white hover:scale-105 duration-300 py-2 px-4 ${isButtonDisabled === true?"cursor-not-allowed":"cursor-pointer"}`}
+              className={`font-bold mt-6 md:mt-0 py-5 hover:bg-gray-200  border border-gray-800  w-96 2xl:w-full text-base leading-4 text-gray-800 ${isButtonDisabled === true?"cursor-not-allowed":"cursor-pointer"}`}
               type="submit"
               disabled={isButtonDisabled}
             >

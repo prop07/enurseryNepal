@@ -40,10 +40,8 @@ const reducer = (state, action) => {
 const CartProvider = ({ children }) => {
   const { userId } = useUser();
   const products = useContext(ProductContext);
-  // const initialState = localStorage.getItem("cart");
   const [cart, dispatch] = useReducer(
     reducer,
-    // initialState ? JSON.parse(initialState) : 
     {}
   );
 

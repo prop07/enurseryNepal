@@ -13,9 +13,6 @@ import gardening from "../images/gardening.jpg";
 //icon
 import { BsImageAlt} from "react-icons/bs";
 
-
-
-
 //context
 import { ProductContext } from "../context/ProductProvider";
 import { useDispatchCart } from "../context/CartProvider";

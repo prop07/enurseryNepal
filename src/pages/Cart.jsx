@@ -22,7 +22,6 @@ const Cart = () => {
   const { cart } = useContext(CartDispatchContext);
   const [cartAmount, setCartAmount] = useState();
 
-
   const showToastRemoveMessage = () => {
     toast.warning("Item removed.", {
       position: "bottom-right",
@@ -51,9 +50,7 @@ const Cart = () => {
     });
   };
 
-
- 
-
+  //scroll top
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
@@ -73,6 +70,7 @@ const Cart = () => {
     showToastRemoveMessage();
   };
 
+  //update
   const handleUpdateCart = (action, id) => {
     Object.keys(cart).find((key) => key === id);
     if( cart[id] === 1  && action === "decrease"){
@@ -110,17 +108,16 @@ const Cart = () => {
       </center>)
   }
 
-  if(!products ){
+if(!products ){
 return(
   <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
   <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
-  
 </div></div>
 )
-  }
-  return (
+}
+return (
     <div className="flex items-center  font-poppins mt-20 ">
       <ToastContainer className="sm:w-72" />
       <div className="justify-center flex-1 px-1 py-6 mx-auto max-w-7xl lg:py-4 md:px-6 ">

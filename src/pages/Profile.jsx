@@ -1,14 +1,15 @@
 import { useEffect, useState, useContext } from "react";
 import { MdBrokenImage } from "react-icons/md";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
-
-import { ref, onValue } from "firebase/database";
+//firebase
+import { ref, onValue, get, child, remove } from "firebase/database";
 import { database, auth } from "../config/firebase";
-
+//context
 import { useUser } from "../context/UserContext";
 import { ProductContext } from "../context/ProductProvider";
-
 
 const Profile = () => {
   const { userId } = useUser();
@@ -35,9 +36,36 @@ const Profile = () => {
         console.error("Error fetching order data:", error);
       }
     };
-
     fetchData();
   }, [userId, modifiedEmail, email]);
+
+  const showToastRemoveMessage = () => {
+    toast.warning("Order removed.", {
+      position: "bottom-right",
+      autoClose: 4000,
+      closeButton: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
+  const showToastErrorMessage = (message) => {
+    toast.error(message, {
+      position: "bottom-right",
+      autoClose: 4000,
+      closeButton: false,
+      hideProgressBar: false,
+      closeOnClick: false,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
 //loading
   useEffect(() => {
@@ -48,10 +76,27 @@ const Profile = () => {
     return () => clearTimeout(loadingTimeout);
   }, []);
 
+//total item count
   function calculateTotalQuantity() {
     const items = orderDetails[activeOrderId]?.orderPlace?.items || [];
     return items.reduce((total, item) => total + item.qty, 0);
   }
+
+//remove order
+async function deleteOrder(orderId, email) {
+  const orderRef = ref(database, 'order/' + email);
+  try {
+    const snapshot = await get(child(orderRef, orderId));
+    if (snapshot.exists()) {
+      remove(child(orderRef, orderId));
+      showToastRemoveMessage();
+    } else {
+      showToastErrorMessage("Unable to remove !");
+    }
+  } catch (error) {
+    showToastErrorMessage(error);
+  }
+}
 
   if (isLoading || !products) {
     return (
@@ -62,9 +107,9 @@ const Profile = () => {
       </div></div>
     )
   }
-
   return (
     <div className=" py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
+      <ToastContainer className="sm:w-72" />
       <div className="flex"><div className="text-gray-600 text-center  font-bold  border-r-2  border-gray-400 p-2 mr-1" >
         Your Order List:
       </div>
@@ -138,7 +183,10 @@ const Profile = () => {
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <p className="text-base  leading-4 text-gray-800">Shipping</p>
+                  {activeOrderId?
                   <p className="text-base  leading-4 text-gray-600">Rs:100/-</p>
+                  : <p className="text-base  leading-4 text-gray-600">Rs:NaN/-</p>
+                  }
                 </div>
               </div>
               <div className="flex justify-between items-center w-full">
@@ -186,7 +234,7 @@ const Profile = () => {
               </div>
               <div className="flex w-full justify-center items-center md:justify-start md:items-start">
                 {activeOrderId?
-                ( <button className="mt-6 md:mt-0    py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800  w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">Delete order</button>)
+                ( <button onClick={()=>deleteOrder( activeOrderId, modifiedEmail)} className="mt-6 md:mt-0 py-5 hover:bg-gray-200   border border-gray-800  w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">Delete order</button>)
               :null }
               </div>
             </div>
@@ -194,11 +242,7 @@ const Profile = () => {
         </div>
       </div>
     </div>
-
   );
 };
 
 export default Profile;
-
-
-

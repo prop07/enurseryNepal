@@ -4,14 +4,12 @@ import { Outlet } from "react-router-dom";
 import NavBar from "../components/NavBar";
 import NewsLetter from "../components/NewsLetter";
 import Footer from "../components/Footer";
-
+//context
 import { useUser } from "../context/UserContext";
 
 
 const Home = () => {
   const {userId} = useUser();
-
-
   return (
     <  >
       <NavBar  />

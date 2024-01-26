@@ -3,7 +3,6 @@ import { createContext, useState,useEffect ,useContext} from 'react';
 // firebase
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
@@ -13,7 +12,7 @@ export const UserProvider = ({ children }) => {
     window.location.reload("/");
     
   }
-
+  
   useEffect(() => {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {

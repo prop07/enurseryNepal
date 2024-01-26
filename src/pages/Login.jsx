@@ -11,8 +11,6 @@ import { useForm } from "react-hook-form";
 import { useUser } from '../context/UserContext';
 import { useEffect } from "react";
 
-
-
 const Register = () => {
   const { updateUser, userId } = useUser();
   const redirect = useNavigate();
@@ -26,7 +24,6 @@ const Register = () => {
   const [errorResponse, setErrorResponse] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   useEffect(() => {
     userId?setLoading(true): null;
@@ -44,7 +41,6 @@ const Register = () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       redirect("/")
-
     } catch (err) {
       setErrorResponse({
         message: err.message,
@@ -68,7 +64,6 @@ const Register = () => {
     }
     setLoading(false);
   };
-
   
   return (
     <div className="static">
