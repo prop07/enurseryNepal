@@ -125,7 +125,7 @@ return (
           <div className="w-full lg:w-8/12">
             <p className="flex items-center px-10 my-4 cursor-pointer text-cyan-500 hover:text-cyan-400 ">
                   <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
-                </p> <div className="px-10 overflow-auto" style={{ maxHeight: '80vh' }}>
+                </p> <div className="px-10 overflow-auto" style={{ maxHeight: '69vh' }}>
               <Link to={"/products/1"}>
               </Link>
               {Object.keys(cart)?.map((cartKey) => {

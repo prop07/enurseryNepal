@@ -55,7 +55,8 @@ const Register = () => {
     try {
       await signInWithPopup(auth, googleProvider);
       updateUser(auth?.currentUser?.id);
-      // redirect("/");
+      location.reload();
+      
     } catch (err) {
       setErrorResponse({
         message: err.message,

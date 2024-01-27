@@ -9,8 +9,6 @@ export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState();
   const updateUser = (newUserId)=>{
     setUserId(newUserId);
-    window.location.reload("/");
-    
   }
   
   useEffect(() => {
@@ -23,7 +21,7 @@ export const UserProvider = ({ children }) => {
         console.log("User Not Found");
       }
     });
-  }, []);
+  }, [userId]);
 
   useEffect(()=>{
 console.log("here is your User id"+ userId);
