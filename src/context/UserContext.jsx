@@ -6,6 +6,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+
   const [userId, setUserId] = useState();
   const updateUser = (newUserId)=>{
     setUserId(newUserId);
@@ -13,15 +14,20 @@ export const UserProvider = ({ children }) => {
   
   useEffect(() => {
     const auth = getAuth();
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserId(user.uid);
-        console.log(user.email);
+        console.log("User logged in:", user.email);
       } else {
-        console.log("User Not Found");
+        setUserId(null);
+        console.log("User logged out");
       }
     });
-  }, [userId]);
+  
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useEffect(()=>{
 console.log("here is your User id"+ userId);
