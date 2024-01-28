@@ -4,7 +4,7 @@ import { RiCoupon3Line, RiDeleteBinLine } from "react-icons/ri";
 import { FaAngleDoubleLeft } from "react-icons/fa";
 import { HiShoppingCart } from "react-icons/hi";
 import { MdBrokenImage } from "react-icons/md";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -54,13 +54,13 @@ const Cart = () => {
   useEffect(() => {
     window.scroll(0, 0);
   }, []);
-  
+
 
   useEffect(() => {
     let totalAmount = 0;
     Object.keys(cart)?.map((cartKey) => {
       let item = products.find((product) => product.id === parseInt(cartKey));
-      totalAmount += cart[cartKey] * item.price;
+      totalAmount += cart[cartKey] * item?.price;
     });
     setCartAmount(totalAmount);
   }, [cart, cartAmount, products]);
@@ -73,26 +73,26 @@ const Cart = () => {
   //update
   const handleUpdateCart = (action, id) => {
     Object.keys(cart).find((key) => key === id);
-    if( cart[id] === 1  && action === "decrease"){
-    dispatch({ type: "DeleteCartItem", payload: { id } });
-    showToastRemoveMessage();
+    if (cart[id] === 1 && action === "decrease") {
+      dispatch({ type: "DeleteCartItem", payload: { id } });
+      showToastRemoveMessage();
     }
-    else if(cart[id] === 20  && action === "increase") {
-    showToastErrorMessage("20 Max Quantity per items !")
+    else if (cart[id] === 20 && action === "increase") {
+      showToastErrorMessage("20 Max Quantity per items !")
     }
-    else{
-    dispatch({
-    type: "AddToCart",
-    payload: {
-      id: parseInt(id),
-      qtyEq: action === "increase" ? 1 : -1,
-    },
-  }); 
-  }
+    else {
+      dispatch({
+        type: "AddToCart",
+        payload: {
+          id: parseInt(id),
+          qtyEq: action === "increase" ? 1 : -1,
+        },
+      });
+    }
   };
 
-  const Checkout =() =>{
-    userId ? navigate('/checkout'): showToastErrorMessage("Login First !");
+  const Checkout = () => {
+    userId ? navigate('/checkout') : showToastErrorMessage("Login First !");
   }
 
   if (Object.keys(cart).length <= 0) {
@@ -107,33 +107,30 @@ const Cart = () => {
         </Link>
       </center>)
   }
-
-if(!products ){
-return(
-  <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
-  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
-  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
-  <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
-</div></div>
-)
-}
-return (
+  if (!products || !cart) {
+    return (
+      <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 "> <div className="flex h-full items-center justify-center space-x-2">
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+        <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
+      </div></div>
+    )
+  }
+  return (
     <div className="flex items-center  font-poppins mt-20 ">
       <ToastContainer className="sm:w-72" />
       <div className="justify-center flex-1 px-1 py-6 mx-auto max-w-7xl lg:py-4 md:px-6 ">
         <div className="flex flex-wrap mt-2">
           <div className="w-full lg:w-8/12">
-            <p className="flex items-center px-10 my-4 cursor-pointer text-cyan-500 hover:text-cyan-400 ">
-                  <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
-                </p> <div className="px-10 overflow-auto" style={{ maxHeight: '69vh' }}>
-              <Link to={"/products/1"}>
-              </Link>
+            <Link to={"/products/1"}>  <p className="flex items-center px-10 my-4 cursor-pointer text-cyan-500 hover:text-cyan-400 ">
+              <FaAngleDoubleLeft /> <span>Continue Shopping.</span>
+            </p></Link> <div className="px-10 overflow-auto" style={{ maxHeight: '69vh' }}>
               {Object.keys(cart)?.map((cartKey) => {
                 const p = products.find(
                   (product) => product.id === parseInt(cartKey)
                 );
                 if (!p) {
-                  return <div key={p.id} >Product removed from store.</div>;
+                  return <div key={cartKey} >Product removed from store.</div>;
                 }
                 return (
                   <div
@@ -142,14 +139,13 @@ return (
                   >
                     <div className="w-full mb-2 lg:mb-0 h-96 md:h-44 md:w-44">
                       {p.image ? (
-                        
                         <img
                           src={p.image}
                           alt="Loading..."
                           className=" rounded object-cover w-full h-full"
                         />
                       ) : (
-                        <div className="flex justify-center items-center rounded w-full h-full bg-gray-200 text-gray-400"><MdBrokenImage size={30}/></div>
+                        <div className="flex justify-center items-center rounded w-full h-full bg-gray-200 text-gray-400"><MdBrokenImage size={30} /></div>
                       )}
                     </div>
                     <div className=" px-4 mb-6 w-64 xl:mb-0 ">
@@ -226,7 +222,7 @@ return (
                     </div>
                     <span className="absolute top-0 right-0 text-gray-400 p-2 lg:mt-6 lg:-mr-4 hover:text-gray-600 cursor-pointer  ">
                       <RiDeleteBinLine
-                      title="remove"
+                        title="remove"
                         className="bg-gray-50 rounded"
                         onClick={() => handleDeleteCart(cartKey)}
                         size={25}

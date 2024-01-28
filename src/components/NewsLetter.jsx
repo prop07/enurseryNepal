@@ -9,7 +9,7 @@ const NewsLetter = () => {
       <form  className="flex justify-items-center ">
         <input 
         type="email"
-          className=" text-sm md:text-base h-10 md:h-12 w-auto px-8 rounded text-neutral-900 "
+          className=" text-sm text-center md:text-base h-10 md:h-12 w-auto px-8 rounded text-neutral-900 "
           placeholder=" Enter Your Email Here!"
           required={true}
         />

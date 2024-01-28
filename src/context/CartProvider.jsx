@@ -60,12 +60,11 @@ const CartProvider = ({ children }) => {
       get(child(userRef, "data")).then((snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
-          console.log("Cart from database :", data);
+          // console.log("Cart from database :", data);
           dispatch({ type: "SetCart", payload: data });
-          console.log(cart);
+          // console.log(cart);
         } else {
           const initialState = localStorage.getItem("cart");
-          console.log("try from local storage" + initialState);
           dispatch({type:"SetCart", payload: JSON.parse(initialState)})
         }
       });
@@ -78,7 +77,7 @@ const CartProvider = ({ children }) => {
   useEffect(() => {
     userId
       ? writeUserCart(userId, cart)
-      : console.log("user not found");
+      : null;
     localStorage.setItem("cart", JSON.stringify(cart)
     );
   }, [cart]);

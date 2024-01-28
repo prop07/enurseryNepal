@@ -70,7 +70,6 @@ const NavBar = () => {
     }
   };
 
-
   return (
     <div>
       <div className="z-10   fixed w-full bg-white  top-0 left-0 right-0  pb-1  shadow-md shadow-slate-500/50 justify-center items-center">
@@ -204,6 +203,17 @@ const NavBar = () => {
                     aria-orientation="vertical"
                     aria-labelledby="options-menu"
                   >
+                  <p
+                  onClick={userHandle}
+                      className="block md:hidden px-4 py-2 text-gray-700"
+                      role="menuitem"
+                    >
+                        <span className="flex items-center cursor-pointer truncate">
+                          <IoMdGift size={20} className="mr-1" />
+                          {email}
+                        </span>
+                    </p>
+                    <hr className="block md:hidden text-gray-400 w-3/4 mx-auto " />
                     <p
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       role="menuitem"
@@ -259,22 +269,48 @@ const NavBar = () => {
               className="justify-center cursor-pointer hover:text-cyan-600 ml-2 "
             />
           </div>
-          <ul>
-            <p
-              className="cursor-pointer hover:text-cyan-600 text-sm p-2 mt-2 "
-              onClick={searchToggle}
-            >
-              Shop
-            </p>
+          <ul className="mt-2">
+            
             <Link to={"/products/1"}>
               <p
-                className="cursor-pointer hover:text-cyan-600 text-sm p-2"
+                className="cursor-pointer text-base text-gray-700   p-1 w-28"
                 onClick={searchToggle}
               >
                 Products
               </p>
             </Link>
-          </ul>
+            <hr className="text-gray-400 w-3/4 mx-auto" />
+                        <Link  onClick={searchToggle} to={"/search/indoor/1"}>
+                          <center className=" text-base text-gray-700  p-1 w-28">
+                            Indoor
+                          </center>
+                        </Link>
+                        <hr className="text-gray-400 w-3/4 mx-auto" />
+                        <Link onClick={searchToggle} to={"/search/outdoor/1"}>
+                          <center className=" text-base text-gray-700  p-1 w-28">
+                            Outdoor
+                          </center>
+                        </Link>
+                        <hr className="text-gray-400 w-3/4 mx-auto" />
+                        <Link onClick={searchToggle} to={"/search/semi-indoor/1"}>
+                          <center className=" text-base text-gray-700  p-1 w-28">
+                            Semi-Indoor
+                          </center>
+                        </Link>
+                        <hr className="text-gray-400 w-3/4 mx-auto" />
+                        <Link onClick={searchToggle} to={"/search/vase/1"}>
+                          <center className=" text-base text-gray-700  p-1 w-28">
+                            Vase
+                          </center>
+                        </Link>
+                        <hr className="text-gray-400 w-3/4 mx-auto" />
+                        <Link onClick={searchToggle} to={"/search/fertilizer/1"}>
+                          <center className=" text-base text-gray-700  p-1 w-28">
+                            Fertilizer
+                          </center>
+                        </Link>
+                        <hr className="text-gray-400 w-3/4 mx-auto" />
+                      </ul>
         </center>
       ) : null}
     </div>
