@@ -222,14 +222,14 @@ const DashBoard = () => {
           </div>
         </div>
         {/* basic info */}
-        <div className="  md:w-8/12 p-4 md:p-0 flex  justify-between m-auto my-4">
+        <div className="  md:w-8/12 p-1  md:p-0 flex  justify-between m-auto my-4">
           <div className=" flex items-center justify-center flex-col">
             <div className="flex justify-center items-center rounded-full md:h-24 h-16 md:w-24 w-16 bg-gray-100">
               <div className=" flex items-center justify-center md:h-20 md:w-20 h-14 w-14 bg-gray-200   rounded-full">
                 <TbPhoneCall size={25} className="text-green-500  " />
               </div>
             </div>
-            <p className="mt-2 md:font-semibold text-sm">Need Help?Call</p>
+            <p className="mt-2 md:font-semibold md:text-base text-xs">Need Help?Call</p>
             <p className="sm:text-sm text-xs text-gray-500 text-center">(+977)9808035913</p>
           </div>
           <div className=" flex items-center justify-center flex-col">
@@ -238,7 +238,7 @@ const DashBoard = () => {
                 <TbTruckDelivery size={25} className="text-green-500  " />
               </div>
             </div>
-            <p className="mt-2 md:font-semibold text-sm">Delivery On</p>
+            <p className="mt-2 md:font-semibold md:text-base text-xs">Delivery On</p>
             <p className="sm:text-sm text-xs text-gray-500 text-center">Safe and Quick</p>
           </div>
           <div className=" flex items-center justify-center flex-col">
@@ -247,7 +247,7 @@ const DashBoard = () => {
                 <MdPayment size={25} className="text-green-500  " />
               </div>
             </div>
-            <p className="mt-2 md:font-semibold text-sm">Payment</p>
+            <p className="mt-2 md:font-semibold md:text-base text-xs">Payment</p>
             <p className="sm:text-sm text-xs text-gray-500 text-center">Online/On Delivery</p>
           </div>
           <div className=" flex items-center justify-center flex-col">
@@ -256,7 +256,7 @@ const DashBoard = () => {
                 <MdOutlineAssignmentReturn size={25} className="text-green-500  " />
               </div>
             </div>
-            <p className="mt-2 md:font-semibold   text-sm ">Easy Return</p>
+            <p className="mt-2 md:font-semibold md:text-base  text-xs ">Easy Return</p>
             <p className="sm:text-sm text-xs text-gray-500 text-center">On Delivery Damage</p>
           </div>
         </div>
