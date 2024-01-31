@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect } from "react";
+import productJson from "../../data";
 
 export const ProductContext = createContext();
+
 
 const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
@@ -8,13 +10,11 @@ const ProductProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          "https://enurserynepal.com/api/v1/product/",{mode:'cors'}
-        );
+        const response = await fetch(import.meta.env.VITE_API_KEY);
         const data = await response.json();
         setProducts(data);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        setProducts(productJson);
       }
     };
     fetchProducts();

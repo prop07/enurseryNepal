@@ -1,4 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
 import { createContext, useEffect, useReducer, useContext } from "react";
 import { ProductContext } from "../context/ProductProvider";
 
@@ -60,9 +59,7 @@ const CartProvider = ({ children }) => {
       get(child(userRef, "data")).then((snapshot) => {
         if (snapshot.exists()) {
           const data = snapshot.val();
-          // console.log("Cart from database :", data);
           dispatch({ type: "SetCart", payload: data });
-          // console.log(cart);
         } else {
           const initialState = localStorage.getItem("cart");
           dispatch({type:"SetCart", payload: JSON.parse(initialState)})
@@ -82,7 +79,7 @@ const CartProvider = ({ children }) => {
     );
   }, [cart]);
 
-  //find product within cart
+  //find product within a cart
   useEffect(() => {
     let newCartData = {};
     Object.keys(cart).map((key) => {

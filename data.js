@@ -1,4 +1,4 @@
- export const product = [
+ const productJson = [
     {
         "id": 494,
         "created_at": "2023-03-29T15:04:31.850549+05:45",
@@ -22260,3 +22260,5 @@
         }
     }
 ]
+
+export default productJson;

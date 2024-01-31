@@ -106,18 +106,6 @@ const Checkout = () => {
     });
   };
 
-  if (orderItems.length === 0) {
-    return (
-      <div className=" h-screen w-screen  backdrop-blur-sm bg-white/30 ">
-        <div className="flex h-full items-center justify-center space-x-2">
-          <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
-          <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
-          <div className="w-2 h-2 rounded-full animate-pulse bg-neutral-700"></div>
-        </div>
-      </div>
-    );
-  }
-
   
   return (
     <div className="flex justify-center object-contain items-center h-screen bg-[url('https://images.unsplash.com/photo-1538438253612-287c9fc9217e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')]">

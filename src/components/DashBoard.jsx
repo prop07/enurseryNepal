@@ -1,9 +1,9 @@
 import { BsBagPlus } from "react-icons/bs";
 import { ToastContainer, toast } from "react-toastify";
 import { useContext } from "react";
-import {Link} from "react-router-dom";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/blur.css';
+import { Link } from "react-router-dom";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 //images
 import outdoor from "../images/outdoor.jpg";
@@ -11,7 +11,11 @@ import indoor from "../images/indoor.jpg";
 import gardening from "../images/gardening.jpg";
 
 //icon
-import { BsImageAlt} from "react-icons/bs";
+import { BsImageAlt } from "react-icons/bs";
+import { TbPhoneCall } from "react-icons/tb";
+import { TbTruckDelivery } from "react-icons/tb";
+import { MdPayment } from "react-icons/md";
+import { MdOutlineAssignmentReturn } from "react-icons/md";
 
 //context
 import { ProductContext } from "../context/ProductProvider";
@@ -53,7 +57,13 @@ const DashBoard = () => {
         <img
           src="https://images.unsplash.com/photo-1483794344563-d27a8d18014e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="banner"
-          className="w-full  object-none"
+          className="w-full hidden md:block  object-none"
+          style={{ height: "60vh" }}
+        />
+        <img
+          src="https://images.unsplash.com/photo-1615853623420-ad2060722a64?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="banner"
+          className="w-full block md:hidden object-none"
           style={{ height: "60vh" }}
         />
         <div className="absolute lg:left-24  lg:top-24 top-20 ml-4 lg:ml-80 ">
@@ -62,13 +72,14 @@ const DashBoard = () => {
             CREATE YOUR OWN
           </p>
           <p className="lg:text-6xl text-4xl font-extrabold">HEALTHIER SPACE</p>
-          <p className="mt-2  lg:text-base text-sm text-gray-600">
+          <p className="mt-2  lg:text-base text-sm text-gray-700">
             All types of plant delivered at your door step stop waiting and
             start building your own garden
           </p>
-          <Link to={'/products/1'}><button className="py-3 px-5 mt-2 bg-gray-800 rounded-md text-white hover:bg-green-700 ">
-            SHOP NOW
-          </button>
+          <Link to={"/products/1"}>
+            <button className="py-3 px-5 mt-2 bg-gray-800 rounded-md text-white hover:bg-green-700 ">
+              SHOP NOW
+            </button>
           </Link>
         </div>
       </div>
@@ -89,41 +100,56 @@ const DashBoard = () => {
             </div>
           </div>
           <div className="grid grid-flow-col gap-2 overflow-scroll ">
-            {
-              deal.map((value) => {
-                const p = products.find((product) => product.id === parseInt(value));
-                if (p) {
-                  return (
-                    <div className="rounded-md  h-96 w-64" key={p.id}>
-                      <Link key={p.id} to={`/product/${p.id}`}>
-                      <LazyLoadImage
-                      effect="blur"
-                      width={240}
-                        src={p.image}
-                        alt="product image"
-                        className="object-cover object-center w-full rounded-t-md h-72" /></Link>
-                      <div className="mt-0.5 px-2">  <span className="text-gray-400 p-1  mb-1 rounded bg-gray-200 mr-1 text-sm">
-                        {p.type.title}
-                      </span>
-                        <span className="text-gray-400 p-1  mb-0.5 rounded bg-gray-200 mr-1 text-sm">
-                          {p.sub_category.category.title}
-                        </span></div>
-                      <div className="px-2">
-                        <p className=" mt-0.5 font-semibold text-neutral-700 truncate block capitalize">
-                          {p.name}
-                        </p>
-                        <div className="flex items-center ">
-                          <p className="text-neutral-700  cursor-auto my-1">Rs:{p.price}/-</p>
-                          <span className="ml-auto cursor-pointer hover:text-cyan-600">
-                            <BsBagPlus title="add to cart" onClick={() => addToCart(p.id)} size={20} className="mr-2" />
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }//
+            {deal.map((value) => {
+              const p = products.find(
+                (product) => product.id === parseInt(value)
+              );
+              if (p) {
                 return (
                   <div
+                    className="shadow-lg  rounded-md  h-96  border border-gray-300 justify-center w-60"
+                    key={p.id}
+                  >
+                    <Link key={p.id} to={`/product/${p.id}`}>
+                      <LazyLoadImage
+                        effect="blur"
+                        width={240}
+                        src={p.image}
+                        alt="product image"
+                        className=" object-cover p-1  object-center  rounded-t-md h-72"
+                      />
+                    </Link>
+                    <div className="mt-0.5 px-2">
+                      <span className="text-gray-400 p-1  mb-1 rounded bg-gray-200 mr-1 text-sm">
+                        {p.type.title}
+                      </span>
+                      <span className="text-gray-400 p-1  mb-0.5 rounded bg-gray-200 mr-1 text-sm">
+                        {p.sub_category.category.title}
+                      </span>
+                    </div>
+                    <div className="px-2">
+                      <p className=" mt-0.5 font-semibold text-neutral-700 truncate block capitalize">
+                        {p.name}
+                      </p>
+                      <div className="flex items-center ">
+                        <p className="text-neutral-700  cursor-auto my-1">
+                          Rs:{p.price}/-
+                        </p>
+                        <span className="ml-auto cursor-pointer hover:text-cyan-600">
+                          <BsBagPlus
+                            title="add to cart"
+                            onClick={() => addToCart(p.id)}
+                            size={20}
+                            className="mr-2"
+                          />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              } //
+              return (
+                <div
                   key={value}
                   role="status"
                   className="mr-2 h-96 w-64 border border-gray-500 rounded-xl shadow animate-pulse p-4  "
@@ -136,9 +162,8 @@ const DashBoard = () => {
                   <div className="h-2.5 bg-gray-400 rounded-full  w-56 mb-2 ml-1"></div>
                   <span className="sr-only">Loading...</span>
                 </div>
-                );
-              })
-            }
+              );
+            })}
           </div>
         </div>
       </div>
@@ -146,35 +171,93 @@ const DashBoard = () => {
         <div className="mx-14 flex xl:flex-row flex-col gap-2 ">
           <div className="relative flex-1">
             <img className="rounded-md " src={indoor} alt="indoor plants" />
-          <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
-            <p className="text-neutral-700  ">Only On Our Store!</p>
-            <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Indoor Life Plants</p>
-            <Link to={'search/indoor/1'} className="font-bold cursor-pointer sm:text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300 bg-gray-900 sm:bg-transparent text-white  rounded-lg text-sm px-6 py-4 text-center me-2  ">
-              CHECK NOW
-            </Link>
+            <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
+              <p className="text-neutral-700  ">Only On Our Store!</p>
+              <p className="  sm:text-6xl text-3xl font-extrabold mb-6">
+                Indoor Life Plants
+              </p>
+              <Link
+                to={"search/indoor/1"}
+                className="font-bold cursor-pointer sm:text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300 bg-gray-900 sm:bg-transparent text-white  rounded-lg text-sm px-6 py-4 text-center me-2  "
+              >
+                CHECK NOW
+              </Link>
             </div>
           </div>
           <div className="relative flex-1">
             <img className=" rounded-md " src={outdoor} alt="outdoor plants" />
-          <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
-            <p className="text-neutral-700  ">Only On Our Store!</p>
-            <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Outdoor Life Plants</p>
-            <Link to={'search/outdoor/1'} className=" font-bold cursor-pointer sm:text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300 bg-gray-900 sm:bg-transparent text-white  rounded-lg text-sm px-6 py-4 text-center me-2  ">
-              CHECK NOW
-            </Link>
+            <div className="absolute right-10  lg:top-32 top-1 ml-4 ">
+              <p className="text-neutral-700  ">Only On Our Store!</p>
+              <p className="  sm:text-6xl text-3xl font-extrabold mb-6">
+                Outdoor Life Plants
+              </p>
+              <Link
+                to={"search/outdoor/1"}
+                className=" font-bold cursor-pointer sm:text-gray-900 hover:text-white border-2 border-gray-800   hover:bg-gray-900  focus:ring-4 focus:outline-none focus:ring-gray-300 bg-gray-900 sm:bg-transparent text-white  rounded-lg text-sm px-6 py-4 text-center me-2  "
+              >
+                CHECK NOW
+              </Link>
             </div>
           </div>
         </div>
         <div className="flex xl:flex-row flex-col  mx-14 p-4 gap-1">
-        <div className="flex-1 right-10  ml-4  flex flex-col items-center justify-center h-96">
+          <div className="flex-1 right-10  ml-4  flex flex-col items-center justify-center h-96">
             <p className="text-neutral-700  ">A Great Addition</p>
-            <p className="  sm:text-6xl text-3xl font-extrabold mb-6">Gardening, Timly Visit & Routine Service For You !</p>
-            <span title="adding soon!" className=" font-bold   cursor-not-allowed text-gray-900 hover:text-white border-2 border-gray-800  hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-6 py-4 text-center me-2 ">
+            <p className="  sm:text-6xl text-3xl font-extrabold mb-6">
+              Gardening, Timly Visit & Routine Service For You !
+            </p>
+            <span
+              title="adding soon!"
+              className=" font-bold   cursor-not-allowed text-gray-900 hover:text-white border-2 border-gray-800  hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300  rounded-lg text-sm px-6 py-4 text-center me-2 "
+            >
               BOOK NOW
             </span>
-            </div>
+          </div>
           <div className="flex-1">
-        <img className="sm:rounded-full rounded-xl" src={gardening} alt="gardening" />
+            <img
+              className="sm:rounded-full rounded-xl"
+              src={gardening}
+              alt="gardening"
+            />
+          </div>
+        </div>
+        {/* basic info */}
+        <div className="  md:w-8/12 p-4 md:p-0 flex  justify-between m-auto my-4">
+          <div className=" flex items-center justify-center flex-col">
+            <div className="flex justify-center items-center rounded-full md:h-24 h-16 md:w-24 w-16 bg-gray-100">
+              <div className=" flex items-center justify-center md:h-20 md:w-20 h-14 w-14 bg-gray-200   rounded-full">
+                <TbPhoneCall size={25} className="text-green-500  " />
+              </div>
+            </div>
+            <p className="mt-2 md:font-semibold text-sm">Need Help?Call</p>
+            <p className="sm:text-sm text-xs text-gray-500 text-center">(+977)9808035913</p>
+          </div>
+          <div className=" flex items-center justify-center flex-col">
+            <div className="flex justify-center items-center rounded-full md:h-24 h-16 md:w-24 w-16 bg-gray-100">
+              <div className=" flex items-center justify-center md:h-20 md:w-20 h-14 w-14 bg-gray-200   rounded-full">
+                <TbTruckDelivery size={25} className="text-green-500  " />
+              </div>
+            </div>
+            <p className="mt-2 md:font-semibold text-sm">Delivery On</p>
+            <p className="sm:text-sm text-xs text-gray-500 text-center">Safe and Quick</p>
+          </div>
+          <div className=" flex items-center justify-center flex-col">
+            <div className="flex justify-center items-center rounded-full md:h-24 h-16 md:w-24 w-16 bg-gray-100">
+              <div className=" flex items-center justify-center md:h-20 md:w-20 h-14 w-14 bg-gray-200   rounded-full">
+                <MdPayment size={25} className="text-green-500  " />
+              </div>
+            </div>
+            <p className="mt-2 md:font-semibold text-sm">Payment</p>
+            <p className="sm:text-sm text-xs text-gray-500 text-center">Online/On Delivery</p>
+          </div>
+          <div className=" flex items-center justify-center flex-col">
+            <div className="flex justify-center items-center rounded-full md:h-24 h-16 md:w-24 w-16 bg-gray-100">
+              <div className=" flex items-center justify-center md:h-20 md:w-20 h-14 w-14 bg-gray-200   rounded-full">
+                <MdOutlineAssignmentReturn size={25} className="text-green-500  " />
+              </div>
+            </div>
+            <p className="mt-2 md:font-semibold   text-sm ">Easy Return</p>
+            <p className="sm:text-sm text-xs text-gray-500 text-center">On Delivery Damage</p>
           </div>
         </div>
       </div>

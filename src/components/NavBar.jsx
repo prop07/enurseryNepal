@@ -86,7 +86,7 @@ const NavBar = () => {
         )}
         <div className="flex items-center p-2 ">
           <Link to={"/"} className="flex mr-6 ">
-            <img className="h-18 w-28 ml-4" src={logo} alt={logo} />
+            <img className=" h-22 w-28  ml-4" src={logo} alt={logo} />
           </Link>
           <div className="w-auto flex">
             <div className="hidden lg:block">
@@ -107,31 +107,46 @@ const NavBar = () => {
                   {categoryDropDown ? (
                     <div className="  absolute left-0 mt-1 w-28 rounded-md shadow-lg  bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <ul className="flex flex-col  cursor-pointer">
-                        <Link  onClick={() => setCategoryDropDown(!categoryDropDown)} to={"/search/indoor/1"}>
+                        <Link
+                          onClick={() => setCategoryDropDown(!categoryDropDown)}
+                          to={"/search/indoor/1"}
+                        >
                           <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-28">
                             Indoor
                           </center>
                         </Link>
                         <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link onClick={() => setCategoryDropDown(!categoryDropDown)} to={"/search/outdoor/1"}>
+                        <Link
+                          onClick={() => setCategoryDropDown(!categoryDropDown)}
+                          to={"/search/outdoor/1"}
+                        >
                           <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-28">
                             Outdoor
                           </center>
                         </Link>
                         <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link onClick={() => setCategoryDropDown(!categoryDropDown)} to={"/search/semi-indoor/1"}>
+                        <Link
+                          onClick={() => setCategoryDropDown(!categoryDropDown)}
+                          to={"/search/semi-indoor/1"}
+                        >
                           <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-28">
                             Semi-Indoor
                           </center>
                         </Link>
                         <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link onClick={() => setCategoryDropDown(!categoryDropDown)} to={"/search/vase/1"}>
+                        <Link
+                          onClick={() => setCategoryDropDown(!categoryDropDown)}
+                          to={"/search/vase/1"}
+                        >
                           <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-28">
                             Vase
                           </center>
                         </Link>
                         <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link onClick={() => setCategoryDropDown(!categoryDropDown)} to={"/search/fertilizer/1"}>
+                        <Link
+                          onClick={() => setCategoryDropDown(!categoryDropDown)}
+                          to={"/search/fertilizer/1"}
+                        >
                           <center className=" text-base text-gray-700 hover:bg-gray-100 p-1 w-28">
                             Fertilizer
                           </center>
@@ -203,22 +218,26 @@ const NavBar = () => {
                     aria-orientation="vertical"
                     aria-labelledby="options-menu"
                   >
-                  <p
-                  onClick={userHandle}
+                    <p
+                      onClick={userHandle}
                       className="block md:hidden px-4 py-2 text-gray-700"
                       role="menuitem"
                     >
-                        <span className="flex items-center cursor-pointer truncate">
-                          <IoMdGift size={20} className="mr-1" />
-                          {email}
-                        </span>
+                      <span className="flex items-center cursor-pointer truncate">
+                        <IoMdGift size={20} className="mr-1" />
+                        {email}
+                      </span>
                     </p>
                     <hr className="block md:hidden text-gray-400 w-3/4 mx-auto " />
                     <p
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       role="menuitem"
                     >
-                      <Link onClick={userHandle} className=" hover:text-gray-700" to={"/profile/order"}>
+                      <Link
+                        onClick={userHandle}
+                        className=" hover:text-gray-700"
+                        to={"/profile/order"}
+                      >
                         <span className="flex items-center cursor-pointer">
                           <IoMdGift size={20} className="mr-1" />
                           Orders
@@ -270,47 +289,46 @@ const NavBar = () => {
             />
           </div>
           <ul className="mt-2">
-            
-            <Link to={"/products/1"}>
+            <Link to={"/products/1"} >
               <p
-                className="cursor-pointer text-base text-gray-700   p-1 w-28"
+                className="cursor-pointer text-base text-gray-700 hover:bg-gray-100 p-1 "
                 onClick={searchToggle}
               >
                 Products
               </p>
             </Link>
             <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link  onClick={searchToggle} to={"/search/indoor/1"}>
-                          <center className=" text-base text-gray-700  p-1 w-28">
-                            Indoor
-                          </center>
-                        </Link>
-                        <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link onClick={searchToggle} to={"/search/outdoor/1"}>
-                          <center className=" text-base text-gray-700  p-1 w-28">
-                            Outdoor
-                          </center>
-                        </Link>
-                        <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link onClick={searchToggle} to={"/search/semi-indoor/1"}>
-                          <center className=" text-base text-gray-700  p-1 w-28">
-                            Semi-Indoor
-                          </center>
-                        </Link>
-                        <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link onClick={searchToggle} to={"/search/vase/1"}>
-                          <center className=" text-base text-gray-700  p-1 w-28">
-                            Vase
-                          </center>
-                        </Link>
-                        <hr className="text-gray-400 w-3/4 mx-auto" />
-                        <Link onClick={searchToggle} to={"/search/fertilizer/1"}>
-                          <center className=" text-base text-gray-700  p-1 w-28">
-                            Fertilizer
-                          </center>
-                        </Link>
-                        <hr className="text-gray-400 w-3/4 mx-auto" />
-                      </ul>
+            <Link onClick={searchToggle} to={"/search/indoor/1"}>
+              <center className=" text-base text-gray-700  p-1 hover:bg-gray-100 ">
+                Indoor
+              </center>
+            </Link>
+            <hr className="text-gray-400 w-3/4 mx-auto" />
+            <Link onClick={searchToggle} to={"/search/outdoor/1"}>
+              <center className=" text-base text-gray-700  p-1 hover:bg-gray-100 ">
+                Outdoor
+              </center>
+            </Link>
+            <hr className="text-gray-400 w-3/4 mx-auto" />
+            <Link onClick={searchToggle} to={"/search/semi-indoor/1"}>
+              <center className=" text-base text-gray-700  p-1 hover:bg-gray-100 ">
+                Semi-Indoor
+              </center>
+            </Link>
+            <hr className="text-gray-400 w-3/4 mx-auto" />
+            <Link onClick={searchToggle} to={"/search/vase/1"}>
+              <center className=" text-base text-gray-700  p-1 hover:bg-gray-100 ">
+                Vase
+              </center>
+            </Link>
+            <hr className="text-gray-400 w-3/4 mx-auto" />
+            <Link onClick={searchToggle} to={"/search/fertilizer/1"}>
+              <center className=" text-base text-gray-700  p-1 hover:bg-gray-100 ">
+                Fertilizer
+              </center>
+            </Link>
+            <hr className="text-gray-400 w-3/4 mx-auto" />
+          </ul>
         </center>
       ) : null}
     </div>

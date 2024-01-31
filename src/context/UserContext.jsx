@@ -17,10 +17,8 @@ export const UserProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserId(user.uid);
-        // console.log("User logged in:", user.email);
       } else {
         setUserId(null);
-        // console.log("User logged out");
       }
     });
   
@@ -28,9 +26,7 @@ export const UserProvider = ({ children }) => {
       unsubscribe();
     };
   }, []);
-//   useEffect(()=>{
-// console.log("here is your User id"+ userId);
-//   },[userId])
+
   return (
     <UserContext.Provider value={{ userId, updateUser }}>
       {children}

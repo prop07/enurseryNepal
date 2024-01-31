@@ -37,7 +37,7 @@ const Footer = () => {
 		<div className="lg:w-1/3">
 			<a rel="noopener noreferrer" href="#" className="flex justify-center space-x-3 lg:justify-start">
 				<div className="flex items-center justify-center w-48 h-16 ">
-        <img className="h-16 w-48" src={logo} alt={logo}/>
+        <img  src={logo} alt={logo}/>
 				</div>
 				
 			</a>
@@ -75,7 +75,7 @@ const Footer = () => {
 			</div>
 		</div>
 	</div>
-	<div className="py-2 bg-neutral-700 text-white text-sm text-center ">© 1999 Plantopia Company Co. All rights reserved.</div>
+	<div className="py-2 bg-neutral-700 text-white text-sm text-center ">© 2010 enurserynepal Company Co. All rights reserved.</div>
 </footer>
   );
 };
